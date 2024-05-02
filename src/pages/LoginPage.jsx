@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from "../assets/DALL·E 2024-05-02 13.03.50 - Logo design for a recycling software called CAS. The logo should feature eco-friendly and recycling themes, incorporating elements like recycling symb-fotor-bg-remover-2024050213622.png";
+import logo from "../assets/logo2.png";
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 
