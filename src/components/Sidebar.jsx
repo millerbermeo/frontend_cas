@@ -1,5 +1,5 @@
 import { ChevronFirst, ChevronLast, MoreVertical, X, Menu, Power, Copyright } from "lucide-react"
-import logo from "../assets/logo.png"
+import logo from "../assets/logo2.png"
 import logo_sena from "../assets/logo_sena.png"
 import profile from "../assets/profile.png"
 import { createContext, useContext, useState } from "react"
@@ -13,30 +13,33 @@ export default function Sidebar({ children }) {
     return (
         <>
             <aside className="h-screen">
-                <nav className="h-full flex flex-col bg-[#003366] text-white border-r shadow-sm px-2 justify-start">
+                <nav className="h-full flex flex-col bg-gradient-to-r from-cyan-400 to-sky-500 text-white border-r shadow-sm px-2 justify-start">
                     <div className="p-4 pb-2 flex justify-between items-center text-black">
-                        {/* <img src={logo} className={`overflow-hidden transition-all  ${expanded ? "w-32" : "w-0"}`} /> */}
+                       <div className="flex gap-3 items-end">
+                       {/* <img src={logo} className={`overflow-hidden duration-500 ease-out rounded-full  ${expanded ? "w-14" : "w-0"}`} /> */}
+                        <h1 className={`duration-500 ease-out overflow-hidden transition-all text-3xl text-white font-bold ${expanded ? "w-14" : "w-0"}`}>CAS</h1>
+                       </div>
                         <button onClick={() => setExpanded((curr) => !curr)} className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
                             {expanded ? <Menu /> : <X />}
                         </button>
                     </div>
 
-                    <div className="mt-10 pt-4 border-t-[1px]">
+                    <div className="mt-10 pt-4 border-t-[1px] border-white border-opacity-50">
                         <span className="ml-3 h-8 items-center flex">
                             MENU
                         </span>
 
                         <SidebarContext.Provider value={{ expanded }}>
 
-                            <ul className="flex-1 px-3 border-b-[1px] mt-4 py-6 border-t-[1px] mb-5">{children}</ul>
+                            <ul className="flex-1 px-3 border-b-[1px] mt-4 py-6 border-white border-opacity-50 border-t-[1px] mb-5">{children}</ul>
                         </SidebarContext.Provider>
                     </div>
 
-                    <div className="border-t flex p-3 mt-28">
+                    <div className="border-t flex p-3 mt-[45%] border-white cursor-pointer border-opacity-50">
                         {/* <img src={profile} className="w-10 h-10 rounded-md" /> */}
                         <Power className="ml-2.5" size={20} />
-                        <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"} `}>
-                            <div className="leading-4">
+                        <div className={`flex justify-between items-center overflow-hidden cursor-pointer transition-all ${expanded ? "w-48 ml-3" : "w-0"} `}>
+                            <div className="">
                                 {/* <h4 className="font-semibold">constGenius</h4>
                                 <span className="text-xs text-gray-600">constgenius@gmail.com</span> */}
                                 <h4>Logout</h4>
@@ -46,7 +49,7 @@ export default function Sidebar({ children }) {
                     </div>
 
 
-                    <div className="absolute flex items-center bottom-5 h-10 p-3 mt-28">
+                    <div className="absolute flex items-center bottom-5 h-10 p-3">
                         {/* <img src={profile} className="w-10 h-10 rounded-md" /> */}
                         <Copyright className="ml-2.5" size={20} />
                         <div className={`overflow-hidden h-5 ${expanded ? "w-auto ml-3" : "w-0"} `}>
@@ -76,9 +79,9 @@ export function SidebarItem({ nav, icon, text, active, alert }) {
 
     return (
         <Link to={nav}>
-            <li className={`relative flex items-center text-white py-2 px-3 my-1 font-medium rounded-md cursor-pointer  group ${isActive ? "bg-gradient-to-tr from-indigo-200 to-indigo-100  text-black" : "hover:bg-indigo-200 hover:text-black"}`}>
+            <li className={`relative flex items-center  py-2 px-3 my-1 font-medium rounded-md cursor-pointer  group ${isActive ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-black" : "hover:bg-indigo-200 text-white hover:text-black"}`}>
                 {icon}
-                <span className={`overflow-hidden  ${expanded ? "w-52 ml-3" : "w-0"}`}>{text}</span>
+                <span className={`overflow-hidden ${expanded ? "w-48 ml-3" : "w-0"}`}>{text}</span>
                 {alert && (
                     <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`}>
 
