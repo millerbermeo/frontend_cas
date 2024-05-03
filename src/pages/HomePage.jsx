@@ -2,7 +2,11 @@ import React from 'react'
 
 function HomePage() {
   return (
-    <div>HomePage</div>
+    <>
+      <main className='w-full p-3'>
+        HomePage
+      </main>
+    </>
   )
 }
 

@@ -2,7 +2,11 @@ import React from 'react'
 
 function ElementosPage() {
   return (
-    <div>ElementosPage</div>
+    <>
+      <main className='w-full p-3'>
+        ElementosPage
+      </main>
+    </>
   )
 }
 

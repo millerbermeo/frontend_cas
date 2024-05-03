@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "../assets/logo2.png";
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import axiosClient from '../configs/axiosClient';
+
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -9,15 +11,47 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [usernameFocused, setUsernameFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [loading, setLoading] = useState(false); 
   const navegation = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navegation("/home");
+    }
+}, [navegation]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    alert();
-    navegation("/home");
-  };
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    const data = { email: username, password };
+    const response = await axiosClient.post('/validar', data);
+    
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('rol', response.data.rol);
+      localStorage.setItem('nombre', response.data.nombre);
+
+      setLoading(true); // Activar el loader solo después de una respuesta exitosa
+
+      setTimeout(() => {
+        setLoading(false); // Desactivar el loader antes de la navegación
+        if (response.data.rol === 'administrador') {
+          navegation("/home");
+        } else {
+          navegation("/");
+        }
+      }, 2000); // Retraso de 2 segundos antes de redirigir
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    alert("Error al iniciar sesión");
+  }
+};
+
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -58,6 +92,7 @@ export const LoginPage = () => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      {loading && <div className='w-full h-screen fixed flex justify-center items-center bg-black z-20 opacity-70'><div className="progress z-50 bg-white"></div></div>} 
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
           <div
             className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"
@@ -72,9 +107,9 @@ export const LoginPage = () => {
                         <div className="g-0 lg:flex lg:flex-wrap">
                           <div className="px-4 md:px-0 lg:w-full">
                             <div className="md:mx-6 ">
-                              <div className="text-center">
+                              <div className="text-center flex flex-col items-center">
                                 <img
-                                  className="mx-auto w-48"
+                                  className="w-48"
                                   src={logo}
                                   alt="logo"
                                 />
@@ -82,7 +117,7 @@ export const LoginPage = () => {
                                   Centro de Acopio Yamboro
                                 </h4>
                               </div>
-                              <form>
+                              <form onSubmit={handleSubmit}>
                                 <p className="mb-4">Por favor, ingrese a su cuenta</p>
                                 <div className="relative mb-4">
                                   <input
@@ -124,7 +159,7 @@ export const LoginPage = () => {
                                   </button>
                                   <label
                                     htmlFor="exampleFormControlInput11"
-                                    className={`pointer-events-none absolute top-0 bg-white left-3 max-w-[90%] mt-1 leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary ${password ? 'transform translate-y-[-16px] text-sm text-black' : ''}`}
+                                    className={`pointer-events-none absolute top-0 bg-white left-3 max-w-[90%] mt-1 leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary ${password || passwordFocused ? 'transform translate-y-[-16px] text-sm text-black' : ''}`}
                                   >
                                     Password
                                   </label>
@@ -133,7 +168,7 @@ export const LoginPage = () => {
                                   <button
                                     onClick={handleSubmit}
                                     className="mb-3 bg-gradient-to-r from-cyan-200 to-green-500  inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-dark-3 transition duration-150 ease-in-out hover:shadow-dark-2 focus:shadow-dark-2 focus:outline-none focus:ring-0 active:shadow-dark-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                                    type="button"
+                                    type="submit"
                                   >
                                     Log in
                                   </button>

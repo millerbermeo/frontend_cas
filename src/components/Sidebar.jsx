@@ -5,6 +5,8 @@ import profile from "../assets/profile.png"
 import { createContext, useContext, useState } from "react"
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { ModalLogout } from "../configs/ModalLogout"
+
 
 const SidebarContext = createContext();
 
@@ -40,9 +42,8 @@ export default function Sidebar({ children }) {
                         <Power className="ml-2.5" size={20} />
                         <div className={`flex justify-between items-center overflow-hidden cursor-pointer transition-all ${expanded ? "w-48 ml-3" : "w-0"} `}>
                             <div className="">
-                                {/* <h4 className="font-semibold">constGenius</h4>
-                                <span className="text-xs text-gray-600">constgenius@gmail.com</span> */}
-                                <h4>Logout</h4>
+             <ModalLogout/>
+                        
                             </div>
 
                         </div>
@@ -79,7 +80,7 @@ export function SidebarItem({ nav, icon, text, active, alert }) {
 
     return (
         <Link to={nav}>
-            <li className={`relative flex items-center  py-2 px-3 my-1 font-medium rounded-md cursor-pointer  group ${isActive ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-black" : "hover:bg-indigo-200 text-white hover:text-black"}`}>
+            <li className={`relative flex items-center  py-2 px-3 my-1 font-medium rounded-md cursor-pointer  group ${isActive ? "bg-gradient-to-tr from-indigo-50 to-indigo-50 text-black" : "hover:bg-indigo-50 text-white hover:text-black"}`}>
                 {icon}
                 <span className={`overflow-hidden ${expanded ? "w-48 ml-3" : "w-0"}`}>{text}</span>
                 {alert && (
@@ -89,7 +90,7 @@ export function SidebarItem({ nav, icon, text, active, alert }) {
                 )}
 
                 {!expanded && (
-                    <div className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
+                    <div className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-50 text-sky-900 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
                         {text}
                     </div>
                 )}

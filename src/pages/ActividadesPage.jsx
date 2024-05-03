@@ -2,7 +2,11 @@ import React from 'react'
 
 function ActividadesPage() {
   return (
-    <div>ActividadesPage</div>
+    <>
+      <main className='w-full p-3'>
+        ActividadesPage
+      </main>
+    </>
   )
 }
 

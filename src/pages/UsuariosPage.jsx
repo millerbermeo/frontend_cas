@@ -2,7 +2,11 @@ import React from 'react'
 
 function UsuariosPage() {
   return (
-    <div>UsuariosPage</div>
+    <>
+      <main className='w-full p-3'>
+        UsuariosPage
+      </main>
+    </>
   )
 }
 

@@ -1,8 +1,13 @@
 import React from 'react'
 
+
 function ResiduosPage() {
   return (
-    <div>ResiduosPage</div>
+    <>
+      <main className='w-full p-3'>
+        ResiduosPage
+      </main>
+    </>
   )
 }
 

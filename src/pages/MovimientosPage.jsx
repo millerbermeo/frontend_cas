@@ -2,7 +2,11 @@ import React from 'react'
 
 function MovimientosPage() {
   return (
-    <div>MovimientosPage</div>
+    <>
+      <main className='w-full p-3'>
+        MovimientosPage
+      </main>
+    </>
   )
 }
 
