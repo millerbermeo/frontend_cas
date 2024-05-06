@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
-const SweetAlert = ({ isSuccess, text }) => {
+export const SweetAlert = ({ isSuccess, text }) => {
   useEffect(() => {
     if (isSuccess !== null) {
       if (isSuccess) {
@@ -27,4 +27,3 @@ const SweetAlert = ({ isSuccess, text }) => {
   return null; // No renderiza nada en el DOM, ya que SweetAlert maneja la visualización
 };
 
-export default SweetAlert;
