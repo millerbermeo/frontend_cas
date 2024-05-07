@@ -7,8 +7,8 @@ import { LineChartHero } from '../components/graficos/LineChartHero'
 function HomePage() {
   return (
     <>
-      <main className='w-full px-3'>
-        <Navbar/>
+   <main className='w-full px-3 h-screen overflow-y-auto'>
+        <Navbar tittle="Home"/>
         <div className='flex mt-5 gap-5 rounded'>
         <BarChartHero/>
         <DonutChartHero/>

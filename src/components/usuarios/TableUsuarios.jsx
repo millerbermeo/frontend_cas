@@ -108,6 +108,15 @@ export const TableUsuarios = () => {
     window.location.reload(); // Esto es opcional para restaurar completamente el estado de la página.
   };
 
+  const cambiarEstado = async (id) => {
+
+    await axiosClient.put(`usuario/desactivar/${id}`).then((response) => {
+
+      console.log(response.data)
+      fetchData()
+    })
+  }
+
 
   return (
     <>

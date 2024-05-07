@@ -10,7 +10,7 @@ function MovimientosPage() {
     <>
       <main className='w-full px-3 h-screen overflow-y-auto'>
 
-        <Navbar />
+        <Navbar tittle="Movimientos"/>
         <div className='flex gap-3 my-10'>
           {/* <CardComponent salesAmount={71465} annualTarget={225000} progressPercentage={45} />
 <CardComponent salesAmount={95000} annualTarget={500000} progressPercentage={19} /> */}
