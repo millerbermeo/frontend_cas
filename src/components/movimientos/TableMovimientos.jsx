@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Tabs, Tab } from "@nextui-org/tabs";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Button, Input, User, Chip, Tooltip, getKeyValue, DatePicker } from "@nextui-org/react";
 import { SearchIcon } from '../iconos/SearchIcon';
 import axiosClient from '../../configs/axiosClient';
@@ -150,53 +151,105 @@ export const TableMovimientos = () => {
         setPage(1);
     };
 
+    const sizes = [
+        "sm",
+        "md",
+        "lg",
+    ];
+
+
+
     return (
         <>
 
             <div className='flex justify-between gap-10 items-end w-full'>
 
-                <div className='w-full flex gap-3'>
-                    <div className='w-2/3 flex flex-col'>
-                        <Input
-                            color='white'
-                            isClearable
-                            className="w-full"
-                            placeholder="Search by name Or Date"
-                            startContent={<SearchIcon />}
-                            value={filterValue}
-                            onClear={() => onClear()}
-                            onValueChange={onSearchChange}
-                        />
+                <div className='w-full flex gap-3 items-end'>
+                    <div className='w-full flex flex-col'>
 
-                        <div className='flex gap-2 mt-5 items-end'>
-                            
+                        <div className="flex flex-wrap gap-4 w-full">
 
-                            <DatePicker
-                            label="Fecha Inicial"
-                                className='w-56'
-                                bordered
-                                color="primary"
-                                placeholder="Start Date"
-                                value={startDate}
-                                onChange={(date) => setStartDate(date)}
-                            />
-                            <DatePicker
-                            label="Fecha Final"
-                                className='w-56'
-                                bordered
-                                color="primary"
-                                placeholder="End Date"
-                                value={endDate}
-                                onChange={(date) => setEndDate(date)}
-                            />
+                            <Tabs className='w-full' size="md" color='primary' aria-label="Tabs sizes">
+                                <Tab title="Filtros" className='flex gap-x-2'>
+                                    <Input
+                                        color='white'
+                                        isClearable
+                                        className="w-[218px]"
+                                        placeholder="Search by name Or Date"
+                                        startContent={<SearchIcon />}
+                                        value={filterValue}
+                                        onClear={() => onClear()}
+                                        onValueChange={onSearchChange}
+                                    />
+                                    <Button className='text-white' color="primary" onClick={onClear}>
+                                        Clear Filters
+                                    </Button>
 
-<Button color="default" onPress={() => handleFilterByType('entrada')}>Entrada</Button>
-                <Button color="warning" onPress={() => handleFilterByType('salida')}>Salida</Button>
-                        
-                            <Button className='text-white' color="primary" onClick={onClear}>
-                                Clear Filters
-                            </Button>
+                                </Tab>
+
+                                <Tab title="Filtrar por Fechas">
+
+                                    <div className='w-full flex gap-x-3'>
+                                        <DatePicker
+                                            // label="Fecha Inicial"
+                                            className='w-40'
+                                            bordered
+                                            color="primary"
+                                            placeholder="Start Date"
+                                            value={startDate}
+                                            onChange={(date) => setStartDate(date)}
+                                        />
+                                        <DatePicker
+                                            // label="Fecha Final"
+                                            className='w-40'
+                                            bordered
+                                            color="primary"
+                                            placeholder="End Date"
+                                            value={endDate}
+                                            onChange={(date) => setEndDate(date)}
+                                        />
+
+                                        <Button className='text-white' color="primary" onClick={onClear}>
+                                            Clear Filters
+                                        </Button>
+                                    </div>
+                                </Tab>
+                                <Tab title="Filtrar por Tipo">
+                                    <div className='flex gap-3'>
+                                    <Button className='text-white' color="primary" onClick={onClear}>
+                                            Todos
+                                        </Button>
+                                        <Button color="default" onPress={() => handleFilterByType('entrada')}>Entrada</Button>
+                                        <Button color="success" onPress={() => handleFilterByType('salida')}>Salida</Button>
+                                    </div>
+                                </Tab>
+                            </Tabs>
+
                         </div>
+
+
+
+
+
+
+
+
+                    </div>
+
+                    <div className='flex pb-[14px]'>
+                        <div className='flex gap-2'>
+                            <Button color="secondary" auto onClick={() => downloadCSV(data)}>
+                                Descargar CSV
+                            </Button>
+                            <Button color="primary" auto onClick={printTable}>
+                                Imprimir Tabla
+                            </Button>
+
+                            <ModalRegistrarMov fetchData={fetchData} />
+                            <ModalRegistrarSal fetchData={fetchData} />
+                        </div>
+
+                       
                     </div>
 
 
@@ -205,19 +258,7 @@ export const TableMovimientos = () => {
 
 
 
-                <div className='flex gap-2'>
-                    <Button color="secondary" auto onClick={() => downloadCSV(data)}>
-                        Descargar CSV
-                    </Button>
-                    <Button color="primary" auto onClick={printTable}>
-                        Imprimir Tabla
-                    </Button>
-                </div>
 
-                <div className='flex justify-center items-center gap-x-2'>
-                    <ModalRegistrarMov fetchData={fetchData} />
-                    <ModalRegistrarSal fetchData={fetchData} />
-                </div>
 
             </div>
 

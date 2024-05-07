@@ -14,6 +14,7 @@
     "@headlessui/tailwindcss": "^0.2.0",
     "@heroicons/react": "^2.1.3",
     "@nextui-org/react": "^2.3.6",
+    "@nextui-org/tabs": "^2.0.29",
     "@remixicon/react": "^4.2.0",
     "@tremor/react": "^3.16.2",
     "axios": "^1.6.8",
