@@ -63,6 +63,7 @@ export const RegistrarElemento = ({ fetchData }) => {
             await axiosClient.post('http://localhost:3000/elemento/registrar', formData).then((response) => {
                 setIsSuccess(true);
                 fetchData();
+                onOpenChange(false);
             });
         } catch (error) {
             console.error('Error submitting data:', error);

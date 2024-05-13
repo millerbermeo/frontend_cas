@@ -111,6 +111,7 @@ export const ModalRegistrarSal = ({ fetchData }) => {
             await axiosClient.post('residuo/registrarsalida', formData).then(() => {
                 setIsSuccess(true);
                 fetchData();
+                onOpenChange(false);
             });
         } catch (error) {
             console.error('Error submitting data:', error);

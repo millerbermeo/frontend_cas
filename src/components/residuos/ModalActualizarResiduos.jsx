@@ -317,7 +317,7 @@ export const ModalActualizarResiduos = ({ fetchData, residuos }) => {
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>Cerrar</Button>
-                                <Button color="primary" onClick={handleSubmit} onPress={onClose}>Actualizar</Button>
+                                <Button color="primary" onClick={handleSubmit}>Actualizar</Button>
                             </ModalFooter>
                         </>
                     )}

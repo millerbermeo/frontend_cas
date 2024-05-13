@@ -3,24 +3,25 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagina
 import { Switch } from "@nextui-org/react";
 import axiosClient from '../../configs/axiosClient';
 import { SearchIcon } from '../iconos/SearchIcon';
-import { RegistrarUsuario } from './RegistrarUsuario';
-import { ActualizarUsuarios } from './ActualizarUsuarios';
+import { ActualizarActividad } from './ActualizarActividad';
 
 
 
-export const TableUsuarios = () => {
+
+
+export const TableActividades = () => {
 
     
   const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
-  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const [page, setPage] = useState(1);
   const [filterValue, setFilterValue] = useState('');
 
 
   const fetchData = async () => {
     try {
-      const response = await axiosClient.get('usuario/listar');
+      const response = await axiosClient.get('actividades/listar');
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -29,12 +30,22 @@ export const TableUsuarios = () => {
 
 
   const convertToCSV = (data) => {
-    const headers = ["ID", "NOMBRE", "APELLIDOS", "IDENTIFICACION", "EMAIL", "ROL", "ESTADO"];
+    const headers = ["ID", "TIPO", "NOMBRE", "LUGAR", "FECHA", "ESTADO"];
     const rows = data.map(item =>
-      [item.id_usuario, item.nombre, item.apellidos, item.identificacion, item.email, item.rol, item.estado].join(',')
+      [item.id_actividad, item.tipo_actividad, item.nombre_act, item.nombre_lugar, item.fecha_actividad, item.estado].join(',')
     );
     return [headers.join(','), ...rows].join('\n');
   };
+
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return formattedDate;
+}
+
+
+
 
   const downloadCSV = (data) => {
     const csvString = convertToCSV(data);
@@ -42,7 +53,7 @@ export const TableUsuarios = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', 'usuarios.csv');
+    link.setAttribute('download', 'activiades.csv');
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -90,7 +101,7 @@ export const TableUsuarios = () => {
 
   const start = (page - 1) * rowsPerPage;
   const end = start + rowsPerPage;
-  const paginatedData = data.filter(item => item.nombre.toLowerCase().includes(filterValue.toLowerCase())).slice(start, end);
+  const paginatedData = data.filter(item => item.nombre_act.toLowerCase().includes(filterValue.toLowerCase())).slice(start, end);
 
 
   const statusColorMap = {
@@ -110,13 +121,12 @@ export const TableUsuarios = () => {
 
   const cambiarEstado = async (id) => {
 
-    await axiosClient.put(`usuario/desactivar/${id}`).then((response) => {
+    await axiosClient.put(`actividades/actualizar/${id}`).then((response) => {
 
-      console.log(response.data)
+      console.log("actividades",response.data)
       fetchData()
     })
   }
-
 
   return (
     <>
@@ -141,9 +151,10 @@ export const TableUsuarios = () => {
        Imprimir Tabla
      </Button>
        </div>
+
+  
     </div>
 
-    <RegistrarUsuario/>
 
      </div>
 
@@ -169,52 +180,51 @@ export const TableUsuarios = () => {
 
      <Table className='z-0 printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys}  onSelectionChange={setSelectedKeys}>
      <TableHeader>
-          <TableColumn>ID</TableColumn>
+     <TableColumn>ID</TableColumn>
+          <TableColumn>TIPO</TableColumn>
           <TableColumn>NOMBRE</TableColumn>
-          <TableColumn>APELLIDO</TableColumn>
-          <TableColumn>IDENTIIFCACION</TableColumn>
-          <TableColumn>EMAIL</TableColumn>
-          <TableColumn>ROL</TableColumn>
+          <TableColumn>LUGAR</TableColumn>
+          <TableColumn>FECHA</TableColumn>
+          <TableColumn>HORA INICIAL</TableColumn>
+          <TableColumn>HORA FINAL</TableColumn>
           <TableColumn>ESTADO</TableColumn>
           <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
-       <TableBody>
-         {paginatedData.map(item => (
-          <TableRow key={item.id_usuario}>
-          <TableCell>{item.id_usuario}</TableCell>
-          <TableCell>{item.nombre}</TableCell>
-          <TableCell>{item.apellidos}</TableCell>
-          <TableCell>{item.identificacion}</TableCell>
-          <TableCell>{item.email}</TableCell>
-          <TableCell>{item.rol}</TableCell>
+        <TableBody>
+          {paginatedData.map(item => (
+            <TableRow key={item.id_actividad}>
+                           <TableCell>{item.id_actividad}</TableCell>
+              <TableCell>{item.tipo_actividad}</TableCell>
+              <TableCell>{item.nombre_act}</TableCell>
+
+              <TableCell>{item.nombre_lugar}</TableCell>
+              <TableCell>{formatDate(item.fecha_actividad)}</TableCell>
+
+              <TableCell>{item.hora_inicial}</TableCell>
+              <TableCell>{item.hora_final}</TableCell>
 
 
-          <TableCell><div className='w-14 inline-block'>
-          {item.estado}
-          </div>
-            <Switch
-              defaultSelected={item.estado === 'activo'}
-              color="success"
-              onChange={() => cambiarEstado(item.id_usuario)}
-            />
-          </TableCell>
+              <TableCell><div className='w-20 inline-block'>
+              {item.estado_actividad}
+              </div>
+                <Switch
+                  defaultSelected={item.estado_actividad === 'asignada'}
+                  color="success"
+                  onChange={() => cambiarEstado(item.id_actividad)}
+                />
+              </TableCell>
+              <TableCell className='flex justify-center gap-2'>
 
+             {/* <ActualizarActividad actividad={item} fetchData={fetchData}/> */}
 
-
-
-
-          <TableCell className='flex justify-center gap-2'>
-
-
-            <ActualizarUsuarios usuario={item} fetchData={fetchData} />
-
-          </TableCell>
+             <ActualizarActividad actividad={item} fetchData={fetchData}/>
+              </TableCell>
 
 
 
-        </TableRow>
-         ))}
-       </TableBody>
+            </TableRow>
+          ))}
+        </TableBody>
      </Table>
 
      <div className="py-2 px-2 flex justify-between my-2 items-center">
@@ -239,3 +249,4 @@ export const TableUsuarios = () => {
    </>
   )
 }
+

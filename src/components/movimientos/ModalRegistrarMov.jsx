@@ -119,6 +119,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
             await axiosClient.post('http://localhost:3000/residuo/registrarmov', formData).then(() => {
                 setIsSuccess(true);
                 fetchData();
+                onOpenChange(false);
             });
         } catch (error) {
             console.error('Error submitting data:', error);

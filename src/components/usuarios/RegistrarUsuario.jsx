@@ -62,6 +62,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
             await axiosClient.post('http://localhost:3000/usuario/registrar', formData).then((response) => {
                 setIsSuccess(true);
                 fetchData();
+                onOpenChange(false);
             });
         } catch (error) {
             console.error('Error al enviar los datos:', error);

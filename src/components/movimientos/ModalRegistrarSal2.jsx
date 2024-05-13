@@ -113,6 +113,7 @@ export const ModalRegistrarSal2 = () => {
                 console.log(response.data);
                 fetchData();
                 setIsSuccess(true);
+                onOpenChange(false);
             });
         } catch (error) {
             console.error('Error submitting data:', error);

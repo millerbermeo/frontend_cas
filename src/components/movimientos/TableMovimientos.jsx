@@ -12,7 +12,7 @@ export const TableMovimientos = () => {
 
     const [data, setData] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState(new Set([]));
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(6);
     const [page, setPage] = useState(1);
     const [filterValue, setFilterValue] = useState('');
     const [startDate, setStartDate] = useState(null);
