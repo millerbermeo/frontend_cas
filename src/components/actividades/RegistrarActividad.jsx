@@ -61,10 +61,16 @@ export const RegistrarActividad = () => {
   }, []);
 
 
-  const handleCantidadChange = (elementoId, cantidad) => {
-    setCantidades({ ...cantidades, [elementoId]: cantidad });
+  const handleCantidadChange = (elementoId, nuevaCantidad) => {
+    const cantidadMaxima = elementos.find(e => e.id_elemento === elementoId).cantidad;
+    if (nuevaCantidad > cantidadMaxima) {
+      // Si la cantidad ingresada es mayor que la cantidad disponible, se establece a la cantidad máxima.
+      setCantidades({ ...cantidades, [elementoId]: cantidadMaxima });
+    } else {
+      // Solo actualizar si es menor o igual a la cantidad máxima.
+      setCantidades({ ...cantidades, [elementoId]: nuevaCantidad });
+    }
   };
-
 
 
   const handleActividad = async () => {
@@ -90,6 +96,13 @@ export const RegistrarActividad = () => {
       setError('Se de seleccionar una fecha');
       return;
     }
+    if (!horaFinal || !horaInicial) {
+      setError('Debe establer las horas correspondiente');
+      return;
+    }
+
+
+ 
 
     setError('');
     const datos = {
@@ -108,7 +121,7 @@ export const RegistrarActividad = () => {
       setElementos([])
       setMostrarUsuarios(false)
       setMostrarElementos(false)
-      setLugarActividad('')
+      setLugarActividad(null)
       setFechaActividad('')
       setCantidades('')
     } catch (error) {
@@ -201,6 +214,7 @@ export const RegistrarActividad = () => {
                     value={cantidades[elemento.id_elemento] || ''}
                     onChange={(e) => handleCantidadChange(elemento.id_elemento, e.target.value)}
                     min="0"
+                    max={elemento.cantidad}
                     disabled={elemento.cantidad === 0}
                   />
                 </div>

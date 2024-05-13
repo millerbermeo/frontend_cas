@@ -183,7 +183,7 @@ export const TablaResiduos = () => {
               <TableCell className='flex justify-center gap-2'>
 
 
-                <ModalActualizarResiduos residuos={item} fetchData={fetchData} />
+                <ModalActualizarResiduos fetchData={fetchData} residuos={item} />
                 {/* <ModalRegistrarSal2 residuos={item} fetchData={fetchData} /> */}
 
               </TableCell>

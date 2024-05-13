@@ -64,7 +64,7 @@ export const ModalActualizarResiduos = ({ fetchData, residuos }) => {
     useEffect(() => {
         const fetchData3 = async () => {
             try {
-                const response = await axiosClient.get(`residuo/buscar/${id}`);
+                const response = await axiosClient.get(`residuo/buscar2/${id}`);
                 setData3(response.data);
                 console.log("miller", response.data)
             } catch (error) {

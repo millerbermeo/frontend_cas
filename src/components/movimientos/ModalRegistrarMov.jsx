@@ -160,6 +160,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                         </SelectItem>
                                     ))}
                                 </Select>
+                                
                                 {formErrors.id_residuo && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
                                         Residuo Requerido

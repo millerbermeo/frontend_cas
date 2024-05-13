@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, ModalContent, ModalHeader, Select, SelectItem, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, Select, SelectItem, Input, ModalBody, ModalFooter, Button, useDisclosure, Checkbox } from "@nextui-org/react";
 import { PlusIcon } from '../iconos/PlusIcon';
 import { SweetAlert } from '../../configs/SweetAlert';
 import axiosClient from '../../configs/axiosClient';
@@ -9,14 +9,21 @@ import axiosClient from '../../configs/axiosClient';
 
 
 
-export const ModalRegistrarSal = ({ fetchData }) => {
+export const ModalRegistrarSal = ({ fetchData, initialCantidad = '' }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
+    const [isCantidadEnabled, setIsCantidadEnabled] = useState(false);
+    const [data, setData] = useState([]);
+    const [data2, setData2] = useState([]);
+    const [data3, setData3] = useState([]);
+    const [data4, setData4] = useState([]);
+    const [cantidadResiduo, setCantidadResiduo] = useState('');
 
     const [formData, setFormData] = useState({
         id_residuo: "",
         usuario_adm: "",
-        destino: ""
+        destino: "",
+        registrar_cantidad: initialCantidad
     });
 
     const [formErrors, setFormErrors] = useState({
@@ -25,11 +32,11 @@ export const ModalRegistrarSal = ({ fetchData }) => {
         destino: false
     });
 
-    const [data, setData] = useState([]);
-    const [data2, setData2] = useState([]);
-    const [data3, setData3] = useState([]);
 
 
+    const handleCheckboxChange = () => {
+        setIsCantidadEnabled(!isCantidadEnabled);
+    };
 
 
     useEffect(() => {
@@ -59,6 +66,8 @@ export const ModalRegistrarSal = ({ fetchData }) => {
         fetchData2();
     }, []);
 
+
+
     useEffect(() => {
         const fetchData3 = async () => {
             try {
@@ -73,6 +82,28 @@ export const ModalRegistrarSal = ({ fetchData }) => {
         fetchData3();
     }, []);
 
+
+    const handleResiduoChange = async (event) => {
+        const { name, value } = event.target;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
+
+        if (name === 'id_residuo' && value) {
+            try {
+                const response = await axiosClient.get(`residuo/buscar/${value}`);
+                if (response && response.data) {
+                    setCantidadResiduo(response.data); // Asume que el objeto viene directamente
+                } else {
+                    setCantidadResiduo('No disponible');
+                }
+            } catch (error) {
+                console.error('Error fetching residuo data:', error);
+                setCantidadResiduo('Error al buscar');
+            }
+        }
+    };
 
 
     const handleChange = (event) => {
@@ -92,9 +123,9 @@ export const ModalRegistrarSal = ({ fetchData }) => {
     const handleSubmit = async () => {
         const newFormErrors = {};
 
-        // Validar campos
         Object.entries(formData).forEach(([key, value]) => {
-            if (!value) {
+            // Asegúrate de excluir la validación para 'registrar_cantidad'
+            if (!value && key !== 'registrar_cantidad') {
                 newFormErrors[key] = true;
             }
         });
@@ -109,9 +140,12 @@ export const ModalRegistrarSal = ({ fetchData }) => {
             console.log(formData);
 
             await axiosClient.post('residuo/registrarsalida', formData).then(() => {
-                setIsSuccess(true);
+
                 fetchData();
                 onOpenChange(false);
+                setFormData('')
+
+                setIsSuccess(true);
             });
         } catch (error) {
             console.error('Error submitting data:', error);
@@ -141,19 +175,16 @@ export const ModalRegistrarSal = ({ fetchData }) => {
                                     placeholder="Selecciona un Residuo"
                                     name="id_residuo"
                                     value={formData.id_residuo}
-                                    onChange={handleChange}
+                                    onChange={handleResiduoChange}
                                 >
-
-                                    <SelectItem>
-                                        Seleccionar Residuo
-                                    </SelectItem>
-
-                                    {data2.map((item, index) => (
+                                    <SelectItem disabled>Seleccionar Residuo</SelectItem>
+                                    {data2.map((item) => (
                                         <SelectItem key={item.id_residuo} value={item.id_residuo}>
                                             {item.nombre_residuo}
                                         </SelectItem>
                                     ))}
                                 </Select>
+
                                 {formErrors.id_residuo && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
                                         Residuo Requerido
@@ -197,6 +228,26 @@ export const ModalRegistrarSal = ({ fetchData }) => {
                                         Destino Requerido
                                     </div>
                                 )}
+
+                                <Checkbox checked={isCantidadEnabled} onChange={handleCheckboxChange}>
+                                 <div className='flex gap-x-3'>
+                                 <span> Cantidad: {cantidadResiduo.cantidad || '0'}</span>
+                                    <span>
+                                    {cantidadResiduo.unidad_medida}
+                                    </span>
+                                 </div>
+                                </Checkbox>
+
+                                <Input
+                                    label="cantidad"
+                                    placeholder="Enter cantidad"
+                                    variant="bordered"
+                                    name="registrar_cantidad"
+                                    value={formData.registrar_cantidad}
+                                    onChange={handleChange}
+                                    disabled={!isCantidadEnabled}
+                                />
+
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
@@ -213,5 +264,5 @@ export const ModalRegistrarSal = ({ fetchData }) => {
 
             <SweetAlert isSuccess={isSuccess} />
         </div>
-  )
+    )
 }
