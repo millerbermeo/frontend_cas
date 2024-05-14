@@ -1,46 +1,40 @@
 import { DonutChart } from '@tremor/react';
+import React, { useEffect, useState } from 'react';
+import axiosClient from '../../configs/axiosClient';
 
-const datahero = [
-  {
-    name: 'Noche Holding AG',
-    value: 9800,
-  },
-  {
-    name: 'Rain Drop AG',
-    value: 4567,
-  },
-  {
-    name: 'Push Rail AG',
-    value: 3908,
-  },
-  {
-    name: 'Flow Steal AG',
-    value: 2400,
-  },
-  {
-    name: 'Tiny Loop Inc.',
-    value: 2174,
-  },
-  {
-    name: 'Anton Resorts Holding',
-    value: 1398,
-  },
-];
+export const DonutChartHero = () => {
+  const [chartData, setChartData] = useState([]);
 
-const dataFormatter = (number) =>
-  `$ ${Intl.NumberFormat('us').format(number).toString()}`;
+  const fetchData = async () => {
+    try {
+      const response = await axiosClient.get('grafico/listarTipos');
+      // Transformar los datos recibidos para que se ajusten al formato esperado por DonutChart
+      const transformedData = response.data.map(item => ({
+        name: item.tipo_residuo,
+        value: parseInt(item.cantidad) // Convertir la cantidad a un entero
+      }));
+      setChartData(transformedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
-export const DonutChartHero = () => (
-  <>
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const dataFormatter = (number) => Intl.NumberFormat('us').format(number).toString();
+
+  return (
     <div className="mx-auto bg-zinc-100 p-2 space-y-12 flex w-full">
-      <div className="space-y-3 w-full  ">
+      <div className="space-y-3 w-full">
         <span className="text-center block font-mono text-tremor-default text-tremor-content dark:text-dark-tremor-content">
           donut variant 1
         </span>
         <div className="flex justify-center w-full">
           <DonutChart
-          className='w-full'
-            data={datahero}
+            className='w-full'
+            data={chartData}
             variant="donut"
             valueFormatter={dataFormatter}
             onValueChange={(v) => console.log(v)}
@@ -53,7 +47,7 @@ export const DonutChartHero = () => (
         </span>
         <div className="flex justify-center w-full">
           <DonutChart
-            data={datahero}
+            data={chartData}
             variant="pie"
             valueFormatter={dataFormatter}
             onValueChange={(v) => console.log(v)}
@@ -61,5 +55,5 @@ export const DonutChartHero = () => (
         </div>
       </div>
     </div>
-  </>
-);
+  );
+};
