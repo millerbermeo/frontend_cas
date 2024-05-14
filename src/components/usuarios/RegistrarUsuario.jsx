@@ -7,6 +7,7 @@ import axiosClient from '../../configs/axiosClient';
 
 
 
+
 export const RegistrarUsuario = ({ fetchData }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
