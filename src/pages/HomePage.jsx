@@ -3,6 +3,7 @@ import { BarChartHero } from '../components/graficos/BarChartHero'
 import { Navbar } from '../components/Navbar'
 import { DonutChartHero } from '../components/graficos/DonutChartHero'
 import { LineChartHero } from '../components/graficos/LineChartHero'
+import { BarList } from '@tremor/react'
 
 function HomePage() {
   return (
@@ -15,7 +16,8 @@ function HomePage() {
         </div>
 
        <div className='bg-zinc-100 mt-5'>
-       <LineChartHero/>
+       {/* <LineChartHero/> */}
+       <BarList/>
        </div>
       </main>
     </>
