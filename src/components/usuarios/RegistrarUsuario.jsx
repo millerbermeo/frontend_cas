@@ -10,7 +10,9 @@ import axiosClient from '../../configs/axiosClient';
 
 export const RegistrarUsuario = ({ fetchData }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
 
     const [formErrors, setFormErrors] = useState({
         nombre: false,
@@ -42,6 +44,9 @@ export const RegistrarUsuario = ({ fetchData }) => {
     };
 
     const handleSubmit = async () => {
+        setIsSuccess(null);
+        setMessage('');
+
         const newFormErrors = {};
 
         // Validar campos
@@ -64,10 +69,19 @@ export const RegistrarUsuario = ({ fetchData }) => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);
+                setFormData('')
+                setIsSuccess(true);
+                setMessage('Usuario Registrado Con Exito');
+                console.log(response.data)
             });
+
+
+
         } catch (error) {
             console.error('Error al enviar los datos:', error);
             setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Usuario No registrado');
         }
     };
 
@@ -185,7 +199,8 @@ export const RegistrarUsuario = ({ fetchData }) => {
                     )}
                 </ModalContent>
             </Modal>
-            <SweetAlert isSuccess={isSuccess} />
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
+
         </div>
     )
 }

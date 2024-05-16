@@ -9,6 +9,7 @@ import {SweetAlert} from "../../configs/SweetAlert"
 export const ActualizarActividad = ({ fetchData, actividad }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
 
 
     
@@ -30,6 +31,11 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
 
 
     const handleSubmit = async () => {
+
+        setIsSuccess(null);
+        setMessage('');
+
+
         try {
             console.log(formData);
         
@@ -38,12 +44,17 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
                 console.log(response.data)
                 setIsSuccess(true)
                 onOpenChange(false);
+
+                setFormData('')
+                setIsSuccess(true);
+                setMessage('Actividad Actualizada Con Exito');
             });
             onOpenChange(false);
         } catch (error) {
             console.error('Error submitting data:', error);
-            onOpenChange(false);
-            setIsSuccess(false)
+            setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Activiadad No Actualizada');
         }
     };
 
@@ -112,7 +123,8 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
                 </ModalContent>
             </Modal>
 
-            <SweetAlert isSuccess={isSuccess}/>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
+
 
         </div>
   )

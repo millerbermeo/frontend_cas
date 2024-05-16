@@ -13,6 +13,7 @@ export const ModalActualizarResiduos = ({ fetchData, residuos }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
 
 
     const [data, setData] = useState([]);
@@ -100,15 +101,22 @@ export const ModalActualizarResiduos = ({ fetchData, residuos }) => {
     };
 
     const handleSubmit = async () => {
+
+        setIsSuccess(null);
+        setMessage('');
+        
         try {
             // console.log(formData);
             // alert("Datos actualizados correctamente");
 
             await axiosClient.put(`residuo/actualizar/${residuos.id_residuo}`, formData).then((response) => {
-                onOpenChange(false);
+  
                 console.log(response.data)
                 fetchData()
                   onOpenChange(false);
+                  setFormData('')
+                  setIsSuccess(true);
+                  setMessage('Residuo Actualizado Con Exito');
             })
 
 
@@ -120,8 +128,9 @@ export const ModalActualizarResiduos = ({ fetchData, residuos }) => {
 
         } catch (error) {
             console.error('Error submitting data:', error);
-            onOpenChange(false);
-            setIsSuccess(false)
+            setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Residuo No Actualizado ');
         }
     };
 
@@ -324,7 +333,8 @@ export const ModalActualizarResiduos = ({ fetchData, residuos }) => {
                 </ModalContent>
             </Modal>
 
-            <SweetAlert isSuccess={isSuccess}/>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
+
         </div>
     </>
   )

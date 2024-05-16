@@ -137,7 +137,7 @@ export const TableElementos = () => {
        </div>
     </div>
 
-<RegistrarElemento/>
+<RegistrarElemento fetchData={fetchData}/>
 
      </div>
 

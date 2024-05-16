@@ -143,7 +143,7 @@ export const TableUsuarios = () => {
        </div>
     </div>
 
-    <RegistrarUsuario/>
+    <RegistrarUsuario fetchData={fetchData}/>
 
      </div>
 

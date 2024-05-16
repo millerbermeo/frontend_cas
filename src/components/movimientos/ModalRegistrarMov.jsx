@@ -9,6 +9,9 @@ import { PlusIcon } from '../iconos/PlusIcon';
 export const ModalRegistrarMov = ({ fetchData }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
+
+ 
 
     const [formData, setFormData] = useState({
         id_residuo: "",
@@ -28,8 +31,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
     const [data3, setData3] = useState([]);
-    const [showAlert, setShowAlert] = useState(false);
-    const [showAlert2, setShowAlert2] = useState(false);
+
 
 
 
@@ -100,6 +102,9 @@ export const ModalRegistrarMov = ({ fetchData }) => {
     };
 
     const handleSubmit = async () => {
+
+        setIsSuccess(null);
+        setMessage('');
         const newFormErrors = {};
 
         // Validar campos
@@ -120,11 +125,18 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);
+                setFormData('')
+                setIsSuccess(true);
+                setMessage('Movimiento Registrado Con Exito');
             });
         } catch (error) {
             console.error('Error submitting data:', error);
             setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Movimiento No registrado');
         }
+
+        
     };
 
     return (
@@ -244,7 +256,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                 </ModalContent>
             </Modal>
 
-            <SweetAlert isSuccess={isSuccess}/>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
         </div>
   )
 }

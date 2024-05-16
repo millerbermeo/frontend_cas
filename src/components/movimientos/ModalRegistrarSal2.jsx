@@ -89,6 +89,10 @@ export const ModalRegistrarSal2 = () => {
     };
 
     const handleSubmit = async () => {
+
+        setIsSuccess(null);
+        setMessage('');
+        
         const newFormErrors = {};
 
         // Validar campos
@@ -113,11 +117,14 @@ export const ModalRegistrarSal2 = () => {
                 console.log(response.data);
                 fetchData();
                 setIsSuccess(true);
+                setMessage('Movimiento De Salida Registrado Con Exito');
                 onOpenChange(false);
             });
         } catch (error) {
             console.error('Error submitting data:', error);
             setIsSuccess(false);
+            setIsSuccess(false);
+            setMessage('Movimiento No registrado');
         }
     };
 
@@ -196,7 +203,7 @@ export const ModalRegistrarSal2 = () => {
                     )}
                 </ModalContent>
             </Modal>
-            <SweetAlert isSuccess={isSuccess}/>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
         </div>
   )
 }

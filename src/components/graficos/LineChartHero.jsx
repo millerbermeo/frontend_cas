@@ -1,78 +1,35 @@
 import { LineChart } from '@tremor/react';
+import React, { useEffect, useState } from 'react';
+import axiosClient from '../../configs/axiosClient';
 
-const chartdata = [
-  {
-    date: 'Jan 22',
-    SemiAnalysis: 2890,
-    'The Pragmatic Engineer': 2338,
-  },
-  {
-    date: 'Feb 22',
-    SemiAnalysis: 2756,
-    'The Pragmatic Engineer': 2103,
-  },
-  {
-    date: 'Mar 22',
-    SemiAnalysis: 3322,
-    'The Pragmatic Engineer': 2194,
-  },
-  {
-    date: 'Apr 22',
-    SemiAnalysis: 3470,
-    'The Pragmatic Engineer': 2108,
-  },
-  {
-    date: 'May 22',
-    SemiAnalysis: 3475,
-    'The Pragmatic Engineer': 1812,
-  },
-  {
-    date: 'Jun 22',
-    SemiAnalysis: 3129,
-    'The Pragmatic Engineer': 1726,
-  },
-  {
-    date: 'Jul 22',
-    SemiAnalysis: 3490,
-    'The Pragmatic Engineer': 1982,
-  },
-  {
-    date: 'Aug 22',
-    SemiAnalysis: 2903,
-    'The Pragmatic Engineer': 2012,
-  },
-  {
-    date: 'Sep 22',
-    SemiAnalysis: 2643,
-    'The Pragmatic Engineer': 2342,
-  },
-  {
-    date: 'Oct 22',
-    SemiAnalysis: 2837,
-    'The Pragmatic Engineer': 2473,
-  },
-  {
-    date: 'Nov 22',
-    SemiAnalysis: 2954,
-    'The Pragmatic Engineer': 3848,
-  },
-  {
-    date: 'Dec 22',
-    SemiAnalysis: 3239,
-    'The Pragmatic Engineer': 3736,
-  },
-];
+const dataFormatter = (number) => `${number} hrs`;
 
-const dataFormatter = (number) =>
-  `$${Intl.NumberFormat('us').format(number).toString()}`;
+export const LineChartHero = () => {
+  const [chartData, setChartData] = useState([]);
 
-export function LineChartHero() {
+  const fetchData = async () => {
+    try {
+      const response = await axiosClient.get('actividades/listar');
+      const formattedData = response.data.map(item => ({
+        date: new Date(item.fecha_actividad).toISOString().split('T')[0], // Extract the date part
+        value: parseFloat(item.hora_inicial.split(':')[0]) // Convert hour to a number
+      }));
+      setChartData(formattedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <LineChart
       className="h-80"
-      data={chartdata}
+      data={chartData}
       index="date"
-      categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+      categories={['value']}
       colors={['indigo', 'rose']}
       valueFormatter={dataFormatter}
       yAxisWidth={60}

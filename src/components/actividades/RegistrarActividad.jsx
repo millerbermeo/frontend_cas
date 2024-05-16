@@ -24,6 +24,7 @@ export const RegistrarActividad = () => {
   const [mostrarUsuarios, setMostrarUsuarios] = useState(false);
   const [mostrarElementos, setMostrarElementos] = useState(false);
   const [isSuccess, setIsSuccess] = useState(null);
+  const [message, setMessage] = useState(null);
   const [error, setError] = useState('');
 
 
@@ -74,6 +75,11 @@ export const RegistrarActividad = () => {
 
 
   const handleActividad = async () => {
+
+    setIsSuccess(null);
+    setMessage('');
+
+
     const usuariosSeleccionados = usuarios.filter(usuario => usuario.isChecked);
     const elementosSeleccionados = elementos.filter(elemento => elemento.isChecked && cantidades[elemento.id_elemento] > 0);
 
@@ -124,9 +130,17 @@ export const RegistrarActividad = () => {
       setLugarActividad(null)
       setFechaActividad('')
       setCantidades('')
+
+      setIsSuccess(true);
+      setMessage('Actividad Registrada Con Exito');
+
+
     } catch (error) {
       console.error('Error registering activity:', error);
       setIsSuccess(false);
+      onOpenChange(true);
+      setMessage('Actividad No registrada');
+  
     }
   };
 
@@ -341,7 +355,8 @@ export const RegistrarActividad = () => {
         </Button>
       </section>
 
-      <SweetAlert isSuccess={isSuccess} />
+      <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
+
     </>
   )
 }

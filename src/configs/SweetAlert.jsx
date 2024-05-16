@@ -1,29 +1,26 @@
 import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
-export const SweetAlert = ({ isSuccess, text }) => {
+export const SweetAlert = ({ type, message }) => {
   useEffect(() => {
-    if (isSuccess !== null) {
-      if (isSuccess) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Operación exitosa',
-          text: text || 'La operación se completó con éxito.', // Usamos el texto proporcionado o un texto predeterminado
-          timer: 3000, // Auto-cerrar después de 2 segundos
-          timerProgressBar: true,
-        });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: text || 'Hubo un error al procesar la operación.', // Usamos el texto proporcionado o un texto predeterminado
-          timer: 3000, // Auto-cerrar después de 2 segundos
-          timerProgressBar: true,
-        });
-      }
+    if (type && message) { // Verifica que type y message no sean null o undefined
+        if (type === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: message,
+            });
+        } else if (type === 'error') {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: message,
+            });
+        }
     }
-  }, [isSuccess, text]); // Actualiza el efecto cuando cambian isSuccess o text
+}, [type, message]); 
 
-  return null; // No renderiza nada en el DOM, ya que SweetAlert maneja la visualización
-};
+return null;
+}
+
 

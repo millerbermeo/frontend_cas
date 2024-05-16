@@ -9,6 +9,7 @@ import { PlusIcon } from '../iconos/PlusIcon';
 export const RegistrarElemento = ({ fetchData }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
 
     const [formData, setFormData] = useState({
         nombre_elm: "",
@@ -37,6 +38,11 @@ export const RegistrarElemento = ({ fetchData }) => {
     };
 
     const handleSubmit = async () => {
+
+        setIsSuccess(null);
+        setMessage('');
+
+
         const newFormErrors = {};
 
         // Validar campos
@@ -64,10 +70,15 @@ export const RegistrarElemento = ({ fetchData }) => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);
+                setFormData('')
+                setIsSuccess(true);
+                setMessage('Elemento Registrado Con Exito');
             });
         } catch (error) {
             console.error('Error submitting data:', error);
             setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Elemento No registrado');
         }
     };
 
@@ -141,7 +152,8 @@ export const RegistrarElemento = ({ fetchData }) => {
                     )}
                 </ModalContent>
             </Modal>
-            <SweetAlert isSuccess={isSuccess}/>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
+
         </div>
   )
 }

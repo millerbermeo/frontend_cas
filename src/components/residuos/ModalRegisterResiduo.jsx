@@ -11,6 +11,8 @@ export const ModalRegisterResiduo = ({fetchData}) => {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
+
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
 
@@ -75,6 +77,9 @@ export const ModalRegisterResiduo = ({fetchData}) => {
     };
 
    const handleSubmit = async () => {
+
+   setIsSuccess(null);
+   setMessage('');
         const newFormErrors = {};
 
         // Validar campos
@@ -93,13 +98,18 @@ export const ModalRegisterResiduo = ({fetchData}) => {
             // Enviar los datos a tu backend utilizando axios o fetch
             console.log(formData);
             await axiosClient.post('residuo/registrar', formData).then(() => {
+                setFormData('')
                 setIsSuccess(true);
+                setMessage('Residuo Registrado Con Exito');
+
                 fetchData();
                 onOpenChange(false);
             });
         } catch (error) {
             console.error('Error submitting data:', error);
-            setIsSuccess(false);
+           setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Residuo No registrado');
         }
     };
 
@@ -234,8 +244,8 @@ export const ModalRegisterResiduo = ({fetchData}) => {
                     )}
                 </ModalContent>
             </Modal>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
 
-            <SweetAlert isSuccess={isSuccess}/>
         </div>
   )
 }

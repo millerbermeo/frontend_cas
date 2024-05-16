@@ -10,6 +10,7 @@ import { SweetAlert } from '../../configs/SweetAlert';
 export const ActualizarElemento = ({ fetchData, elemento }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
+    const [message, setMessage] = useState(null);
 
 
     const [formData, setFormData] = useState({
@@ -39,6 +40,11 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
 
 
     const handleSubmit = async () => {
+
+        setIsSuccess(null);
+        setMessage('');
+
+
         const newFormErrors = {};
 
         // Validar campos
@@ -65,6 +71,10 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
         
             await axiosClient.put(`http://localhost:3000/elemento/actualizar/${elemento.id_elemento}`, formData).then(() => {
                 fetchData();
+                onOpenChange(false);
+                setFormData('')
+                setIsSuccess(true);
+                setMessage('Elemento Actualizado Con Exito');
             });
 
             setIsSuccess(true)
@@ -72,8 +82,9 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
             onOpenChange(false);
         } catch (error) {
             console.error('Error submitting data:', error);
-            onOpenChange(false);
-            setIsSuccess(false)
+            setIsSuccess(false);
+            onOpenChange(true);
+            setMessage('Elemento No registrado');
         }
     };
 
@@ -141,7 +152,7 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
                     )}
                 </ModalContent>
             </Modal>
-            <SweetAlert isSuccess={isSuccess}/>
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
         </div>
   )
 }
