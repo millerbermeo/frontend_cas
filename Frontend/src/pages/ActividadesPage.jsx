@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import TableActividad from '../actividades/TableActividad'; // Asegúrate de importar el componente desde la ubicación correcta
 
 function ActividadesPage() {
@@ -86,11 +88,11 @@ function ActividadesPage() {
               onChange={(e) => setEstadoActividad(e.target.value)}
             >
               <option value="" disabled>Lugar Actividad</option>
-              <option value="Agropecuario">Agropecuario</option>
-              <option value="Ambiental">Ambiental</option>
-              <option value="Tic">Tic</option>
-              <option value="Bioconstrucción">Bioconstrucción</option>
-              <option value="Turismo">Turismo</option>
+              <option value="1">Agropecuario</option>
+              <option value="2">Ambiental</option>
+              <option value="3">Tic</option>
+              <option value="4">Bioconstrucción</option>
+              <option value="5">Turismo</option>
             </select>
           </div>
           <div className='mt-3'>
@@ -101,12 +103,10 @@ function ActividadesPage() {
               className='bg-slate-200 text-xs w-80 h-8 rounded-md flex justify-center mx-auto items-center text-slate-500 p-2'
             />
           </div>
-          <button
-            onClick={handleRegistrar}
-            className='bg-gradient-to-r from-cyan-400 to-sky-500 text-xl w-80 flex justify-center mx-auto items-center h-8 rounded-md text-white p-2 mt-4'
-          >
-            Registrar
-          </button>
+          <Stack spacing={2} direction="row" className='justify-center mx-auto items-center p-2' onChange>
+      <Button variant="contained">Registrar</Button>
+    </Stack>
+
         </div>
       </div>
       <div>
