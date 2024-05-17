@@ -26,7 +26,7 @@ export const DonutChartHero = () => {
   const dataFormatter = (number) => Intl.NumberFormat('us').format(number).toString();
 
   return (
-    <div className="p-2 flex w-1/3 justify-start">
+    <div className="p-2 hidden 2xl:flex w-1/3 justify-start">
       <div className="space-y-3 w-full">
         <span className="text-center block font-mono text-tremor-default text-tremor-content dark:text-dark-tremor-content">
           donut variant 1
