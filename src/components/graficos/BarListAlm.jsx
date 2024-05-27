@@ -28,7 +28,7 @@ export const BarListAlm = () => {
         data={chartData}
         index="name"
         categories={['value']}
-        className="mx-auto w-96"
+        className="mx-auto w-80 2xl:w-96"
       />
     </div>
   );

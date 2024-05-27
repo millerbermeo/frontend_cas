@@ -19,16 +19,16 @@ function HomePage() {
         </div>
         <div className='flex mt-5 gap-5 rounded'>
           <BarChartHero />
-<LineChartHero/>
+          <LineChartHero />
         </div>
 
-  
+
 
         <div className='mt-5 flex items-end justify-start w-full gap-5'>
           <BarListAlm />
           <DonutChartHero />
-          <BarChartActividad/>
-               
+          <BarChartActividad />
+
         </div>
       </main>
     </>

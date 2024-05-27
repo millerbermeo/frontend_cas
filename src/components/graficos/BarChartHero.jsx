@@ -49,8 +49,8 @@ export const BarChartHero = () => {
 
   return (
     <>
-      <div className='relative w-full'>
-        <div className="mb-4 w-72 -top-5 left-4 absolute">
+      <div className='relative w-[85%] 2xl:w-full'>
+        <div className="mb-4 w-72 -top-6 2xl:-top-5 left-4 absolute">
           <Select
             color='primary'
             className='w-full z-10'
