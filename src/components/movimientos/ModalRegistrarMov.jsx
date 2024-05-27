@@ -39,7 +39,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosClient.get('http://localhost:3000/residuo/listar_admin');
+                const response = await axiosClient.get('residuo/listar_admin');
                 setData(response.data);
                 console.log("admin", response.data)
             } catch (error) {
@@ -52,7 +52,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
 
     const fetchData2 = async () => {
         try {
-            const response = await axiosClient.get('http://localhost:3000/residuo/listar');
+            const response = await axiosClient.get('residuo/listar');
             setData2(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -70,7 +70,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
 
     const fetchData3 = async () => {
         try {
-            const response = await axiosClient.get('http://localhost:3000/residuo/listar_actividad');
+            const response = await axiosClient.get('residuo/listar_actividad');
             setData3(response.data);
             console.log("dataaa AAAA", response.data)
         } catch (error) {
@@ -121,7 +121,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
 
         try {
             // Enviar los datos a tu backend utilizando axios o fetch
-            await axiosClient.post('http://localhost:3000/residuo/registrarmov', formData).then(() => {
+            await axiosClient.post('residuo/registrarmov', formData).then(() => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);

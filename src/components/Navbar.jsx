@@ -16,7 +16,7 @@ export const Navbar = ({ tittle }) => {
 
                    
 
-                    <Dropdown backdrop="opaque  ">
+                    <Dropdown backdrop="opaque">
                         <DropdownTrigger>
                         <User
                         name="Miller Rivera"

@@ -22,7 +22,7 @@ export const BarListAlm = () => {
   }, []);
 
   return (
-    <div className="p-3">
+    <div className="p-3 bg-zinc-100 h-96">
       <div className='flex justify-between mb-3'><span>Almacenamiento</span> <span>Cantidad</span></div>
       <BarList
         data={chartData}

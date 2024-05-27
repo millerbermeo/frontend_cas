@@ -47,7 +47,7 @@ export const BarChartActividad = () => {
     return (
         <>
             <BarChart
-                className='w-[60%] p-2 bg-zinc-100'
+                className='w-[60%] p-2 bg-zinc-100 h-96'
                 data={chartData}
                 index="month" // Usar el mes como el índice
                 categories={['asignada', 'terminada', 'total']} // Categorías para los estados

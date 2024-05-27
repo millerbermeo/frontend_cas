@@ -26,29 +26,15 @@ export const DonutChartHero = () => {
   const dataFormatter = (number) => Intl.NumberFormat('us').format(number).toString();
 
   return (
-    <div className="p-2 hidden 2xl:flex w-1/3 justify-start">
-      <div className="space-y-3 w-full">
-        <span className="text-center block font-mono text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-          donut variant 1
-        </span>
-        <div className="flex justify-center w-full">
+    <div className="flex justify-center w-96 h-full items-center bg-zinc-50">
+      <div className="space-y-3 w-96 p-8 h-full rounded-lg">
+
+        <div className="flex justify-center relative">
+          <span className='text-xl absolute top-44'>Cantidad de Residuos</span>
           <DonutChart
-            className='w-full'
+            className='h-80'
             data={chartData}
             variant="donut"
-            valueFormatter={dataFormatter}
-            onValueChange={(v) => console.log(v)}
-          />
-        </div>
-      </div>
-      <div className="space-y-3 w-full">
-        <span className="text-center block font-mono text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-          pie variant
-        </span>
-        <div className="flex justify-center w-full">
-          <DonutChart
-            data={chartData}
-            variant="pie"
             valueFormatter={dataFormatter}
             onValueChange={(v) => console.log(v)}
           />
