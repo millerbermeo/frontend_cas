@@ -185,8 +185,6 @@ export const TableActividades = () => {
           <TableColumn>NOMBRE</TableColumn>
           <TableColumn>LUGAR</TableColumn>
           <TableColumn>FECHA</TableColumn>
-          <TableColumn>HORA INICIAL</TableColumn>
-          <TableColumn>HORA FINAL</TableColumn>
           <TableColumn>ESTADO</TableColumn>
           <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
@@ -199,10 +197,6 @@ export const TableActividades = () => {
 
               <TableCell>{item.nombre_lugar}</TableCell>
               <TableCell>{formatDate(item.fecha_actividad)}</TableCell>
-
-              <TableCell>{item.hora_inicial}</TableCell>
-              <TableCell>{item.hora_final}</TableCell>
-
 
               <TableCell><div className='w-20 inline-block'>
               {item.estado_actividad}

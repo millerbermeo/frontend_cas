@@ -161,7 +161,7 @@ export const TableElementos = () => {
        </label>
      </div>
 
-     <Table className='z-0 printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys} selectionMode="multiple" onSelectionChange={setSelectedKeys}>
+     <Table className='z-0 printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys}  onSelectionChange={setSelectedKeys}>
      <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>NOMBRE</TableColumn>

@@ -1,4 +1,3 @@
-// CalendarActividades.js
 import React, { useEffect, useState } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -6,12 +5,12 @@ import dayjs from 'dayjs';
 import axiosClient from '../../configs/axiosClient';
 import { ModalActividades } from '../utils/ModalActividades';
 
-
 export const CalendarActividades = () => {
   const localizer = dayjsLocalizer(dayjs);
   const [events, setEvents] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  
   const fetchData = async () => {
     try {
       const response = await axiosClient.get('actividades/listar');
@@ -27,8 +26,6 @@ export const CalendarActividades = () => {
       console.error('Error fetching data:', error);
     }
   };
-  
-  
 
   useEffect(() => {
     fetchData();
@@ -38,7 +35,14 @@ export const CalendarActividades = () => {
     setSelectedEvent(event);
     setModalVisible(true);
   };
-  
+
+  const eventPropGetter = (event) => {
+    const backgroundColor = event.id_actividad % 2 === 0 ? '#1e90ff' : '#1e90ff'; // Example condition to alternate colors
+    return {
+      style: { backgroundColor }
+    };
+  };
+
   return (
     <>
       <Calendar
@@ -49,14 +53,14 @@ export const CalendarActividades = () => {
         endAccessor="end"
         style={{ height: 500 }}
         onSelectEvent={handleEventClick}
+        eventPropGetter={eventPropGetter}
       />
- <ModalActividades
-  isOpen={modalVisible}
-  onOpenChange={setModalVisible}
-  selectedEvent={selectedEvent}
-  id_actividad={selectedEvent ? selectedEvent.id_actividad : null}
-/>
-
+      <ModalActividades
+        isOpen={modalVisible}
+        onOpenChange={setModalVisible}
+        selectedEvent={selectedEvent}
+        id_actividad={selectedEvent ? selectedEvent.id_actividad : null}
+      />
     </>
   );
 };

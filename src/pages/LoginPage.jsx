@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import logo from "../assets/logo2.png";
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { Progress } from "@nextui-org/react";
 import axiosClient from '../configs/axiosClient';
-
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -11,47 +11,74 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [usernameFocused, setUsernameFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const [sliderValue, setSliderValue] = useState(0);
   const navegation = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       navegation("/home");
     }
-}, [navegation]);
+  }, [navegation]);
 
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-
-  try {
-    const data = { email: username, password };
-    const response = await axiosClient.post('/validar', data);
-    
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('rol', response.data.rol);
-      localStorage.setItem('nombre', response.data.nombre);
-
-      setLoading(true); // Activar el loader solo después de una respuesta exitosa
-
-      setTimeout(() => {
-        setLoading(false); // Desactivar el loader antes de la navegación
-        if (response.data.rol === 'administrador') {
-          navegation("/home");
-        } else {
-          navegation("/");
-        }
-      }, 2000); // Retraso de 2 segundos antes de redirigir
+  useEffect(() => {
+    let interval;
+    if (loading) {
+      interval = setInterval(() => {
+        setSliderValue((prevValue) => (prevValue >= 100 ? 0 : prevValue + 1));
+      }, 3000); // Actualiza el valor cada 30ms para una animación suave
+    } else {
+      setSliderValue(0);
+      clearInterval(interval);
     }
-  } catch (error) {
-    console.error('Error during login:', error);
-    alert("Error al iniciar sesión");
-  }
-};
 
+    return () => clearInterval(interval);
+  }, [loading]);
+
+  const [value, setValue] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setValue((v) => (v >= 100 ? 0 : v + 10));
+    }, 700);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true); // Activar el loader antes de la solicitud
+
+    try {
+      const data = { email: username, password };
+      const response = await axiosClient.post('/validar', data);
+
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('rol', response.data.rol);
+        localStorage.setItem('nombre', response.data.nombre);
+
+        setTimeout(() => {
+          setLoading(false); // Desactivar el loader antes de la navegación
+          if (response.data.rol === 'administrador') {
+            navegation("/home");
+          } else {
+            navegation("/");
+          }
+        }, 2500); // Retraso de 2 segundos antes de redirigir
+      } else {
+        setLoading(false);
+        alert("Error al iniciar sesión");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error('Error during login:', error);
+      alert("Error al iniciar sesión");
+    }
+  };
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -92,15 +119,27 @@ const handleSubmit = async (event) => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      {loading && <div className='w-full h-screen fixed flex justify-center items-center bg-black z-20 opacity-70'><div className="progress z-50 bg-white"></div></div>} 
+
+        {loading && (
+          <div className='w-full h-screen fixed flex justify-center items-center bg-black z-20 opacity-85'>
+            <div className="z-50 w-80 text-white opacity-100">
+              <Progress
+                aria-label="Downloading..."
+                size="lg"
+                value={value}
+                color="primary"
+                showValueLabel={true}
+                className="max-w-xl w-full opacity-100"
+              />
+            </div>
+          </div>
+        )}
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"
-          ></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
           <div className="relative px-4 py-2 bg-white shadow-lg sm:rounded-3xl p-3 w-[450px] h-[550px]">
             <div className="max-w-96 mx-auto">
               <section className="gradient-form h-full text-black">
-                <div className="container h-full ">
+                <div className="container h-full">
                   <div className="flex h-full flex-wrap items-center justify-center dark:text-black">
                     <div className="w-full">
                       <div className="block rounded-lg">
@@ -167,7 +206,7 @@ const handleSubmit = async (event) => {
                                 <div className="mb-6 pb-1 pt-1 text-center">
                                   <button
                                     onClick={handleSubmit}
-                                    className="mb-3 bg-gradient-to-r from-cyan-200 to-green-500  inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-dark-3 transition duration-150 ease-in-out hover:shadow-dark-2 focus:shadow-dark-2 focus:outline-none focus:ring-0 active:shadow-dark-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                                    className="mb-3 bg-gradient-to-r from-cyan-200 to-green-500 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-dark-3 transition duration-150 ease-in-out hover:shadow-dark-2 focus:shadow-dark-2 focus:outline-none focus:ring-0 active:shadow-dark-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                                     type="submit"
                                   >
                                     Log in

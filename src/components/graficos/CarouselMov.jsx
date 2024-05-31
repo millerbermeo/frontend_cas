@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Flex, Title } from '@tremor/react';
-import { Trash, ChevronLeft, ChevronRight } from "lucide-react";
+import { Trash, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import axiosClient from '../../configs/axiosClient';
 
-const Carousel = () => {
+const monthNames = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+
+
+
+const CarouselMov = () => {
   const [data, setData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosClient.get('grafico/listarr');
+        const response = await axiosClient.get('grafico/listarPorMes');
         if (Array.isArray(response.data)) {
           setData(response.data);
         } else {
@@ -50,10 +57,10 @@ const Carousel = () => {
               >
                 <Flex justifyContent="between" alignItems="center">
                   <div>
-                    <Title className='uppercase text-3xl font-bold'>{item.unidad_medida}</Title>
+                    <Title className='uppercase text-3xl font-bold'>{monthNames[item.mes - 1]}</Title>
                     <p>Total: {item.total}</p>
                   </div>
-                  <Trash size={50} color='gray'/>
+                  <Calendar size={50} color='gray'/>
                 </Flex>
               </Card>
             </div>
@@ -66,4 +73,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default CarouselMov;

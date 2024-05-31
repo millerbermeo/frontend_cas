@@ -27,7 +27,7 @@ export const ModalActividades = ({ isOpen, onOpenChange, selectedEvent, id_activ
     return (
         <>
             <Modal isOpen={isOpen} onClose={() => onOpenChange(false)}>
-                <ModalContent>
+                <ModalContent >
                     <ModalHeader>Info de la Actividad</ModalHeader>
                     <ModalBody>
                         <div className="w-full border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">

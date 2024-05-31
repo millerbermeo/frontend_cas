@@ -30,7 +30,7 @@ export const DonutChartHero = () => {
       <div className="space-y-3 w-96 p-8 h-full rounded-lg">
 
         <div className="flex justify-center relative">
-          <span className='text-xl absolute -top-3 -left-2 2xl:left-0 2xl:top-44'>Cantidad de Residuos</span>
+          <span className='text-xl absolute -top-3 -left-2 2xl:left-16 2xl:top-44'>Cantidad de Residuos</span>
           <DonutChart
             className='h-80'
             data={chartData}

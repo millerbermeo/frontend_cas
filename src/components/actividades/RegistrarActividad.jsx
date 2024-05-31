@@ -8,8 +8,7 @@ export const RegistrarActividad = () => {
   const [elementos, setElementos] = useState([]);
   const [lugarActividad, setLugarActividad] = useState('');
   const [fechaActividad, setFechaActividad] = useState('');
-  const [horaInicial, setHoraInicial] = useState('');
-  const [horaFinal, setHoraFinal] = useState('');
+
   const [cantidades, setCantidades] = useState({});
   const [mostrarUsuarios, setMostrarUsuarios] = useState(false);
   const [mostrarElementos, setMostrarElementos] = useState(false);
@@ -85,17 +84,12 @@ export const RegistrarActividad = () => {
       return;
     }
 
-    if (!horaFinal || !horaInicial) {
-      setError('Debe establecer las horas correspondientes');
-      return;
-    }
 
     setError('');
     const datos = {
       lugar_actividad: lugarActividad,
       fecha_actividad: fechaActividad,
-      hora_inicial: horaInicial.toString(),
-      hora_final: horaFinal.toString(),
+
       usuarios: usuariosSeleccionados.map(u => u.id_usuario),
       elementos: elementosSeleccionados.map(e => ({ elemento_id: e.id_elemento, cantidad: cantidades[e.id_elemento] }))
     };
@@ -167,7 +161,7 @@ export const RegistrarActividad = () => {
           )}
         </div>
 
-        <div className='bg-zinc-100 p-3 my-10 rounded flex flex-col items-center'>
+        <div className='bg-zinc-100 p-3 my-10 rounded flex flex-col items-'>
           <div className='mb-4 flex gap-x-3'>
             <span className='text-lg w-48'>Seleccionar Elementos:</span>
             <Button color="primary" onClick={toggleElementos}>
@@ -236,21 +230,7 @@ export const RegistrarActividad = () => {
               />
             </div>
 
-            <div className='w-full'>
-              <TimeInput
-                label="Hora Inicial"
-                value={horaInicial}
-                onChange={setHoraInicial}
-              />
-            </div>
-
-            <div className='w-full'>
-              <TimeInput
-                label="Hora Final"
-                value={horaFinal}
-                onChange={setHoraFinal}
-              />
-            </div>
+       
           </form>
         </div>
 
