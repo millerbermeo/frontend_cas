@@ -4,7 +4,7 @@ import { Home, StickyNote, CircleUserRound, Trash2, ArrowLeftRight, Calendar, Se
 import Sidebar, { SidebarItem } from "./components/Sidebar";
 import { LoginPage } from './pages/LoginPage';
 import { ProtectedRoute } from './configs/ProtectedRoute';
-
+import {Spinner} from "@nextui-org/react";
 
 // Lazy load the pages
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -22,7 +22,7 @@ export const App = () => {
         <Route path="/home" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
                 <HomePage />
               </Suspense>
             </WithSidebar>
@@ -31,7 +31,7 @@ export const App = () => {
         <Route path="/residuos" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
                 <ResiduosPage />
               </Suspense>
             </WithSidebar>
@@ -40,7 +40,7 @@ export const App = () => {
         <Route path="/movimientos" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
                 <MovimientosPage />
               </Suspense>
             </WithSidebar>
@@ -49,7 +49,7 @@ export const App = () => {
         <Route path="/actividades" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
                 <ActividadesPage />
               </Suspense>
             </WithSidebar>
@@ -58,7 +58,7 @@ export const App = () => {
         <Route path="/usuarios" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
                 <UsuariosPage />
               </Suspense>
             </WithSidebar>
@@ -67,7 +67,7 @@ export const App = () => {
         <Route path="/elementos" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={   <Spinner label="Default" color="default" labelColor="foreground"/>}>
                 <ElementosPage />
               </Suspense>
             </WithSidebar>

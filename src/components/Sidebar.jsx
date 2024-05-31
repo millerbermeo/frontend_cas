@@ -26,7 +26,7 @@ export default function Sidebar({ children }) {
                         </button>
                     </div>
 
-                    <div className="mt-10 pt-4 border-t-[1px] border-white border-opacity-50">
+                    <div className=" mt-5 2xl:mt-10 pt-4 border-t-[1px] border-white border-opacity-50">
                         <span className="ml-3 h-8 items-center flex">
                             MENU
                         </span>
@@ -37,7 +37,7 @@ export default function Sidebar({ children }) {
                         </SidebarContext.Provider>
                     </div>
 
-                    <div className="border-t flex p-3 mt-[45%] border-white cursor-pointer border-opacity-50">
+                    <div className="border-t flex p-3 mt-[12%]  2xl:mt-[45%] border-white cursor-pointer border-opacity-50">
                         {/* <img src={profile} className="w-10 h-10 rounded-md" /> */}
                         <Power className="ml-2.5" size={20} />
                         <div className={`flex justify-between items-center overflow-hidden cursor-pointer transition-all ${expanded ? "w-48 ml-3" : "w-0"} `}>
@@ -90,7 +90,7 @@ export function SidebarItem({ nav, icon, text, active, alert }) {
                 )}
 
                 {!expanded && (
-                    <div className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-50 text-sky-900 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
+                    <div className={`absolute left-full z-10 rounded-md px-2 py-1 ml-6 bg-indigo-50 text-sky-900 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
                         {text}
                     </div>
                 )}
