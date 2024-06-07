@@ -133,14 +133,14 @@ export const TableUsuarios = () => {
          onValueChange={onSearchChange}
        />
 
-       <div className='flex gap-1'>
-       <Button color="secondary" auto onClick={() => downloadCSV(data)}>
-       Descargar CSV
-     </Button>
-     <Button color="primary" auto onClick={printTable}>
-       Imprimir Tabla
-     </Button>
-       </div>
+<div className='flex gap-1'>
+        <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
+        Descargar CSV
+      </Button>
+      <Button className='' auto onClick={printTable}>
+        Imprimir Tabla
+      </Button>
+        </div>
     </div>
 
     <RegistrarUsuario fetchData={fetchData}/>
@@ -193,6 +193,7 @@ export const TableUsuarios = () => {
           {item.estado}
           </div>
             <Switch
+            size="sm"
               defaultSelected={item.estado === 'activo'}
               color="success"
               onChange={() => cambiarEstado(item.id_usuario)}

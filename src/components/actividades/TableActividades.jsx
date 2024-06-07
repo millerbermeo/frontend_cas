@@ -143,14 +143,14 @@ export const TableActividades = () => {
          onValueChange={onSearchChange}
        />
 
-       <div className='flex gap-1'>
-       <Button color="secondary" auto onClick={() => downloadCSV(data)}>
-       Descargar CSV
-     </Button>
-     <Button color="primary" auto onClick={printTable}>
-       Imprimir Tabla
-     </Button>
-       </div>
+<div className='flex gap-1'>
+        <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
+        Descargar CSV
+      </Button>
+      <Button className='' auto onClick={printTable}>
+        Imprimir Tabla
+      </Button>
+        </div>
 
   
     </div>
@@ -202,6 +202,7 @@ export const TableActividades = () => {
               {item.estado_actividad}
               </div>
                 <Switch
+                  size="sm"
                   defaultSelected={item.estado_actividad === 'asignada'}
                   color="success"
                   onChange={() => cambiarEstado(item.id_actividad)}

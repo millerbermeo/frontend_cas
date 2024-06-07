@@ -116,7 +116,7 @@ export const ModalRegisterResiduo = ({fetchData}) => {
 
   return (
       <div className="flex flex-col gap-2">
-            <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>Registrar</Button>
+            <Button className='bg-[#2293CE] text-white' endContent={<PlusIcon />} onPress={onOpen}>Registrar</Button>
 
             <Modal
                 isOpen={isOpen}

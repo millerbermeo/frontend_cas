@@ -37,7 +37,7 @@ export const CalendarActividades = () => {
   };
 
   const eventPropGetter = (event) => {
-    const backgroundColor = event.id_actividad % 2 === 0 ? '#1e90ff' : '#1e90ff'; // Example condition to alternate colors
+    const backgroundColor = event.id_actividad % 2 === 0 ? '#0284C7' : '#0284C7'; // Example condition to alternate colors
     return {
       style: { backgroundColor }
     };

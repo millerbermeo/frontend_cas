@@ -181,7 +181,7 @@ export const TableMovimientos = () => {
                                         onClear={() => onClear()}
                                         onValueChange={onSearchChange}
                                     />
-                                    <Button className='text-white' color="primary" onClick={onClear}>
+                                    <Button className='text-white bg-[#0284C7]' onClick={onClear}>
                                         Clear Filters
                                     </Button>
 
@@ -209,39 +209,30 @@ export const TableMovimientos = () => {
                                             onChange={(date) => setEndDate(date)}
                                         />
 
-                                        <Button className='text-white' color="primary" onClick={onClear}>
+                                        <Button className='text-white bg-[#0284C7]' onClick={onClear}>
                                             Clear Filters
                                         </Button>
                                     </div>
                                 </Tab>
                                 <Tab title="Filtrar por Tipo">
                                     <div className='flex gap-3'>
-                                    <Button className='text-white' color="primary" onClick={onClear}>
-                                            Todos
-                                        </Button>
-                                        <Button color="default" onPress={() => handleFilterByType('entrada')}>Entrada</Button>
-                                        <Button color="success" onPress={() => handleFilterByType('salida')}>Salida</Button>
+                                        <Button className={movementType === '' ? 'text-white bg-[#0284C7]' : ''} onClick={() => handleFilterByType('')}>Todos</Button>
+                                        <Button className={movementType === 'entrada' ? 'text-white bg-[#0284C7]' : ''} onClick={() => handleFilterByType('entrada')}>Entrada</Button>
+                                        <Button className={movementType === 'salida' ? 'text-white bg-[#0284C7]' : ''} onClick={() => handleFilterByType('salida')}>Salida</Button>
                                     </div>
                                 </Tab>
                             </Tabs>
 
                         </div>
 
-
-
-
-
-
-
-
                     </div>
 
                     <div className='flex pb-[14px]'>
                         <div className='flex gap-2'>
-                            <Button color="secondary" auto onClick={() => downloadCSV(data)}>
+                            <Button className='bg-[#61B2DC] text-white'auto onClick={() => downloadCSV(data)}>
                                 Descargar CSV
                             </Button>
-                            <Button color="primary" auto onClick={printTable}>
+                            <Button  auto onClick={printTable}>
                                 Imprimir Tabla
                             </Button>
 
@@ -280,7 +271,7 @@ export const TableMovimientos = () => {
             </div>
 
             <Table className='printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys} selectionMode="multiple" onSelectionChange={setSelectedKeys}>
-                <TableHeader>
+                <TableHeader className=''>
                     <TableColumn>ID</TableColumn>
                     <TableColumn>TIPO MOVIMIENTO</TableColumn>
                     <TableColumn>CANTIDAD</TableColumn>

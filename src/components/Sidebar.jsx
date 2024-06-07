@@ -15,7 +15,7 @@ export default function Sidebar({ children }) {
     return (
         <>
             <aside className="h-screen">
-                <nav className="h-full flex flex-col bg-gradient-to-r from-cyan-400 to-sky-500 text-white border-r shadow-sm px-2 justify-start">
+                <nav className="h-full flex flex-col bg-sky-600 text-white border-r shadow-sm px-2 justify-start">  
                     <div className="p-4 pb-2 flex justify-between items-center text-black">
                        <div className="flex gap-3 items-end">
                        {/* <img src={logo} className={`overflow-hidden duration-500 ease-out rounded-full  ${expanded ? "w-14" : "w-0"}`} /> */}
@@ -40,7 +40,7 @@ export default function Sidebar({ children }) {
                     <div className="border-t flex p-3 mt-[12%]  2xl:mt-[45%] border-white cursor-pointer border-opacity-50">
                         {/* <img src={profile} className="w-10 h-10 rounded-md" /> */}
                         <Power className="ml-2.5" size={20} />
-                        <div className={`flex justify-between items-center overflow-hidden cursor-pointer transition-all ${expanded ? "w-48 ml-3" : "w-0"} `}>
+                        <div className={`flex justify-between items-center overflow-hidden cursor-pointer transition-all ${expanded ? "w-40 2xl:w-48 ml-3" : "w-0"} `}>
                             <div className="">
              <ModalLogout/>
                         
@@ -82,7 +82,7 @@ export function SidebarItem({ nav, icon, text, active, alert }) {
         <Link to={nav}>
             <li className={`relative flex items-center  py-2 px-3 my-1 font-medium rounded-md cursor-pointer  group ${isActive ? "bg-gradient-to-tr from-indigo-50 to-indigo-50 text-black" : "hover:bg-indigo-50 text-white hover:text-black"}`}>
                 {icon}
-                <span className={`overflow-hidden ${expanded ? "w-48 ml-3" : "w-0"}`}>{text}</span>
+                <span className={`overflow-hidden ${expanded ? "w-40 2xl:w-48 ml-3" : "w-0"}`}>{text}</span>
                 {alert && (
                     <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`}>
 

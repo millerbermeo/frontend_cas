@@ -21,7 +21,7 @@ export const BarChartHero = () => {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      setErrorMessage('Error al obtener los datos');
+      setErrorMessage('No hay datos registrados');
     }
   };
 

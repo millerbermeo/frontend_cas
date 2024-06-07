@@ -65,7 +65,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
 
         try {
             // Aquí puedes enviar los datos a tu backend utilizando axios o fetch
-            await axiosClient.post('http://localhost:3000/usuario/registrar', formData).then((response) => {
+            await axiosClient.post('usuario/registrar', formData).then((response) => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);
@@ -88,7 +88,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
 
     return (
         <div className="flex flex-col gap-2">
-            <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>Registrar Usuario</Button>
+            <Button className="bg-sky-600 text-white" endContent={<PlusIcon />} onPress={onOpen}>Registrar Usuario</Button>
 
             <Modal
                 isOpen={isOpen}

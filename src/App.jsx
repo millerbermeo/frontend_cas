@@ -5,6 +5,10 @@ import Sidebar, { SidebarItem } from "./components/Sidebar";
 import { LoginPage } from './pages/LoginPage';
 import { ProtectedRoute } from './configs/ProtectedRoute';
 import {Spinner} from "@nextui-org/react";
+import RequestPasswordReset from './configs/RequestPasswordReset';
+import ResetPassword from './configs/ResetPassword';
+
+
 
 // Lazy load the pages
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -13,12 +17,20 @@ const MovimientosPage = lazy(() => import('./pages/MovimientosPage'));
 const ActividadesPage = lazy(() => import('./pages/ActividadesPage'));
 const UsuariosPage = lazy(() => import('./pages/UsuariosPage'));
 const ElementosPage = lazy(() => import('./pages/ElementosPage'));
+const UserActividad = lazy(() => import('./pages/UserActividad'));
+
 
 export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/request-password-reset" element={< RequestPasswordReset/>} />
+        <Route path="/reset-password" element={<ResetPassword/>} />
+
+
+        <Route path="/usuario-actividad" element={<UserActividad />} />
+
         <Route path="/home" element={
           <ProtectedRoute>
             <WithSidebar>
