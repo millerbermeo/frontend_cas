@@ -1,39 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Select, SelectItem, TimeInput } from '@nextui-org/react';
+import { Input, Button } from '@nextui-org/react';
 import axiosClient from '../../configs/axiosClient';
 import { SweetAlert } from '../../configs/SweetAlert';
 
-export const RegistrarActividad = () => {
-  const [usuarios, setUsuarios] = useState([]);
+export const RegistrarActividadElm = () => {
   const [elementos, setElementos] = useState([]);
-  const [lugarActividad, setLugarActividad] = useState('');
   const [fechaActividad, setFechaActividad] = useState('');
   const [cantidades, setCantidades] = useState({});
-  const [mostrarUsuarios, setMostrarUsuarios] = useState(false);
   const [mostrarElementos, setMostrarElementos] = useState(false);
   const [isSuccess, setIsSuccess] = useState(null);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState('');
 
-  const toggleUsuarios = () => {
-    setMostrarUsuarios(!mostrarUsuarios);
-  };
-
   const toggleElementos = () => {
     setMostrarElementos(!mostrarElementos);
   };
 
-  const lugares = [
-    { label: "Area 1", value: "1" },
-    { label: "Area 2", value: "2" },
-    { label: "Area 3", value: "3" },
-    { label: "Area 4", value: "4" },
-  ];
-
   const fetchData = async () => {
     try {
-      const responseUsuarios = await axiosClient.get('usuario/listar2');
-      setUsuarios(responseUsuarios.data);
       const responseElementos = await axiosClient.get('elemento/listar');
       setElementos(responseElementos.data);
     } catch (error) {
@@ -58,21 +42,10 @@ export const RegistrarActividad = () => {
     setIsSuccess(null);
     setMessage('');
 
-    const usuariosSeleccionados = usuarios.filter(usuario => usuario.isChecked);
     const elementosSeleccionados = elementos.filter(elemento => elemento.isChecked && cantidades[elemento.id_elemento] > 0);
-
-    if (usuariosSeleccionados.length === 0) {
-      setError('Debe seleccionar al menos un usuario');
-      return;
-    }
 
     if (elementosSeleccionados.length === 0) {
       setError('Debe seleccionar al menos un elemento');
-      return;
-    }
-
-    if (!lugarActividad) {
-      setError('Se debe seleccionar el lugar.');
       return;
     }
 
@@ -83,20 +56,15 @@ export const RegistrarActividad = () => {
 
     setError('');
     const datos = {
-      lugar_actividad: lugarActividad,
       fecha_actividad: fechaActividad,
-      usuarios: usuariosSeleccionados.map(u => u.id_usuario),
       elementos: elementosSeleccionados.map(e => ({ elemento_id: e.id_elemento, cantidad: cantidades[e.id_elemento] }))
     };
 
     try {
-      const response = await axiosClient.post('actividades/registrar', datos);
+      const response = await axiosClient.post('actividades/registrarActElm', datos);
       setIsSuccess(true);
-      setUsuarios([]);
       setElementos([]);
-      setMostrarUsuarios(false);
       setMostrarElementos(false);
-      setLugarActividad('');
       setFechaActividad('');
       setCantidades({});
       setIsSuccess(true);
@@ -106,15 +74,6 @@ export const RegistrarActividad = () => {
       setIsSuccess(false);
       setMessage('Actividad No registrada');
     }
-  };
-
-  const handleUsuarioCheckboxChange = (id_usuario, isChecked) => {
-    setUsuarios(usuarios.map(usuario => {
-      if (usuario.id_usuario === id_usuario) {
-        return { ...usuario, isChecked };
-      }
-      return usuario;
-    }));
   };
 
   const handleElementoCheckboxChange = (id_elemento, isChecked) => {
@@ -129,33 +88,6 @@ export const RegistrarActividad = () => {
   return (
     <>
       <section className='w-full z-10'>
-        <div className='bg-zinc-100 p-3 rounded'>
-          <div className='mb-4 flex gap-x-3'>
-            <span className='text-lg w-48'>Seleccionar Usuarios:</span>
-            <Button className='bg-sky-600 text-white' onClick={toggleUsuarios}>
-              {mostrarUsuarios ? 'Ocultar Usuarios' : 'Desplegar Usuarios'}
-            </Button>
-          </div>
-          {mostrarUsuarios && (
-            <form className='grid grid-cols-5 mb-10'>
-              {usuarios.map(usuario => (
-                <div key={usuario.id_usuario}>
-                  <input
-                    type="checkbox"
-                    checked={usuario.isChecked || false}
-                    onChange={(e) => handleUsuarioCheckboxChange(usuario.id_usuario, e.target.checked)}
-                    id={usuario.id_usuario}
-                    name={usuario.id_usuario}
-                    value={usuario.id_usuario}
-                    className="mr-2"
-                  />
-                  <label htmlFor={usuario.id_usuario} className="mr-4">{usuario.nombre}</label>
-                </div>
-              ))}
-            </form>
-          )}
-        </div>
-
         <div className='bg-zinc-100 p-3 my-10 rounded flex flex-col items-'>
           <div className='mb-4 flex gap-x-3'>
             <span className='text-lg w-48'>Seleccionar Elementos:</span>
@@ -199,21 +131,6 @@ export const RegistrarActividad = () => {
 
         <div className='w-full flex flex-col bg-white'>
           <form className='flex justify-between gap-x-3 w-full'>
-            <Select
-              id="lugarActividad"
-              label="Lugar de la Actividad"
-              name='lugarActividad'
-              className="w-full"
-              value={lugarActividad}
-              onChange={(e) => setLugarActividad(e.target.value)}
-            >
-              {lugares.map((lugar) => (
-                <SelectItem key={lugar.value} value={lugar.value}>
-                  {lugar.label}
-                </SelectItem>
-              ))}
-            </Select>
-
             <div className='w-full'>
               <Input
                 label="Fecha de la Actividad:"

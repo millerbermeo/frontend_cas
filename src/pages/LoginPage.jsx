@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { Progress } from "@nextui-org/react";
 import axiosClient from '../configs/axiosClient';
+import { Calendar } from "lucide-react";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -54,6 +55,7 @@ export const LoginPage = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('rol', response.data.rol);
         localStorage.setItem('nombre', response.data.nombre);
+        localStorage.setItem('id', response.data.id);
 
         setProgressVisible(true);
         setTimeout(() => {
@@ -116,7 +118,7 @@ export const LoginPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      <div className="h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
         {progressVisible && (
           <div className='w-full h-screen fixed flex justify-center items-center bg-black z-20 opacity-85'>
             <div className="z-50 w-80 text-white opacity-100">
@@ -145,7 +147,7 @@ export const LoginPage = () => {
                             <div className="md:mx-6 ">
                               <div className="text-center flex flex-col items-center">
                                 <img
-                                  className="w-48"
+                                  className="w-48 h-auto"
                                   src={logo}
                                   alt="logo"
                                 />
@@ -230,6 +232,27 @@ export const LoginPage = () => {
             </div>
           </div>
         </div>
+
+
+      
+        <div className='hidden lg:flex fixed top-5 left-10 justify-center items-center bg-sky-500 w-96 h-96 rounded-full animate-move-up-down-slow'>
+          <div className='p-6 text-center'>
+            <span className='text-6xl text-white font-bold'>CAS</span>
+            <p className='text-white mt-6'>Lorem ipsum dolor sit amet consectetur adipisicing elit. At maxime voluptatem deserunt rem nam quae facere, aspernatur aliquid veniam molestias!</p>
+          </div>
+        </div>
+
+
+        <div className='hidden lg:flex fixed bottom-32 right-16 justify-center items-center bg-sky-500 w-64 h-64 rounded-full animate-move-up-down-fast'>
+          <div className='p-6 text-center flex flex-col items-center'>
+          <Calendar size={120} className='text-white' />
+          <p className='text-white'>Lorem ipsum dolor sit ame</p>
+          </div>
+        </div>
+
+
+
+        <span className='fixed right-5 bottom-5'>© Todos los derechos reservados.</span>
       </div>
     </>
   );

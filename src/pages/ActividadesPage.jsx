@@ -4,6 +4,7 @@ import { Tabs, Tab } from "@nextui-org/tabs";
 import { CalendarActividades } from '../components/actividades/CalendarActividades';
 import { TableActividades } from '../components/actividades/TableActividades';
 import { RegistrarActividad } from '../components/actividades/RegistrarActividad';
+import { RegistrarActividadElm } from '../components/actividades/RegistrarActividadElm';
 
 
 function ActividadesPage() {
@@ -27,6 +28,9 @@ function ActividadesPage() {
             </Tab>
             <Tab className='w-full' title="Registrar Actividad">
             <RegistrarActividad/>
+            </Tab>
+            <Tab className='w-full' title="Suministrar Elementos ">
+         <RegistrarActividadElm/>
             </Tab>
           </Tabs>
 

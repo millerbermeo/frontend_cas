@@ -176,6 +176,8 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     </SelectItem>
                                     <SelectItem onClick={() => setFormData({ ...formData, rol: "3" })}>
                                         Operario
+                                    </SelectItem>          <SelectItem onClick={() => setFormData({ ...formData, rol: "4" })}>
+                                        Aprendiz
                                     </SelectItem>
                                 </Select>
                                 {formErrors.rol && (

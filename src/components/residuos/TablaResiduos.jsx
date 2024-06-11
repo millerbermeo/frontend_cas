@@ -165,6 +165,7 @@ export const TablaResiduos = () => {
           <TableColumn>NOMBRE</TableColumn>
           <TableColumn>RESIDUO</TableColumn>
           <TableColumn>TIPO</TableColumn>
+          <TableColumn>DESCRIPCION</TableColumn>
           <TableColumn>CANTIDAD</TableColumn>
           <TableColumn>UNIDAD MEDIDA</TableColumn>
           <TableColumn>ALMACENAMIENTO</TableColumn>
@@ -177,6 +178,7 @@ export const TablaResiduos = () => {
               <TableCell>{item.nombre_residuo}</TableCell>
               <TableCell>{item.residuo}</TableCell>
               <TableCell>{item.tipo_residuo}</TableCell>
+              <TableCell>{item.descripcion ? item.descripcion : 'NA'}</TableCell>
               <TableCell>{item.cantidad}</TableCell>
               <TableCell>{item.unidad_medida}</TableCell>
               <TableCell>{item.alm}</TableCell>

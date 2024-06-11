@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, ModalContent, ModalHeader, Select, SelectItem, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { SweetAlert } from '../../configs/SweetAlert';
 import axiosClient from '../../configs/axiosClient';
 import { EditIcon } from '../iconos/EditIcon';
-
-
-
 
 export const ActualizarUsuarios = ({ fetchData, usuario }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
     const [message, setMessage] = useState(null);
-
 
     const [formErrors, setFormErrors] = useState({
         nombre: false,
@@ -30,7 +26,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
         email: usuario.email,
         rol: usuario.rol,
         estado: usuario.estado,
-        password: usuario.password
+        password: ''
     });
 
     const handleChange = (event) => {
@@ -47,7 +43,6 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
     };
 
     const handleSubmit = async () => {
-
         setIsSuccess(null);
         setMessage('');
 
@@ -55,27 +50,30 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
 
         // Validar campos
         Object.entries(formData).forEach(([key, value]) => {
-            if (!value) {
+            if (!value && key !== 'password') {
                 newFormErrors[key] = true;
             }
         });
+
+        // if (!formData.password) {
+        //     newFormErrors.password = true;
+        // }
 
         if (Object.keys(newFormErrors).length > 0) {
             setFormErrors(newFormErrors);
             return;
         }
 
+        const { password, ...dataToUpdate } = formData;
+
         try {
             // Enviar los datos actualizados al backend
-            await axiosClient.put(`usuario/editar/${usuario.id_usuario}`, formData).then(() => {
+            await axiosClient.put(`usuario/editar/${usuario.id_usuario}`, { ...dataToUpdate, password }).then(() => {
                 fetchData();
             });
 
             setIsSuccess(true);
             onOpenChange(false);
-
-            setFormData('')
-            setIsSuccess(true);
             setMessage('Usuario Actualizado Con Exito');
         } catch (error) {
             console.error('Error al enviar los datos:', error);
@@ -155,7 +153,6 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     </div>
                                 )}
 
-
                                 <select
                                     label="Rol"
                                     placeholder="Selecciona un rol"
@@ -168,57 +165,27 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     <option value="administrador">Administrador</option>
                                     <option value="pasante">Pasante</option>
                                     <option value="operario">Operario</option>
+                                    <option value="aprendiz">Aprendiz</option>
                                 </select>
-
-                                {/* <Select
-                                    label="Rol"
-                                    placeholder="Selecciona un rol"
-                                    name="rol"
-                                    value={formData.rol}
-                                    onChange={handleChange}
-                                >
-                                    <SelectItem onClick={() => setFormData({ ...formData, rol: "administrador" })}>
-                                        Administrador
-                                    </SelectItem>
-                                    <SelectItem onClick={() => setFormData({ ...formData, rol: "pasante" })}>
-                                        Pasante
-                                    </SelectItem>
-                                    <SelectItem onClick={() => setFormData({ ...formData, rol: "operario" })}>
-                                        Operario
-                                    </SelectItem>
-                                </Select> */}
                                 {formErrors.rol && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
                                         Rol Requerido
                                     </div>
                                 )}
 
-                                {/* <Input
+                                <select
                                     label="Estado"
                                     placeholder="Enter estado"
                                     variant="bordered"
                                     name="estado"
                                     value={formData.estado}
                                     onChange={handleChange}
-                                /> */}
-
-
-<select
-                                        label="Estado"
-                                        placeholder="Enter estado"
-                                        variant="bordered"
-                                        name="estado"
-                                        value={formData.estado}
-                                        onChange={handleChange}
                                     className="border rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300"
                                 >
                                     <option value="">Selecciona un Estado</option>
                                     <option value="activo">Activo</option>
                                     <option value="inactivo">Inactivo</option>
                                 </select>
-
-
-                                
                                 {formErrors.estado && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
                                         Estado Requerido
@@ -248,7 +215,6 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                 </ModalContent>
             </Modal>
             <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
-
         </div>
-  )
+    )
 }

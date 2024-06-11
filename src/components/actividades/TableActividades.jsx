@@ -195,7 +195,7 @@ export const TableActividades = () => {
               <TableCell>{item.tipo_actividad}</TableCell>
               <TableCell>{item.nombre_act}</TableCell>
 
-              <TableCell>{item.nombre_lugar}</TableCell>
+              <TableCell>{item.nombre_lugar ? item.nombre_lugar : 'NA'}</TableCell>
               <TableCell>{formatDate(item.fecha_actividad)}</TableCell>
 
               <TableCell><div className='w-20 inline-block'>
@@ -210,7 +210,6 @@ export const TableActividades = () => {
               </TableCell>
               <TableCell className='flex justify-center gap-2'>
 
-             {/* <ActualizarActividad actividad={item} fetchData={fetchData}/> */}
 
              <ActualizarActividad actividad={item} fetchData={fetchData}/>
               </TableCell>
