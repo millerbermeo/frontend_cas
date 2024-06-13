@@ -5,6 +5,7 @@ import { DonutChartHero } from '../components/graficos/DonutChartHero'
 import { LineChartHero } from '../components/graficos/LineChartHero'
 import { BarListAlm } from '../components/graficos/BarListAlm'
 import { BarChartActividad } from '../components/graficos/BarChartActividad'
+import { BarChartElemento } from '../components/graficos/BarChartElemento'
 
 
 
@@ -19,7 +20,7 @@ function HomePage() {
         </div>
         <div className='flex mt-5 gap-5 rounded'>
           <BarChartHero />
-          <LineChartHero />
+          <BarChartElemento/>
         </div>
 
 

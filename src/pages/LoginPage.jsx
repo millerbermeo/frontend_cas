@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from "../assets/logo2.png";
+import logo2 from "../assets/logoSenaNaranja.png";
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { Progress } from "@nextui-org/react";
@@ -235,24 +236,30 @@ export const LoginPage = () => {
 
 
       
-        <div className='hidden lg:flex fixed top-5 left-10 justify-center items-center bg-sky-500 w-96 h-96 rounded-full animate-move-up-down-slow'>
+        <div className='hidden lg:flex fixed top-5 left-10 justify-center items-center bg-sky-500 w-72 h-72 2xl:w-96 2xl:h-96 rounded-full animate-move-up-down-slow'>
           <div className='p-6 text-center'>
             <span className='text-6xl text-white font-bold'>CAS</span>
-            <p className='text-white mt-6'>Lorem ipsum dolor sit amet consectetur adipisicing elit. At maxime voluptatem deserunt rem nam quae facere, aspernatur aliquid veniam molestias!</p>
+            <p className='text-white mt-6'>El Centro de Recolección de Residuos del SENA gestiona y recicla residuos, promoviendo la sostenibilidad y utilizando tecnologías avanzadas para su seguimiento.</p>
           </div>
         </div>
 
 
-        <div className='hidden lg:flex fixed bottom-32 right-16 justify-center items-center bg-sky-500 w-64 h-64 rounded-full animate-move-up-down-fast'>
+        <div className='hidden lg:flex fixed bottom-32 right-16 justify-center items-center bg-sky-500 w-52 h-52 2xl:w-64 2xl:h-64 rounded-full animate-move-up-down-fast'>
           <div className='p-6 text-center flex flex-col items-center'>
           <Calendar size={120} className='text-white' />
-          <p className='text-white'>Lorem ipsum dolor sit ame</p>
+          <p className='text-white pt-1'>CALENDARIO</p>
           </div>
         </div>
 
 
 
-        <span className='fixed right-5 bottom-5'>© Todos los derechos reservados.</span>
+        <div className='fixed flex flex-col items-start left-10 bottom-10'>
+        <div className='flex items-end pb-2'>
+        <img src={logo2} className='w-24' alt="" />
+        <p className='text-xl'>Sede Yamboro</p>
+        </div>
+        <span >© Todos los derechos reservados.</span>
+        </div>
       </div>
     </>
   );
