@@ -7,7 +7,7 @@ import { ProtectedRoute } from './configs/ProtectedRoute';
 import {Spinner} from "@nextui-org/react";
 import RequestPasswordReset from './configs/RequestPasswordReset';
 import ResetPassword from './configs/ResetPassword';
-
+import UserActividad from './pages/UserActividad';
 
 
 // Lazy load the pages
@@ -17,7 +17,7 @@ const MovimientosPage = lazy(() => import('./pages/MovimientosPage'));
 const ActividadesPage = lazy(() => import('./pages/ActividadesPage'));
 const UsuariosPage = lazy(() => import('./pages/UsuariosPage'));
 const ElementosPage = lazy(() => import('./pages/ElementosPage'));
-const UserActividad = lazy(() => import('./pages/UserActividad'));
+// const UserActividad = lazy(() => import('./pages/UserActividad'));
 
 
 export const App = () => {

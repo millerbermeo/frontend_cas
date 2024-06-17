@@ -37,7 +37,7 @@ export const ModalActividades = ({ isOpen, onOpenChange, selectedEvent, id_activ
                                 <div key={item.id_actividad}>
                                     <Listbox>
                                         <ListboxItem>Nombre: {item.nombre_act}</ListboxItem>
-                                        <ListboxItem>Lugar: {item.nombre_lugar}</ListboxItem>
+                                        <ListboxItem>Lugar: {item.nombre_lugar ?? item.lugar_actividad }</ListboxItem>
                                         <ListboxItem>Estado: {item.estado_actividad}</ListboxItem>
                                     </Listbox>
                                 </div>

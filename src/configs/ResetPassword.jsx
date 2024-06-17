@@ -6,15 +6,28 @@ import { SweetAlert } from './SweetAlert'; // Asegúrate de importar correctamen
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [alertProps, setAlertProps] = useState({ type: '', message: '' });
   const location = useLocation();
   const navigate = useNavigate();
   const token = new URLSearchParams(location.search).get('token');
 
+  const validatePassword = (password) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!newPassword) {
       setAlertProps({ type: 'error', message: 'La nueva contraseña no puede estar vacía.' });
+      return;
+    }
+    if (!validatePassword(newPassword)) {
+      setAlertProps({ type: 'error', message: 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.' });
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setAlertProps({ type: 'error', message: 'Las contraseñas no coinciden.' });
       return;
     }
 
@@ -24,7 +37,7 @@ const ResetPassword = () => {
         type: 'success',
         message: 'Contraseña restablecida correctamente.',
       });
-      setTimeout(() => navigate('/'), 1000); // Redirige al login después de 2 segundos
+      setTimeout(() => navigate('/'), 1000); // Redirige al login después de 1 segundo
     } catch (error) {
       console.error('Error al restablecer la contraseña:', error);
       setAlertProps({
@@ -48,10 +61,18 @@ const ResetPassword = () => {
             className="mb-4"
             required
           />
+          <Input
+            fullWidth
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirme su nueva contraseña"
+            className="mb-4"
+            required
+          />
           <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white">
             Restablecer
           </Button>
-         
         </form>
       </Card>
       <SweetAlert type={alertProps.type} message={alertProps.message} />

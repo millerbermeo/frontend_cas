@@ -6,19 +6,13 @@ import { RegistrarElemento } from './RegistrarElemento';
 import { ActualizarElemento } from './ActualizarElemento';
 
 
-
-
-
-
 export const TableElementos = () => {
 
-    
   const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
   const [page, setPage] = useState(1);
   const [filterValue, setFilterValue] = useState('');
-
 
   const fetchData = async () => {
     try {

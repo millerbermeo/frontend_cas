@@ -18,14 +18,14 @@ function HomePage() {
         <div className='flex gap-8 mt-6'>
 
         </div>
-        <div className='flex mt-5 gap-5 rounded'>
+        <div className='flex  mt-5 flex-col lg:flex-row justify-center gap-5 rounded'>
           <BarChartHero />
           <BarChartElemento/>
         </div>
 
 
 
-        <div className='mt-5 flex items-end justify-start w-full gap-5'>
+        <div className='mt-5 flex flex-col lg:flex-row lg:items-end justify-center lg:justify-start w-full gap-5'>
           <BarListAlm />
           <DonutChartHero />
           <BarChartActividad />

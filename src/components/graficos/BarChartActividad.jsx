@@ -98,7 +98,7 @@ export const BarChartActividad = () => {
                             className='w-full p-2 bg-zinc-100 pb-14'
                             data={showFirstHalf ? firstHalfData : secondHalfData}
                             index="month" // Usar el mes como el índice
-                            categories={['total']} // Categoría para el total
+                            categories={['Actividades','total']} // Categoría para el total
                             yAxisWidth={48}
                         />
                         <div className="flex justify-end -mt-12 pr-4">

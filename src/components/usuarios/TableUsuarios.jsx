@@ -173,6 +173,7 @@ export const TableUsuarios = () => {
           <TableColumn>NOMBRE</TableColumn>
           <TableColumn>APELLIDO</TableColumn>
           <TableColumn>IDENTIIFCACION</TableColumn>
+          <TableColumn>TELEFONO</TableColumn>
           <TableColumn>EMAIL</TableColumn>
           <TableColumn>ROL</TableColumn>
           <TableColumn>ESTADO</TableColumn>
@@ -185,6 +186,7 @@ export const TableUsuarios = () => {
           <TableCell>{item.nombre}</TableCell>
           <TableCell>{item.apellidos}</TableCell>
           <TableCell>{item.identificacion}</TableCell>
+          <TableCell>{item.telefono}</TableCell>
           <TableCell>{item.email}</TableCell>
           <TableCell>{item.rol}</TableCell>
 

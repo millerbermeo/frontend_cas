@@ -134,7 +134,7 @@ export const LoginPage = () => {
             </div>
           </div>
         )}
-        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div className="relative py-3 sm:max-w-xl scale-90 md:scale-100 sm:mx-auto ">
           <div className="absolute inset-0 bg-sky-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
           <div className="relative px-4 py-2 bg-white shadow-lg sm:rounded-3xl p-3 w-[450px] h-[550px]">
             <div className="max-w-96 mx-auto">
@@ -235,30 +235,35 @@ export const LoginPage = () => {
         </div>
 
 
-      
-        <div className='hidden lg:flex fixed top-5 left-10 justify-center items-center bg-sky-500 w-72 h-72 2xl:w-96 2xl:h-96 rounded-full animate-move-up-down-slow'>
-          <div className='p-6 text-center'>
-            <span className='text-6xl text-white font-bold'>CAS</span>
-            <p className='text-white mt-6'>El Centro de Recolección de Residuos del SENA gestiona y recicla residuos, promoviendo la sostenibilidad y utilizando tecnologías avanzadas para su seguimiento.</p>
+
+        <div className='hidden lg:flex fixed top-10 left-10 bg-white w-full max-w-md p-6 rounded-lg shadow-lg'>
+          <div className='text-center'>
+            <h2 className='text-2xl font-bold text-sky-600'>Centro de Recolección de Residuos</h2>
+            <p className='text-gray-700 mt-4'>
+              El Centro de Recolección de Residuos del SENA gestiona y recicla residuos,
+              promoviendo la sostenibilidad y utilizando tecnologías avanzadas para su seguimiento.
+            </p>
           </div>
         </div>
 
 
-        <div className='hidden lg:flex fixed bottom-32 right-16 justify-center items-center bg-sky-500 w-52 h-52 2xl:w-64 2xl:h-64 rounded-full animate-move-up-down-fast'>
-          <div className='p-6 text-center flex flex-col items-center'>
-          <Calendar size={120} className='text-white' />
-          <p className='text-white pt-1'>CALENDARIO</p>
+        <Link to="/usuario-actividad/">
+          <div className='hidden absolute top-10 right-10 md:flex flex-col justify-center  items-center'>
+            <Calendar size={120} className='text-sky-600' />
+            <div>
+              <h2 className='text-lg text-sky-600 font-medium'>Calendario de Actividades</h2>
+
+            </div>
           </div>
-        </div>
+        </Link>
 
 
-
-        <div className='fixed flex flex-col items-start left-10 bottom-10'>
-        <div className='flex items-end pb-2'>
-        <img src={logo2} className='w-24' alt="" />
-        <p className='text-xl'>Sede Yamboro</p>
-        </div>
-        <span >© Todos los derechos reservados.</span>
+        <div className='fixed flex flex-col items-start bottom-10 right-10'>
+          <div className='flex items-end pb-2'>
+            <img src={logo2} className='w-24' alt="" />
+            <p className='text-xl'>Sede Yamboro</p>
+          </div>
+          <span >© Todos los derechos reservados.</span>
         </div>
       </div>
     </>
