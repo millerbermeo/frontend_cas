@@ -236,7 +236,7 @@ export const LoginPage = () => {
 
 
 
-        <div className='hidden lg:flex fixed top-10 left-10 bg-white w-full max-w-md p-6 rounded-lg shadow-lg'>
+        <div className='hidden w-[350px] scale-95 2xl:scale-100 2xl:flex fixed top-10 left-10 bg-white 2xl:w-full max-w-md p-6 rounded-lg shadow-lg'>
           <div className='text-center'>
             <h2 className='text-2xl font-bold text-sky-600'>Centro de Recolección de Residuos</h2>
             <p className='text-gray-700 mt-4'>
@@ -248,10 +248,10 @@ export const LoginPage = () => {
 
 
         <Link to="/usuario-actividad/">
-          <div className='hidden absolute top-10 right-10 md:flex flex-col justify-center  items-center'>
-            <Calendar size={120} className='text-sky-600' />
+          <div className='hidden absolute top-10 left-10 2xl:right-10 md:flex flex-col justify-center  items-center'>
+            <Calendar size={170} className='text-sky-600' />
             <div>
-              <h2 className='text-lg text-sky-600 font-medium'>Calendario de Actividades</h2>
+              <h2 className='2xl:text-lg text-base text-sky-600 font-medium text-center'>Ingresar <br />Calendario de Actividades</h2>
 
             </div>
           </div>
