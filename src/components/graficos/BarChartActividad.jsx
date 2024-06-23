@@ -2,15 +2,15 @@ import { BarChart } from '@tremor/react';
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../configs/axiosClient';
 import dayjs from 'dayjs';
-import 'dayjs/locale/es'; // Importar el locale español para Day.js
+import 'dayjs/locale/es';
 import { Select, SelectItem, Button } from '@nextui-org/react';
 
-dayjs.locale('es'); // Configurar Day.js para usar español
+dayjs.locale('es');
 
 export const BarChartActividad = () => {
     const [chartData, setChartData] = useState([]);
     const [selectedYear, setSelectedYear] = useState('2024');
-    const [showFirstHalf, setShowFirstHalf] = useState(true);
+    const [showFirstHalf, setShowFirstHalf] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const fetchData = async (year) => {
@@ -37,7 +37,12 @@ export const BarChartActividad = () => {
             }, {});
 
             // Convertir datos agrupados a un array y ordenar por mes
-            const formattedData = Object.values(groupedData).sort((a, b) => dayjs(a.month, 'MMMM').month() - dayjs(b.month, 'MMMM').month());
+            const monthOrder = [
+                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+            ];
+
+            const formattedData = monthOrder.map(month => groupedData[month] || { month, total: 0 });
 
             setChartData(formattedData);
             setErrorMessage('');
@@ -63,15 +68,20 @@ export const BarChartActividad = () => {
         { value: '2022', label: '2022' },
         { value: '2023', label: '2023' },
         { value: '2024', label: '2024' },
+        { value: '2025', label: '2025' },
+        { value: '2026', label: '2026' },
+        { value: '2027', label: '2027' },
+        { value: '2028', label: '2028' },
+        { value: '2030', label: '2030' },
     ];
 
     // Dividir los datos en dos mitades
-    const firstHalfData = chartData.filter((item, index) => index < 6);
-    const secondHalfData = chartData.filter((item, index) => index >= 6);
+    const firstHalfData = chartData.slice(0, 6);
+    const secondHalfData = chartData.slice(6, 12);
 
     return (
         <>
-            <div className='relative w-[85%] 2xl:w-full'>
+            <div className='relative w-[85%] 2xl:w-full pb-2'>
                 <div className="mb-4 w-72 -top-6 2xl:-top-5 left-4 absolute">
                     <Select
                         color='primary'
@@ -97,8 +107,8 @@ export const BarChartActividad = () => {
                         <BarChart
                             className='w-full p-2 bg-zinc-100 pb-14'
                             data={showFirstHalf ? firstHalfData : secondHalfData}
-                            index="month" // Usar el mes como el índice
-                            categories={['Actividades','total']} // Categoría para el total
+                            index="month"
+                            categories={['total']}
                             yAxisWidth={48}
                         />
                         <div className="flex justify-end -mt-12 pr-4">
@@ -110,6 +120,7 @@ export const BarChartActividad = () => {
                                 Mostrar primeros 6 meses
                             </Button>
                             <Button
+                            
                                 onClick={() => setShowFirstHalf(false)}
                                 disabled={!showFirstHalf}
                                 className={!showFirstHalf ? 'bg-blue-500 text-white ml-2' : 'bg-gray-200 ml-2'}

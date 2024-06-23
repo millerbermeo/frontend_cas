@@ -68,6 +68,7 @@ export const RegistrarActividadElm = () => {
       setFechaActividad('');
       setCantidades({});
       setIsSuccess(true);
+      fetchData()
       setMessage('Actividad Registrada Con Exito');
     } catch (error) {
       console.error('Error registering activity:', error);

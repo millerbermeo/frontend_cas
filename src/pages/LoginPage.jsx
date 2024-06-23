@@ -163,7 +163,7 @@ export const LoginPage = () => {
                                     type="text"
                                     className="peer block min-h-[auto] w-full rounded border border-cyan-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                                     id="exampleFormControlInput1"
-                                    placeholder=" "
+                                    placeholder=""
                                     value={username}
                                     onChange={handleUsernameChange}
                                     onFocus={handleUsernameFocus}
@@ -236,7 +236,7 @@ export const LoginPage = () => {
 
 
 
-        <div className='hidden w-[350px] scale-95 2xl:scale-100 2xl:flex fixed top-10 left-10 bg-white 2xl:w-full max-w-md p-6 rounded-lg shadow-lg'>
+        <div className='hidden md:flex fixed top-10 left-10 bg-white max-w-md p-6 rounded-lg shadow-lg'>
           <div className='text-center'>
             <h2 className='text-2xl font-bold text-sky-600'>Centro de Recolección de Residuos</h2>
             <p className='text-gray-700 mt-4'>
@@ -246,24 +246,21 @@ export const LoginPage = () => {
           </div>
         </div>
 
-
-        <Link to="/usuario-actividad/">
-          <div className='hidden absolute top-10 left-10 2xl:right-10 md:flex flex-col justify-center  items-center'>
-            <Calendar size={170} className='text-sky-600' />
-            <div>
-              <h2 className='2xl:text-lg text-base text-sky-600 font-medium text-center'>Ingresar <br />Calendario de Actividades</h2>
-
-            </div>
+        {/* Calendario de Actividades */}
+        <Link to="/usuario-actividad">
+          <div className='hidden md:flex flex-col justify-center items-center fixed top-10 right-10 bg-white max-w-xs p-6 rounded-lg shadow-lg'>
+            <Calendar size={70} className='text-sky-600 mb-4' />
+            <h2 className='text-lg text-sky-600 font-medium text-center'>Ingresar <br /> Calendario de Actividades</h2>
           </div>
         </Link>
 
-
+        {/* Pie de página */}
         <div className='fixed flex flex-col items-start bottom-10 right-10'>
           <div className='flex items-end pb-2'>
-            <img src={logo2} className='w-24' alt="" />
-            <p className='text-xl'>Sede Yamboro</p>
+            <img src={logo2} className='w-24' alt="Logo SENA" />
+            <p className='text-xl ml-2'>Sede Yamboro</p>
           </div>
-          <span >© Todos los derechos reservados.</span>
+          <span className='text-gray-600'>© Todos los derechos reservados.</span>
         </div>
       </div>
     </>

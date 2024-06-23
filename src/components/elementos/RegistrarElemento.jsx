@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, Select, SelectItem, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import axiosClient from '../../configs/axiosClient';
 import { SweetAlert } from '../../configs/SweetAlert';
 import { PlusIcon } from '../iconos/PlusIcon';
-
-
 
 export const RegistrarElemento = ({ fetchData }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -23,6 +21,12 @@ export const RegistrarElemento = ({ fetchData }) => {
         cantidad: false
     });
 
+    const tipoElementos = [
+        { id: 'consumible', nombre: 'Consumible' },
+        { id: 'herramienta', nombre: 'Herramienta' },
+        { id: 'aseo', nombre: 'Aseo' },
+        { id: 'otro', nombre: 'Otro' }
+    ];
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -37,11 +41,21 @@ export const RegistrarElemento = ({ fetchData }) => {
         });
     };
 
-    const handleSubmit = async () => {
+    const handleSelectChange = (value) => {
+        setFormData({
+            ...formData,
+            tipo_elm: value
+        });
 
+        setFormErrors({
+            ...formErrors,
+            tipo_elm: false
+        });
+    };
+
+    const handleSubmit = async () => {
         setIsSuccess(null);
         setMessage('');
-
 
         const newFormErrors = {};
 
@@ -59,25 +73,25 @@ export const RegistrarElemento = ({ fetchData }) => {
         if (Object.keys(newFormErrors).length > 0) {
             // Actualizar estado de errores
             setFormErrors(newFormErrors);
-            // Mostrar mensaje de error o manejar la validación según tu diseño
             console.log("Hay campos requeridos vacíos");
             return;
         }
 
         try {
-            console.log(formData);
             await axiosClient.post('http://localhost:3000/elemento/registrar', formData).then((response) => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);
-                setFormData('')
-                setIsSuccess(true);
+                setFormData({
+                    nombre_elm: "",
+                    tipo_elm: "",
+                    cantidad: ""
+                });
                 setMessage('Elemento Registrado Con Exito');
             });
         } catch (error) {
             console.error('Error submitting data:', error);
             setIsSuccess(false);
-            onOpenChange(true);
             setMessage('Elemento No registrado');
         }
     };
@@ -86,10 +100,7 @@ export const RegistrarElemento = ({ fetchData }) => {
         <div className="flex flex-col gap-2">
             <Button className="bg-sky-600 text-white" endContent={<PlusIcon />} onPress={onOpen}>Registrar Elemento</Button>
 
-            <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-            >
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -111,15 +122,19 @@ export const RegistrarElemento = ({ fetchData }) => {
                                     </div>
                                 )}
 
-                                <Input
-                                    autoFocus
+                                <Select
                                     label="Tipo"
-                                    placeholder="Enter tipo"
-                                    variant="bordered"
+                                    placeholder="Selecciona un Tipo"
                                     name="tipo_elm"
                                     value={formData.tipo_elm}
-                                    onChange={handleChange}
-                                />
+                                    onChange={(event) => handleSelectChange(event.target.value)}
+                                >
+                                    {tipoElementos.map((item) => (
+                                        <SelectItem key={item.id} value={item.id}>
+                                            {item.nombre}
+                                        </SelectItem>
+                                    ))}
+                                </Select>
                                 {formErrors.tipo_elm && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
                                         Tipo requerido
@@ -153,7 +168,6 @@ export const RegistrarElemento = ({ fetchData }) => {
                 </ModalContent>
             </Modal>
             <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
-
         </div>
-  )
-}
+    );
+};

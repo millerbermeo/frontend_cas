@@ -108,8 +108,8 @@ export const TableElementos = () => {
 
   return (
     <>
-    <div className='flex justify-between items-center w-full'>
-    <div className='w-full flex gap-3'>
+    <div className='flex flex-col lg:flex-row justify-between lg:items-center w-full'>
+    <div className='w-full flex-col lg:flex-row flex gap-3'>
     <Input
          color='white'
          isClearable
@@ -121,7 +121,7 @@ export const TableElementos = () => {
          onValueChange={onSearchChange}
        />
 
-<div className='flex gap-1'>
+<div className='flex gap-1 mb-2 lg:mb-0'>
         <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
         Descargar CSV
       </Button>

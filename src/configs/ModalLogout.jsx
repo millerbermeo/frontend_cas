@@ -42,7 +42,7 @@ export const ModalLogout = () => {
 
                                     <ModalHeader className="flex flex-col gap-1">Cerrar Sesión</ModalHeader>
                                     <ModalBody>
-                                        <h2>Estas Seguro  de Cerrar Sesión</h2>
+                                        <h2>¿Estas Seguro  de Cerrar Sesión?</h2>
 
                                     </ModalBody>
                                     <ModalFooter>

@@ -8,7 +8,7 @@ export const ModalActividades = ({ isOpen, onOpenChange, selectedEvent, id_activ
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!id_actividad) return; 
+            if (!id_actividad) return;
             try {
                 const response = await axiosClient.get(`actividades/listarUsersAct/${id_actividad}`);
                 const response2 = await axiosClient.get(`actividades/listar/${id_actividad}`);
@@ -21,31 +21,31 @@ export const ModalActividades = ({ isOpen, onOpenChange, selectedEvent, id_activ
 
         if (isOpen) {
             fetchData();
+        } else {
+            // Clear data when modal is closed
+            setData([]);
+            setData2([]);
         }
-    }, [isOpen, id_actividad]);  // Dependencias del useEffect, se ejecuta cuando isOpen o id_actividad cambian
+    }, [isOpen, id_actividad]);
 
     return (
         <>
             <Modal isOpen={isOpen} onClose={() => onOpenChange(false)}>
-                <ModalContent >
+                <ModalContent>
                     <ModalHeader>Info de la Actividad</ModalHeader>
                     <ModalBody>
                         <div className="w-full border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
-
-                        <span className='px-3'>Activida: {id_actividad}</span>
-                        {data2.map(item => (
+                            <span className='px-3'>Actividad: {id_actividad}</span>
+                            {data2.map(item => (
                                 <div key={item.id_actividad}>
                                     <Listbox>
                                         <ListboxItem>Nombre: {item.nombre_act}</ListboxItem>
-                                        <ListboxItem>Lugar: {item.nombre_lugar ?? item.lugar_actividad }</ListboxItem>
+                                        <ListboxItem>Lugar: {item.nombre_lugar ?? item.lugar_actividad}</ListboxItem>
                                         <ListboxItem>Estado: {item.estado_actividad}</ListboxItem>
                                     </Listbox>
                                 </div>
                             ))}
-                        
-
                         </div>
-
                         <div className="w-full border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
                             <span className='px-3'>Usuarios:</span>
                             {data.map(item => (

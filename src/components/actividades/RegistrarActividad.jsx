@@ -101,6 +101,7 @@ export const RegistrarActividad = () => {
       setCantidades({});
       setIsSuccess(true);
       setMessage('Actividad Registrada Con Exito');
+      fetchData()
     } catch (error) {
       console.error('Error registering activity:', error);
       setIsSuccess(false);

@@ -162,9 +162,9 @@ export const TableMovimientos = () => {
     return (
         <>
 
-            <div className='flex justify-between gap-10 items-end w-full'>
+            <div className='flex justify-between  gap-10 items-end w-full'>
 
-                <div className='w-full flex gap-3 items-end'>
+                <div className='w-full flex flex-col lg:flex-row  gap-3 lg:items-end'>
                     <div className='w-full flex flex-col'>
 
                         <div className="flex flex-wrap gap-4 w-full">
@@ -228,7 +228,7 @@ export const TableMovimientos = () => {
                     </div>
 
                     <div className='flex pb-[14px]'>
-                        <div className='flex gap-2'>
+                        <div className='lg:flex  gap-2 grid grid-cols-2'>
                             <Button className='bg-[#61B2DC] text-white'auto onClick={() => downloadCSV(data)}>
                                 Descargar CSV
                             </Button>

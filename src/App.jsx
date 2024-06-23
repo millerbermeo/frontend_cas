@@ -1,13 +1,16 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home, StickyNote, CircleUserRound, Trash2, ArrowLeftRight, Calendar, Settings } from "lucide-react";
+import { Home, StickyNote, CircleUserRound, Recycle , ArrowLeftRight, Calendar, Settings, NotebookPen, Package  } from "lucide-react";
 import Sidebar, { SidebarItem } from "./components/Sidebar";
 import { LoginPage } from './pages/LoginPage';
 import { ProtectedRoute } from './configs/ProtectedRoute';
-import {Spinner} from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import RequestPasswordReset from './configs/RequestPasswordReset';
 import ResetPassword from './configs/ResetPassword';
 import UserActividad from './pages/UserActividad';
+
+
+
 
 
 // Lazy load the pages
@@ -17,7 +20,7 @@ const MovimientosPage = lazy(() => import('./pages/MovimientosPage'));
 const ActividadesPage = lazy(() => import('./pages/ActividadesPage'));
 const UsuariosPage = lazy(() => import('./pages/UsuariosPage'));
 const ElementosPage = lazy(() => import('./pages/ElementosPage'));
-// const UserActividad = lazy(() => import('./pages/UserActividad'));
+const ReportesPage = lazy(() => import('./pages/ReportesPage'));
 
 
 export const App = () => {
@@ -25,8 +28,8 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/request-password-reset" element={< RequestPasswordReset/>} />
-        <Route path="/reset-password" element={<ResetPassword/>} />
+        <Route path="/request-password-reset" element={< RequestPasswordReset />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
 
         <Route path="/usuario-actividad" element={<UserActividad />} />
@@ -34,7 +37,7 @@ export const App = () => {
         <Route path="/home" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
                 <HomePage />
               </Suspense>
             </WithSidebar>
@@ -43,7 +46,7 @@ export const App = () => {
         <Route path="/residuos" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
+              <Suspense fallback={<Spinner classNames="mx-auto" label="Default" color="default" labelColor="foreground" />}>
                 <ResiduosPage />
               </Suspense>
             </WithSidebar>
@@ -52,7 +55,7 @@ export const App = () => {
         <Route path="/movimientos" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
                 <MovimientosPage />
               </Suspense>
             </WithSidebar>
@@ -61,7 +64,7 @@ export const App = () => {
         <Route path="/actividades" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
                 <ActividadesPage />
               </Suspense>
             </WithSidebar>
@@ -70,7 +73,7 @@ export const App = () => {
         <Route path="/usuarios" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground"/>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
                 <UsuariosPage />
               </Suspense>
             </WithSidebar>
@@ -79,26 +82,42 @@ export const App = () => {
         <Route path="/elementos" element={
           <ProtectedRoute>
             <WithSidebar>
-              <Suspense fallback={   <Spinner label="Default" color="default" labelColor="foreground"/>}>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
                 <ElementosPage />
               </Suspense>
             </WithSidebar>
           </ProtectedRoute>
         } />
+
+        <Route path="/reportes" element={
+          <ProtectedRoute>
+            <WithSidebar>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
+                <ReportesPage />
+              </Suspense>
+            </WithSidebar>
+          </ProtectedRoute>
+        } />
+
+
       </Routes>
     </BrowserRouter>
   );
 };
 
+
+
+
 const WithSidebar = ({ children }) => (
   <div className="flex">
     <Sidebar>
       <SidebarItem nav="/home" icon={<Home size={20} />} text="Home" />
-      <SidebarItem nav="/residuos" icon={<Trash2 size={20} />} text="Residuos"/>
+      <SidebarItem nav="/residuos" icon={<Recycle  size={20} />} text="Residuos" />
       <SidebarItem nav="/movimientos" icon={<ArrowLeftRight size={20} />} text="Movimientos" />
-      <SidebarItem nav="/actividades" icon={<Calendar size={20} />} text="Actividades"/>
+      <SidebarItem nav="/actividades" icon={<Calendar size={20} />} text="Actividades" />
       <SidebarItem nav="/usuarios" icon={<CircleUserRound size={20} />} text="Usuarios" />
-      <SidebarItem nav="/elementos" icon={<Settings size={20} />} text="Elementos"/>
+      <SidebarItem nav="/elementos" icon={<Package  size={20} />} text="Elementos" />
+      <SidebarItem nav="/reportes" icon={<NotebookPen size={20} />} text="Reportes" />
     </Sidebar>
     {children}
   </div>

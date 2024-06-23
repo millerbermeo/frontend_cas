@@ -155,7 +155,8 @@ export const ModalUser = () => {
                                                     />
                                                 </dd>
                                             </div>
-                                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                         <div className='flex flex-row 2xl:flex-col'>
+                                         <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt className="text-md text-gray-500">Rol</dt>
                                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 
@@ -180,22 +181,23 @@ export const ModalUser = () => {
                                             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt className="text-md text-gray-500">Estado</dt>
                                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                   
-<select
-    label="Estado"
-    placeholder="Enter estado"
-    variant="bordered"
-    name="estado"
-    value={editData.estado || ''}
-    onChange={handleChange}
-    className="border w-full rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300"
->
-    <option value="">Selecciona un Estado</option>
-    <option value="activo">Activo</option>
-    <option value="inactivo">Inactivo</option>
-</select>
+
+                                                    <select
+                                                        label="Estado"
+                                                        placeholder="Enter estado"
+                                                        variant="bordered"
+                                                        name="estado"
+                                                        value={editData.estado || ''}
+                                                        onChange={handleChange}
+                                                        className="border w-full rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300"
+                                                    >
+                                                        <option value="">Selecciona un Estado</option>
+                                                        <option value="activo">Activo</option>
+                                                        <option value="inactivo">Inactivo</option>
+                                                    </select>
                                                 </dd>
                                             </div>
+                                         </div>
                                         </dl>
                                     </div>
                                     <div className="flex justify-end px-4 py-4 sm:px-6">
