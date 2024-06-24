@@ -112,8 +112,8 @@ export const TablaResiduos = () => {
 
   return (
     <>
-      <div className='flex justify-between items-center w-full'>
-     <div className='w-full flex gap-3'>
+      <div className='flex flex-col lg:flex-row justify-between lg:items-center w-full'>
+     <div className='w-full flex-col lg:flex-row flex gap-3'>
      <Input
           color='white'
           isClearable
@@ -125,11 +125,11 @@ export const TablaResiduos = () => {
           onValueChange={onSearchChange}
         />
 
-        <div className='flex gap-1'>
-        <Button color="secondary" auto onClick={() => downloadCSV(data)}>
+        <div className='flex gap-1 mb-2 lg_mb-0'>
+        <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
         Descargar CSV
       </Button>
-      <Button color="primary" auto onClick={printTable}>
+      <Button className='' auto onClick={printTable}>
         Imprimir Tabla
       </Button>
         </div>
@@ -165,6 +165,7 @@ export const TablaResiduos = () => {
           <TableColumn>NOMBRE</TableColumn>
           <TableColumn>RESIDUO</TableColumn>
           <TableColumn>TIPO</TableColumn>
+          <TableColumn>DESCRIPCION</TableColumn>
           <TableColumn>CANTIDAD</TableColumn>
           <TableColumn>UNIDAD MEDIDA</TableColumn>
           <TableColumn>ALMACENAMIENTO</TableColumn>
@@ -177,6 +178,7 @@ export const TablaResiduos = () => {
               <TableCell>{item.nombre_residuo}</TableCell>
               <TableCell>{item.residuo}</TableCell>
               <TableCell>{item.tipo_residuo}</TableCell>
+              <TableCell>{item.descripcion ? item.descripcion : 'NA'}</TableCell>
               <TableCell>{item.cantidad}</TableCell>
               <TableCell>{item.unidad_medida}</TableCell>
               <TableCell>{item.alm}</TableCell>

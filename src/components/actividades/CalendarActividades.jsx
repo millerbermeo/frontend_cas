@@ -4,6 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from 'dayjs';
 import axiosClient from '../../configs/axiosClient';
 import { ModalActividades } from '../utils/ModalActividades';
+import './CalendarActividades.css'; // Archivo CSS personalizado
 
 export const CalendarActividades = () => {
   const localizer = dayjsLocalizer(dayjs);
@@ -37,24 +38,26 @@ export const CalendarActividades = () => {
   };
 
   const eventPropGetter = (event) => {
-    const backgroundColor = event.id_actividad % 2 === 0 ? '#1e90ff' : '#1e90ff'; // Example condition to alternate colors
+    const backgroundColor = event.id_actividad % 2 === 0 ? 'bg-blue-500' : 'bg-blue-500'; // Example condition to alternate colors
     return {
-      style: { backgroundColor }
+      className: backgroundColor
     };
   };
 
   return (
     <>
-      <Calendar
-        className='w-full max-h-[70vh]'
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-        onSelectEvent={handleEventClick}
-        eventPropGetter={eventPropGetter}
-      />
+      <div className="p-4 bg-white rounded-lg shadow-md w-full">
+        <Calendar
+          className='w-full h-screen my-calendar'
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500 }}
+          onSelectEvent={handleEventClick}
+          eventPropGetter={eventPropGetter}
+        />
+      </div>
       <ModalActividades
         isOpen={modalVisible}
         onOpenChange={setModalVisible}

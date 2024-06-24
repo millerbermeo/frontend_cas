@@ -141,7 +141,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
 
     return (
         <div className="flex flex-col gap-2">
-            <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>Registrar Entrada</Button>
+            <Button className='bg-sky-600 text-white' endContent={<PlusIcon />} onPress={onOpen}>Registrar Entrada</Button>
 
             <Modal
                 isOpen={isOpen}

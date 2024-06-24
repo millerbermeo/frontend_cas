@@ -6,19 +6,13 @@ import { RegistrarElemento } from './RegistrarElemento';
 import { ActualizarElemento } from './ActualizarElemento';
 
 
-
-
-
-
 export const TableElementos = () => {
 
-    
   const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
   const [page, setPage] = useState(1);
   const [filterValue, setFilterValue] = useState('');
-
 
   const fetchData = async () => {
     try {
@@ -114,8 +108,8 @@ export const TableElementos = () => {
 
   return (
     <>
-    <div className='flex justify-between items-center w-full'>
-    <div className='w-full flex gap-3'>
+    <div className='flex flex-col lg:flex-row justify-between lg:items-center w-full'>
+    <div className='w-full flex-col lg:flex-row flex gap-3'>
     <Input
          color='white'
          isClearable
@@ -127,14 +121,14 @@ export const TableElementos = () => {
          onValueChange={onSearchChange}
        />
 
-       <div className='flex gap-1'>
-       <Button color="secondary" auto onClick={() => downloadCSV(data)}>
-       Descargar CSV
-     </Button>
-     <Button color="primary" auto onClick={printTable}>
-       Imprimir Tabla
-     </Button>
-       </div>
+<div className='flex gap-1 mb-2 lg:mb-0'>
+        <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
+        Descargar CSV
+      </Button>
+      <Button className='' auto onClick={printTable}>
+        Imprimir Tabla
+      </Button>
+        </div>
     </div>
 
 <RegistrarElemento fetchData={fetchData}/>

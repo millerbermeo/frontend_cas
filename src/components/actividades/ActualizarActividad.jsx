@@ -2,21 +2,16 @@ import React, { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import axiosClient from '../../configs/axiosClient';
 import { EditIcon } from '../iconos/EditIcon';
-import {SweetAlert} from "../../configs/SweetAlert"
-
-
+import { SweetAlert } from "../../configs/SweetAlert";
 
 export const ActualizarActividad = ({ fetchData, actividad }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
     const [message, setMessage] = useState(null);
 
-
-    
     const [formData, setFormData] = useState({
-        // tipo_actividad: actividad.tipo_actividad,
         nombre_act: actividad.nombre_act,
-        nombre_lugar:actividad.lugar_actividad,
+        nombre_lugar: actividad.lugar_actividad,
         estado_actividad: actividad.estado_actividad,
         fecha_actividad: actividad.fecha_actividad
     });
@@ -29,32 +24,23 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
         });
     };
 
-
     const handleSubmit = async () => {
-
         setIsSuccess(null);
         setMessage('');
 
-
         try {
             console.log(formData);
-        
             await axiosClient.put(`actividades/actualizarAct/${actividad.id_actividad}`, formData).then((response) => {
                 fetchData();
-                console.log(response.data)
-                setIsSuccess(true)
-                onOpenChange(false);
-
-                setFormData('')
+                console.log(response.data);
                 setIsSuccess(true);
-                setMessage('Actividad Actualizada Con Exito');
+                onOpenChange(false);
+                setMessage('Actividad Actualizada Con Éxito');
             });
-            onOpenChange(false);
         } catch (error) {
             console.error('Error submitting data:', error);
             setIsSuccess(false);
-            onOpenChange(true);
-            setMessage('Activiadad No Actualizada');
+            setMessage('Actividad No Actualizada');
         }
     };
 
@@ -70,49 +56,40 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
                         <>
                             <ModalHeader className="flex flex-col gap-1">Actualizar Actividad</ModalHeader>
                             <ModalBody>
-                                {/* <Input
-                                    autoFocus
-                                    label="tipo_actividad"
-                                    placeholder="Enter tipo_actividad"
-                                    variant="bordered"
-                                    name="tipo_actividad"
-                                    value={formData.tipo_actividad}
-                                    onChange={handleChange}
-                                /> */}
                                 <Input
                                     autoFocus
-                                    label="nombre_act"
-                                    placeholder="Enter nombre_act"
+                                    label="Nombre de la Actividad"
+                                    placeholder="Ingrese el nombre de la actividad"
                                     variant="bordered"
                                     name="nombre_act"
                                     value={formData.nombre_act}
                                     onChange={handleChange}
                                 />
                                 <Input
-                                    label="nombre_lugar"
-                                    placeholder="Enter nombre_lugar"
+                                    label="Lugar de la Actividad"
+                                    placeholder="Ingrese el lugar de la actividad"
                                     variant="bordered"
                                     name="nombre_lugar"
                                     value={formData.nombre_lugar}
                                     onChange={handleChange}
                                 />
-                                   <Input
-                                    label="estado_actividad"
-                                    placeholder="Enter estado_actividad"
-                                    variant="bordered"
+                                <select
                                     name="estado_actividad"
                                     value={formData.estado_actividad}
                                     onChange={handleChange}
-                                />
-                                 <Input
-                                    label="fecha_actividad"
-                                    placeholder="Enter fecha_actividad"
+                                    className="border rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300"
+                                >
+                                    <option value="asignada">Asignada</option>
+                                    <option value="terminada">Terminada</option>
+                                </select>
+                                <Input
+                                    label="Fecha de la Actividad"
+                                    placeholder="Ingrese la fecha de la actividad"
                                     variant="bordered"
                                     name="fecha_actividad"
                                     value={formData.fecha_actividad}
                                     onChange={handleChange}
                                 />
-                             
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>Cerrar</Button>
@@ -123,9 +100,7 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
                 </ModalContent>
             </Modal>
 
-            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
-
-
+            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message} />
         </div>
-  )
-}
+    );
+};

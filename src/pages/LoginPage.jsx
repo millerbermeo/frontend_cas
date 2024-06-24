@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import logo from "../assets/logo2.png";
-import { useNavigate } from 'react-router-dom';
+import logo2 from "../assets/logoSenaNaranja.png";
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { Progress } from "@nextui-org/react";
 import axiosClient from '../configs/axiosClient';
+import { Calendar } from "lucide-react";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -12,45 +14,39 @@ export const LoginPage = () => {
   const [usernameFocused, setUsernameFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
-  const navegation = useNavigate();
+  const [progressVisible, setProgressVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState(''); // Estado para el mensaje de error
+
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navegation("/home");
+      navigate("/home");
     }
-  }, [navegation]);
+  }, []);
 
   useEffect(() => {
-    let interval;
-    if (loading) {
-      interval = setInterval(() => {
-        setSliderValue((prevValue) => (prevValue >= 100 ? 0 : prevValue + 1));
-      }, 3000); // Actualiza el valor cada 30ms para una animación suave
-    } else {
-      setSliderValue(0);
-      clearInterval(interval);
+    if (progressVisible) {
+      let interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev < 100) return prev + 2;
+          clearInterval(interval);
+          return prev;
+        });
+      }, 10);
+
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(interval);
-  }, [loading]);
-
-  const [value, setValue] = React.useState(0);
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setValue((v) => (v >= 100 ? 0 : v + 10));
-    }, 700);
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [progressVisible]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); // Activar el loader antes de la solicitud
+    setLoading(true);
+    setError(''); // Limpiar cualquier error previo
 
     try {
       const data = { email: username, password };
@@ -60,23 +56,28 @@ export const LoginPage = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('rol', response.data.rol);
         localStorage.setItem('nombre', response.data.nombre);
+        localStorage.setItem('id', response.data.id);
 
+        setProgressVisible(true);
         setTimeout(() => {
-          setLoading(false); // Desactivar el loader antes de la navegación
+          setLoading(false);
+          setProgressVisible(false);
           if (response.data.rol === 'administrador') {
-            navegation("/home");
+            navigate("/home");
+          } else if (response.data.rol === 'operario') {
+            navigate("/usuario-actividad");
           } else {
-            navegation("/");
+            navigate("/");
           }
-        }, 2500); // Retraso de 2 segundos antes de redirigir
+        }, 1000);
       } else {
         setLoading(false);
-        alert("Error al iniciar sesión");
+        setError("Error al iniciar sesión. Información inválida.");
       }
     } catch (error) {
       setLoading(false);
       console.error('Error during login:', error);
-      alert("Error al iniciar sesión");
+      setError("Error al iniciar sesión. Información inválida.");
     }
   };
 
@@ -118,15 +119,14 @@ export const LoginPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-
-        {loading && (
+      <div className="h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+        {progressVisible && (
           <div className='w-full h-screen fixed flex justify-center items-center bg-black z-20 opacity-85'>
             <div className="z-50 w-80 text-white opacity-100">
               <Progress
-                aria-label="Downloading..."
+                aria-label="Progress"
                 size="lg"
-                value={value}
+                value={progress}
                 color="primary"
                 showValueLabel={true}
                 className="max-w-xl w-full opacity-100"
@@ -134,8 +134,8 @@ export const LoginPage = () => {
             </div>
           </div>
         )}
-        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div className="relative py-3 sm:max-w-xl scale-90 md:scale-100 sm:mx-auto ">
+          <div className="absolute inset-0 bg-sky-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
           <div className="relative px-4 py-2 bg-white shadow-lg sm:rounded-3xl p-3 w-[450px] h-[550px]">
             <div className="max-w-96 mx-auto">
               <section className="gradient-form h-full text-black">
@@ -148,7 +148,7 @@ export const LoginPage = () => {
                             <div className="md:mx-6 ">
                               <div className="text-center flex flex-col items-center">
                                 <img
-                                  className="w-48"
+                                  className="w-48 h-auto"
                                   src={logo}
                                   alt="logo"
                                 />
@@ -163,7 +163,7 @@ export const LoginPage = () => {
                                     type="text"
                                     className="peer block min-h-[auto] w-full rounded border border-cyan-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                                     id="exampleFormControlInput1"
-                                    placeholder=" "
+                                    placeholder=""
                                     value={username}
                                     onChange={handleUsernameChange}
                                     onFocus={handleUsernameFocus}
@@ -172,9 +172,9 @@ export const LoginPage = () => {
                                   />
                                   <label
                                     htmlFor="exampleFormControlInput1"
-                                    className={`pointer-events-none absolute top-0 bg-white left-3 max-w-[90%] mt-1 leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary ${username || usernameFocused ? 'transform translate-y-[-16px] text-sm text-black' : ''}`}
+                                    className={`pointer-events-none absolute top-0 rounded-md px-1 bg-white left-3 max-w-[90%] mt-1 leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary ${username || usernameFocused ? 'transform translate-y-[-16px] text-sm text-black' : ''}`}
                                   >
-                                    Username
+                                    Email
                                   </label>
                                 </div>
                                 <div className="relative mb-4">
@@ -198,7 +198,7 @@ export const LoginPage = () => {
                                   </button>
                                   <label
                                     htmlFor="exampleFormControlInput11"
-                                    className={`pointer-events-none absolute top-0 bg-white left-3 max-w-[90%] mt-1 leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary ${password || passwordFocused ? 'transform translate-y-[-16px] text-sm text-black' : ''}`}
+                                    className={`pointer-events-none absolute top-0 rounded-md px-1 bg-white left-3 max-w-[90%] mt-1 leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary ${password || passwordFocused ? 'transform translate-y-[-16px] text-sm text-black' : ''}`}
                                   >
                                     Password
                                   </label>
@@ -206,16 +206,21 @@ export const LoginPage = () => {
                                 <div className="mb-6 pb-1 pt-1 text-center">
                                   <button
                                     onClick={handleSubmit}
-                                    className="mb-3 bg-gradient-to-r from-cyan-200 to-green-500 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-dark-3 transition duration-150 ease-in-out hover:shadow-dark-2 focus:shadow-dark-2 focus:outline-none focus:ring-0 active:shadow-dark-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                                    className="mb-3 bg-gradient-to-r from-cyan-400 to-sky-600 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-dark-3 transition duration-150 ease-in-out hover:shadow-dark-2 focus:shadow-dark-2 focus:outline-none focus:ring-0 active:shadow-dark-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                                     type="submit"
                                   >
                                     Log in
                                   </button>
-                                  <a href="#!">¿Has olvidado tu contraseña?</a>
+                                  <Link to="/request-password-reset">
+                                    <span>¿Has olvidado tu contraseña?</span>
+                                  </Link>
                                 </div>
-                                <div className="flex items-center justify-between pb-6">
-                                  <p className="mb-0 me-2">¿No tienes una cuenta?</p>
-                                </div>
+                                {error && (
+                                  <div className="mb-6 text-red-500 text-center">
+                                    {error}
+                                  </div>
+                                )}
+
                               </form>
                             </div>
                           </div>
@@ -227,6 +232,35 @@ export const LoginPage = () => {
               </section>
             </div>
           </div>
+        </div>
+
+
+
+        <div className='hidden md:flex fixed top-10 left-10 bg-white max-w-md p-6 rounded-lg shadow-lg'>
+          <div className='text-center'>
+            <h2 className='text-2xl font-bold text-sky-600'>Centro de Recolección de Residuos</h2>
+            <p className='text-gray-700 mt-4'>
+              El Centro de Recolección de Residuos del SENA gestiona y recicla residuos,
+              promoviendo la sostenibilidad y utilizando tecnologías avanzadas para su seguimiento.
+            </p>
+          </div>
+        </div>
+
+        {/* Calendario de Actividades */}
+        <Link to="/usuario-actividad">
+          <div className='hidden md:flex flex-col justify-center items-center fixed top-10 right-10 bg-white max-w-xs p-6 rounded-lg shadow-lg'>
+            <Calendar size={70} className='text-sky-600 mb-4' />
+            <h2 className='text-lg text-sky-600 font-medium text-center'>Ingresar <br /> Calendario de Actividades</h2>
+          </div>
+        </Link>
+
+        {/* Pie de página */}
+        <div className='fixed flex flex-col items-start bottom-10 right-10'>
+          <div className='flex items-end pb-2'>
+            <img src={logo2} className='w-24' alt="Logo SENA" />
+            <p className='text-xl ml-2'>Sede Yamboro</p>
+          </div>
+          <span className='text-gray-600'>© Todos los derechos reservados.</span>
         </div>
       </div>
     </>

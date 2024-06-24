@@ -4,14 +4,10 @@ import axiosClient from '../../configs/axiosClient';
 import { EditIcon } from '../iconos/EditIcon';
 import { SweetAlert } from '../../configs/SweetAlert';
 
-
-
-
 export const ActualizarElemento = ({ fetchData, elemento }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
     const [message, setMessage] = useState(null);
-
 
     const [formData, setFormData] = useState({
         nombre_elm: elemento.nombre_elm,
@@ -24,6 +20,13 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
         tipo_elm: false,
         cantidad: false
     });
+
+    const tipoElementos = [
+        { id: 'consumible', nombre: 'Consumible' },
+        { id: 'herramienta', nombre: 'Herramienta' },
+        { id: 'aseo', nombre: 'Aseo' },
+        { id: 'otro', nombre: 'Otro' }
+    ];
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -38,12 +41,9 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
         });
     };
 
-
     const handleSubmit = async () => {
-
         setIsSuccess(null);
         setMessage('');
-
 
         const newFormErrors = {};
 
@@ -61,24 +61,23 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
         if (Object.keys(newFormErrors).length > 0) {
             // Actualizar estado de errores
             setFormErrors(newFormErrors);
-            // Mostrar mensaje de error o manejar la validación según tu diseño
             console.log("Hay campos requeridos vacíos");
             return;
         }
 
         try {
-            console.log(formData);
-        
             await axiosClient.put(`http://localhost:3000/elemento/actualizar/${elemento.id_elemento}`, formData).then(() => {
                 fetchData();
                 onOpenChange(false);
-                setFormData('')
-                setIsSuccess(true);
+                setFormData({
+                    nombre_elm: "",
+                    tipo_elm: "",
+                    cantidad: ""
+                });
                 setMessage('Elemento Actualizado Con Exito');
             });
 
-            setIsSuccess(true)
-
+            setIsSuccess(true);
             onOpenChange(false);
         } catch (error) {
             console.error('Error submitting data:', error);
@@ -115,15 +114,21 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
                                     </div>
                                 )}
 
-                                <Input
-                                    autoFocus
-                                    label="Tipo"
-                                    placeholder="Enter tipo"
-                                    variant="bordered"
+                        
+                                <select
+                                    id="tipo_elm"
                                     name="tipo_elm"
                                     value={formData.tipo_elm}
                                     onChange={handleChange}
-                                />
+                                    className="border rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300"
+                                >
+                                    <option value="" disabled>Seleccione un tipo</option>
+                                    {tipoElementos.map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.nombre}
+                                        </option>
+                                    ))}
+                                </select>
                                 {formErrors.tipo_elm && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
                                         Tipo requerido
@@ -154,5 +159,5 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
             </Modal>
             <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
         </div>
-  )
-}
+    );
+};

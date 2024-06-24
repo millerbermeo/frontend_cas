@@ -1,0 +1,46 @@
+.my-calendar {
+    --rbc-bg-color: #f9fafb; /* Tailwind's gray-100 */
+    --rbc-day-bg: #ffffff; /* Tailwind's white */
+    --rbc-today-bg: #ccc; /* Tailwind's yellow-200 */
+    --rbc-selected-bg: #0284c7; /* Tailwind's blue-600 */
+    --rbc-event-bg: #0369a1; /* Tailwind's blue-700 */
+    --rbc-border-color: #e5e7eb; /* Tailwind's gray-200 */
+  }
+  
+  .my-calendar .rbc-toolbar {
+    background-color: var(--rbc-bg-color);
+    padding: 1rem;
+    border-bottom: 1px solid var(--rbc-border-color);
+  }
+  
+  .my-calendar .rbc-toolbar button {
+    background-color: var(--rbc-selected-bg);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem; /* Tailwind's rounded-md */
+    transition: background-color 0.2s;
+  }
+  
+  .my-calendar .rbc-toolbar button:hover {
+    background-color: var(--rbc-event-bg);
+  }
+  
+  .my-calendar .rbc-event {
+    background-color: var(--rbc-event-bg);
+    color: white;
+    border-radius: 0.375rem; /* Tailwind's rounded-md */
+  }
+  
+  .my-calendar .rbc-today {
+    background-color: var(--rbc-today-bg);
+  }
+  
+  .my-calendar .rbc-day-bg {
+    background-color: var(--rbc-day-bg);
+  }
+  
+  .my-calendar .rbc-header {
+    background-color: var(--rbc-bg-color);
+    border-bottom: 1px solid var(--rbc-border-color);
+  }
+  

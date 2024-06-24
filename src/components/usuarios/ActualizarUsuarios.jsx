@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
-import { Modal, ModalContent, ModalHeader, Select, SelectItem, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, Input, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { SweetAlert } from '../../configs/SweetAlert';
 import axiosClient from '../../configs/axiosClient';
 import { EditIcon } from '../iconos/EditIcon';
-
-
-
 
 export const ActualizarUsuarios = ({ fetchData, usuario }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSuccess, setIsSuccess] = useState(null);
     const [message, setMessage] = useState(null);
 
-
     const [formErrors, setFormErrors] = useState({
         nombre: false,
         apellidos: false,
         identificacion: false,
         email: false,
+        telefono: false,
         rol: false,
         estado: false,
         password: false
@@ -28,9 +25,10 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
         apellidos: usuario.apellidos,
         identificacion: usuario.identificacion,
         email: usuario.email,
+        telefono: usuario.telefono || '',
         rol: usuario.rol,
         estado: usuario.estado,
-        password: usuario.password
+        password: ''
     });
 
     const handleChange = (event) => {
@@ -46,8 +44,25 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
         });
     };
 
-    const handleSubmit = async () => {
+    const validateField = (name, value) => {
+        switch (name) {
+            case 'nombre':
+            case 'apellidos':
+                return /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/.test(value);
+            case 'identificacion':
+                return /^\d+$/.test(value);
+            case 'telefono':
+                return value === '' || /^\d+$/.test(value);
+            case 'email':
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            case 'password':
+                return value === '' || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+            default:
+                return value.length > 0;
+        }
+    };
 
+    const handleSubmit = async () => {
         setIsSuccess(null);
         setMessage('');
 
@@ -55,27 +70,30 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
 
         // Validar campos
         Object.entries(formData).forEach(([key, value]) => {
-            if (!value) {
+            if (!validateField(key, value) && key !== 'password') {
                 newFormErrors[key] = true;
             }
         });
+
+        if (formData.password && !validateField('password', formData.password)) {
+            newFormErrors.password = true;
+        }
 
         if (Object.keys(newFormErrors).length > 0) {
             setFormErrors(newFormErrors);
             return;
         }
 
+        const { password, ...dataToUpdate } = formData;
+
         try {
             // Enviar los datos actualizados al backend
-            await axiosClient.put(`usuario/editar/${usuario.id_usuario}`, formData).then(() => {
+            await axiosClient.put(`usuario/editar/${usuario.id_usuario}`, { ...dataToUpdate, password }).then(() => {
                 fetchData();
             });
 
             setIsSuccess(true);
             onOpenChange(false);
-
-            setFormData('')
-            setIsSuccess(true);
             setMessage('Usuario Actualizado Con Exito');
         } catch (error) {
             console.error('Error al enviar los datos:', error);
@@ -100,61 +118,74 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                 <Input
                                     autoFocus
                                     label="Nombre"
-                                    placeholder="Enter nombre"
+                                    placeholder="Ingrese nombre"
                                     variant="bordered"
                                     name="nombre"
                                     value={formData.nombre}
                                     onChange={handleChange}
                                 />
                                 {formErrors.nombre && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
-                                        Nombre Requerido
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        El nombre solo puede contener letras, espacios y caracteres acentuados
                                     </div>
                                 )}
 
                                 <Input
                                     autoFocus
                                     label="Apellidos"
-                                    placeholder="Enter apellidos"
+                                    placeholder="Ingrese apellidos"
                                     variant="bordered"
                                     name="apellidos"
                                     value={formData.apellidos}
                                     onChange={handleChange}
                                 />
                                 {formErrors.apellidos && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
-                                        Apellidos Requeridos
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        Los apellidos solo pueden contener letras, espacios y caracteres acentuados
                                     </div>
                                 )}
 
                                 <Input
                                     label="Identificación"
-                                    placeholder="Enter identificación"
+                                    placeholder="Ingrese identificación"
                                     variant="bordered"
                                     name="identificacion"
                                     value={formData.identificacion}
                                     onChange={handleChange}
                                 />
                                 {formErrors.identificacion && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
-                                        Identificación Requerida
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        La identificación solo puede contener números
                                     </div>
                                 )}
 
                                 <Input
                                     label="Email"
-                                    placeholder="Enter email"
+                                    placeholder="Ingrese email"
                                     variant="bordered"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                 />
                                 {formErrors.email && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
-                                        Email Requerido
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        El email debe ser válido
                                     </div>
                                 )}
 
+                                <Input
+                                    label="Teléfono"
+                                    placeholder="Ingrese teléfono"
+                                    variant="bordered"
+                                    name="telefono"
+                                    value={formData.telefono}
+                                    onChange={handleChange}
+                                />
+                                {formErrors.telefono && (
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        El teléfono solo puede contener números
+                                    </div>
+                                )}
 
                                 <select
                                     label="Rol"
@@ -168,74 +199,43 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     <option value="administrador">Administrador</option>
                                     <option value="pasante">Pasante</option>
                                     <option value="operario">Operario</option>
+                                    <option value="aprendiz">Aprendiz</option>
                                 </select>
-
-                                {/* <Select
-                                    label="Rol"
-                                    placeholder="Selecciona un rol"
-                                    name="rol"
-                                    value={formData.rol}
-                                    onChange={handleChange}
-                                >
-                                    <SelectItem onClick={() => setFormData({ ...formData, rol: "administrador" })}>
-                                        Administrador
-                                    </SelectItem>
-                                    <SelectItem onClick={() => setFormData({ ...formData, rol: "pasante" })}>
-                                        Pasante
-                                    </SelectItem>
-                                    <SelectItem onClick={() => setFormData({ ...formData, rol: "operario" })}>
-                                        Operario
-                                    </SelectItem>
-                                </Select> */}
                                 {formErrors.rol && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
                                         Rol Requerido
                                     </div>
                                 )}
 
-                                {/* <Input
+                                <select
                                     label="Estado"
-                                    placeholder="Enter estado"
-                                    variant="bordered"
+                                    placeholder="Selecciona un estado"
                                     name="estado"
                                     value={formData.estado}
                                     onChange={handleChange}
-                                /> */}
-
-
-<select
-                                        label="Estado"
-                                        placeholder="Enter estado"
-                                        variant="bordered"
-                                        name="estado"
-                                        value={formData.estado}
-                                        onChange={handleChange}
                                     className="border rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300"
                                 >
-                                    <option value="">Selecciona un Estado</option>
+                                    <option value="">Selecciona un estado</option>
                                     <option value="activo">Activo</option>
                                     <option value="inactivo">Inactivo</option>
                                 </select>
-
-
-                                
                                 {formErrors.estado && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
                                         Estado Requerido
                                     </div>
                                 )}
 
                                 <Input
                                     label="Password"
-                                    placeholder="Enter password"
+                                    placeholder="Ingrese password"
                                     variant="bordered"
                                     name="password"
                                     value={formData.password}
                                     onChange={handleChange}
                                 />
                                 {formErrors.password && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
-                                        Password Requerido
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número
                                     </div>
                                 )}
                             </ModalBody>
@@ -248,7 +248,6 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                 </ModalContent>
             </Modal>
             <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
-
         </div>
-  )
-}
+    );
+};
