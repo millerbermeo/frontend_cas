@@ -236,7 +236,7 @@ export const LoginPage = () => {
 
 
 
-        <div className='hidden w-80 2xl:w-full md:flex fixed top-10 left-10 bg-white max-w-md p-6 rounded-lg shadow-lg'>
+        {/* <div className='hidden w-80 2xl:w-full md:flex fixed top-10 left-10 bg-white max-w-md p-6 rounded-lg shadow-lg'>
           <div className='text-center'>
             <h2 className='text-2xl font-bold text-sky-600'>Centro de Recolección de Residuos</h2>
             <p className='text-gray-700 mt-4'>
@@ -244,18 +244,18 @@ export const LoginPage = () => {
               promoviendo la sostenibilidad y utilizando tecnologías avanzadas para su seguimiento.
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Calendario de Actividades */}
         <Link to="/usuario-actividad">
-          <div className='hidden md:flex flex-col justify-center items-center fixed top-10 right-10 bg-white max-w-xs p-6 rounded-lg shadow-lg'>
-            <Calendar size={70} className='text-sky-600 mb-4' />
-            <h2 className='text-lg text-sky-600 font-medium text-center'>Ingresar <br /> Calendario de Actividades</h2>
+          <div className='hidden md:flex flex-col justify-center items-center fixed top-10 right-10 bg-white w-[220px] p-6 rounded-lg shadow-lg'>
+            <Calendar size={80} className='text-sky-600 mb-4' />
+            <h2 className='text-base text-sky-600 font-medium text-center'>Ingresar a <br /> Calendario de Actividades</h2>
           </div>
         </Link>
 
         {/* Pie de página */}
-        <div className='fixed flex flex-col items-start bottom-10 right-10'>
+        <div className='fixed flex flex-col items-start bottom-10 left-10'>
           <div className='flex items-end pb-2'>
             <img src={logo2} className='w-24' alt="Logo SENA" />
             <p className='text-xl ml-2'>Sede Yamboro</p>

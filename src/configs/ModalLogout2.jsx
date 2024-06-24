@@ -26,7 +26,7 @@ export const ModalLogout2 = () => {
     return (
         <>
 
-<button color="" className='bg-sky-500 rounded-full w-[43px] absolute top-2 h-[43px] flex justify-center items-center right-3' onClick={onOpen}>
+<button color="" className='bg-sky-500 rounded-full w-[43px] absolute top-2.2 h-[43px] flex justify-center items-center right-3' onClick={onOpen}>
                 <Power size={25} color='black'/>
                 </button>
 
