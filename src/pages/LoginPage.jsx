@@ -236,7 +236,7 @@ export const LoginPage = () => {
 
 
 
-        <div className='hidden md:flex fixed top-10 left-10 bg-white max-w-md p-6 rounded-lg shadow-lg'>
+        <div className='hidden w-80 2xl:w-full md:flex fixed top-10 left-10 bg-white max-w-md p-6 rounded-lg shadow-lg'>
           <div className='text-center'>
             <h2 className='text-2xl font-bold text-sky-600'>Centro de Recolección de Residuos</h2>
             <p className='text-gray-700 mt-4'>

@@ -37,7 +37,7 @@ export default function Sidebar({ children }) {
                         </SidebarContext.Provider>  
                     </div>
 
-                    <div className="border-t flex p-3 mt-[12%]  2xl:mt-[45%] border-white cursor-pointer border-opacity-50">
+                    <div className="border-t hidden 2xl:flex p-3 mt-[12%]  2xl:mt-[45%] border-white cursor-pointer border-opacity-50">
                         {/* <img src={profile} className="w-10 h-10 rounded-md" /> */}
                         <Power className="ml-2.5" size={20} />
                         <div className={`flex justify-between items-center overflow-hidden  duration-300 cursor-pointer transition-all ${expanded ? "w-40 2xl:w-48 ml-3" : "w-0"} `}>
