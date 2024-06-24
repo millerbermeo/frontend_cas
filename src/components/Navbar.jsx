@@ -2,6 +2,11 @@ import React from 'react'
 
 import { Dropdown, Link, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { ModalUser } from './utils/ModalUser';
+import Notificaciones from './utils/Notificaciones';
+import { NotificationProvider } from '../configs/NotificationContext';
+import { ModalLogout2 } from '../configs/ModalLogout2';
+
+
 
 
 
@@ -15,14 +20,19 @@ export const Navbar = ({ tittle }) => {
                         <h2 className="text-xl text-black dark:text-white" href="#"
                         >{tittle}</h2>
 
-                    
+
+                    </div>
+                    <div className='absolute right-16'>
+
+                        <NotificationProvider>
+                            <Notificaciones />
+                        </NotificationProvider>
                     </div>
 
-                    <ModalUser/>
-                  
-                 
-                       
+                    <ModalUser />
 
+
+                    <ModalLogout2 />
 
 
                 </div>

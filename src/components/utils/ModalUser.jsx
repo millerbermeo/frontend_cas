@@ -69,7 +69,7 @@ export const ModalUser = () => {
 
     return (
         <>
-            <div className='absolute right-3 cursor-pointer' onClick={onOpen}>
+            <div className='absolute top-2.5 scale-105 right-[120px] cursor-pointer' onClick={onOpen}>
                 <User
                     name={storedName}
                     description={storedRole}
