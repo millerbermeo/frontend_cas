@@ -97,7 +97,7 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Actualizar Usuario</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">Actualizar Elemento</ModalHeader>
                             <ModalBody>
                                 <Input
                                     autoFocus

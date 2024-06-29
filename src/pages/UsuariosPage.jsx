@@ -11,10 +11,10 @@ function UsuariosPage() {
       <main className='w-full px-3 h-screen overflow-y-auto'>
 
         <Navbar tittle="Usuarios" />
-      
-   <div className='mt-10'>
-   <TableUsuarios/>
-   </div>
+
+        <div className='mt-10'>
+          <TableUsuarios />
+        </div>
 
       </main>
     </>

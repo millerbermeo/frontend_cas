@@ -5,7 +5,6 @@ import { Badge } from "@nextui-org/react";
 import { NotificationIcon } from '../iconos/NotificationIcon';
 import { NotificationContext } from '../../configs/NotificationContext';
 
-
 // Configura el cliente de socket.io
 const socket = io('http://localhost:3000', {
     transports: ['websocket', 'polling']
@@ -15,13 +14,27 @@ const Notificaciones = () => {
     const { notificaciones, setNotificaciones } = useContext(NotificationContext);
 
     useEffect(() => {
+        // Leer notificaciones desde sessionStorage al montar el componente
+        const storedNotificaciones = JSON.parse(sessionStorage.getItem('notificaciones')) || [];
+        setNotificaciones(storedNotificaciones);
+
         // Manejar la recepción de notificaciones del socket
         socket.on('notificacion', (data) => {
             setNotificaciones((prev) => {
                 // Evita duplicados
                 const alreadyExists = prev.some(notif => notif.id_elemento === data.id_elemento && notif.cantidad === data.cantidad);
                 if (alreadyExists) return prev;
-                return [...prev, data];
+
+                // Agregar la nueva notificación al inicio
+                const updatedNotificaciones = [data, ...prev];
+                
+                // Limitar a las últimas 5 notificaciones
+                const limitedNotificaciones = updatedNotificaciones.slice(0, 5);
+                
+                // Guardar notificaciones en sessionStorage
+                sessionStorage.setItem('notificaciones', JSON.stringify(limitedNotificaciones));
+                
+                return limitedNotificaciones;
             });
         });
 
@@ -46,7 +59,7 @@ const Notificaciones = () => {
                     )}
                 </div>
             </DropdownTrigger>
-            <DropdownMenu  aria-label="Lista de notificaciones">
+            <DropdownMenu aria-label="Lista de notificaciones">
                 {notificaciones.length === 0 ? (
                     <DropdownItem key="no-notifications">No hay notificaciones</DropdownItem>
                 ) : (
