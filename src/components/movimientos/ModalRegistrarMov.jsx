@@ -207,16 +207,16 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                     name="fk_actividad"
                                     value={formData.fk_actividad}
                                     onChange={handleChange}
-                                    disabled={!data3.length} // Deshabilita el menú desplegable si no hay actividades disponibles
+                                    disabled={!data3.length} 
                                 >
-                                    {data3.length ? ( // Verifica si hay actividades disponibles
+                                    {data3.length ? ( 
                                         data3.map((item, index) => (
                                             <SelectItem key={item.id_actividad} value={item.id_actividad}>
                                                 {item.nombre_act}
                                             </SelectItem>
                                         ))
                                     ) : (
-                                        // Si no hay actividades, muestra un mensaje
+                                   
                                         <SelectItem disabled>
                                             No hay actividades disponibles
                                         </SelectItem>
