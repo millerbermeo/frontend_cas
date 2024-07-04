@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from "../assets/logo2.png";
+import logo from "../assets/logocas.png";
 import logo2 from "../assets/logoSenaNaranja.png";
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
@@ -146,9 +146,9 @@ export const LoginPage = () => {
                         <div className="g-0 lg:flex lg:flex-wrap">
                           <div className="px-4 md:px-0 lg:w-full">
                             <div className="md:mx-6 ">
-                              <div className="text-center flex flex-col items-center">
+                              <div className="text-center pt-10 flex flex-col items-center">
                                 <img
-                                  className="w-48 h-auto"
+                                  className="w-40 h-auto"
                                   src={logo}
                                   alt="logo"
                                 />

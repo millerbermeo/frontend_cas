@@ -20,6 +20,7 @@ export default function Sidebar({ children }) {
                        <div className="flex gap-3 items-end">
                        {/* <img src={logo} className={`overflow-hidden duration-300 ease-out rounded-full  ${expanded ? "w-14" : "w-0"}`} /> */}
                         <h1 className={`duration-300 ease-out overflow-hidden transition-all text-3xl text-white font-bold ${expanded ? "w-14" : "w-0"}`}>CAS</h1>
+                        <span className={`absolute`}>Centro de acopio SENA</span>
                        </div>
                         <button onClick={() => setExpanded((curr) => !curr)} className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
                             {expanded ? <Menu /> : <X />}
