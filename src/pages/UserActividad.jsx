@@ -16,7 +16,7 @@ function UserActividad() {
                 <li className="text-gray-700 hover:text-sky-600">Login</li>
                 </Link>
                 {/* <li><a href="/about" className="text-gray-700 hover:text-sky-600">Acerca de</a></li> */}
-                <li><a href="https://wa.me/3102455831" className="text-gray-700 hover:text-sky-600">Contacto</a></li>
+                <li><a target='_blank' href="https://wa.me/3102455831" className="text-gray-700 hover:text-sky-600">Contacto</a></li>
               </ul>
             </nav>
           </div>
