@@ -78,7 +78,7 @@ export const RegistrarElemento = ({ fetchData }) => {
         }
 
         try {
-            await axiosClient.post('http://localhost:3000/elemento/registrar', formData).then((response) => {
+            await axiosClient.post('elemento/registrar', formData).then((response) => {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);

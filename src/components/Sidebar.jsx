@@ -15,7 +15,7 @@ export default function Sidebar({ children }) {
     return (
         <>
             <aside className="h-screen">
-                <nav className="h-full flex flex-col bg-sky-600 text-white border-r transition-all duration-300 shadow-sm px-2 justify-start">  
+                <nav className="h-full flex flex-col bg-sky-700 text-white border-r transition-all duration-300 shadow-sm px-2 justify-start">  
                     <div className="p-4 pb-2 flex justify-between items-center text-black">
                        <div className="flex gap-3 items-end">
                        {/* <img src={logo} className={`overflow-hidden duration-300 ease-out rounded-full  ${expanded ? "w-14" : "w-0"}`} /> */}

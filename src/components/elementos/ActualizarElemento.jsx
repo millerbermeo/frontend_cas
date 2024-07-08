@@ -66,7 +66,7 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
         }
 
         try {
-            await axiosClient.put(`http://localhost:3000/elemento/actualizar/${elemento.id_elemento}`, formData).then(() => {
+            await axiosClient.put(`elemento/actualizar/${elemento.id_elemento}`, formData).then(() => {
                 fetchData();
                 onOpenChange(false);
                 setFormData({

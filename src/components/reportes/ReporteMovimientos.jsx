@@ -79,7 +79,8 @@ const ReporteMovimientos = () => {
         <Select 
           label="Selecciona Mes" 
           placeholder="Selecciona Mes" 
-          className="w-40"
+          className="w-96"
+          color='primary'
           onChange={(e) => handleMonthChange(e.target.value)}
         >
           <SelectItem key="01" value="01">Enero</SelectItem>
@@ -98,7 +99,8 @@ const ReporteMovimientos = () => {
         <Select 
           label="Selecciona Año" 
           placeholder="Selecciona Año" 
-          className="w-40"
+          className="w-96"
+          color='primary'
           onChange={(e) => handleYearChange(e.target.value)}
         >
           <SelectItem key="2024" value="2024">2024</SelectItem>

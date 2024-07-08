@@ -64,7 +64,8 @@ const ReporteElementos = () => {
           label="Selecciona Tipos" 
           placeholder="Selecciona Tipos" 
           multiple
-          className="w-40"
+          color='primary'
+          className="w-96"
           onChange={(e) => handleTiposChange(e.target.value)}
         >
           <SelectItem key="consumible" value="consumible">Consumible</SelectItem>

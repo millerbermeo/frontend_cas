@@ -8,6 +8,9 @@ import { Spinner } from "@nextui-org/react";
 import RequestPasswordReset from './configs/RequestPasswordReset';
 import ResetPassword from './configs/ResetPassword';
 import UserActividad from './pages/UserActividad';
+import FloatingButton from './configs/FloatingButton';
+
+
 
 
 
@@ -21,6 +24,9 @@ const ActividadesPage = lazy(() => import('./pages/ActividadesPage'));
 const UsuariosPage = lazy(() => import('./pages/UsuariosPage'));
 const ElementosPage = lazy(() => import('./pages/ElementosPage'));
 const ReportesPage = lazy(() => import('./pages/ReportesPage'));
+const ConfigsPage = lazy(() => import('./pages/ConfigsPage'));
+
+
 
 
 export const App = () => {
@@ -99,6 +105,17 @@ export const App = () => {
           </ProtectedRoute>
         } />
 
+        
+<Route path="/configs" element={
+          <ProtectedRoute>
+            <WithSidebar>
+              <Suspense fallback={<Spinner label="Default" color="default" labelColor="foreground" />}>
+                <ConfigsPage />
+              </Suspense>
+            </WithSidebar>
+          </ProtectedRoute>
+        } />
+
 
       </Routes>
     </BrowserRouter>
@@ -110,6 +127,7 @@ export const App = () => {
 
 const WithSidebar = ({ children }) => (
   <div className="flex">
+<FloatingButton/>
     <Sidebar>
       <SidebarItem nav="/home" icon={<Home size={20} />} text="Home" />
       <SidebarItem nav="/residuos" icon={<Recycle  size={20} />} text="Residuos" />

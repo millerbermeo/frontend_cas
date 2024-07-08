@@ -6,6 +6,7 @@ import ReporteElementos from '../components/reportes/ReporteElementos'
 
 
 
+
 function ReportesPage() {
   return (
     <>
@@ -16,6 +17,9 @@ function ReportesPage() {
         <ReporteMovimientos/>
 
         <ReporteElementos/>
+
+
+   
         </div>
 
 
