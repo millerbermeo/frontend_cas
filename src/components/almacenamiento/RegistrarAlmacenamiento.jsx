@@ -16,7 +16,6 @@ export const RegistrarAlmacenamiento = ({ fetchData }) => {
 
   const [formErrors, setFormErrors] = useState({
     nombre_alm: false,
-    cantidad_alm: false
   });
 
   const handleChange = (event) => {
@@ -42,9 +41,7 @@ export const RegistrarAlmacenamiento = ({ fetchData }) => {
     if (!formData.nombre_alm) {
       newFormErrors.nombre_alm = true;
     }
-    if (formData.cantidad_alm === "") {
-      newFormErrors.cantidad_alm = true;
-    }
+  
 
     if (Object.keys(newFormErrors).length > 0) {
       // Actualizar estado de errores
@@ -97,19 +94,7 @@ export const RegistrarAlmacenamiento = ({ fetchData }) => {
                   </div>
                 )}
 
-                <Input
-                  label="Cantidad"
-                  placeholder="Enter cantidad"
-                  variant="bordered"
-                  name="cantidad_alm"
-                  value={formData.cantidad_alm}
-                  onChange={handleChange}
-                />
-                {formErrors.cantidad_alm && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
-                    Cantidad requerida
-                  </div>
-                )}
+      
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

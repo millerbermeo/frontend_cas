@@ -101,6 +101,7 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
                 )}
 
                 <Input
+                className='hidden'
                   label="Cantidad"
                   placeholder="Enter cantidad"
                   variant="bordered"
