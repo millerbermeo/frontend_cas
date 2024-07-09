@@ -11,11 +11,6 @@ import UserActividad from './pages/UserActividad';
 import FloatingButton from './configs/FloatingButton';
 
 
-
-
-
-
-
 // Lazy load the pages
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ResiduosPage = lazy(() => import('./pages/ResiduosPage'));
@@ -25,7 +20,6 @@ const UsuariosPage = lazy(() => import('./pages/UsuariosPage'));
 const ElementosPage = lazy(() => import('./pages/ElementosPage'));
 const ReportesPage = lazy(() => import('./pages/ReportesPage'));
 const ConfigsPage = lazy(() => import('./pages/ConfigsPage'));
-
 
 
 

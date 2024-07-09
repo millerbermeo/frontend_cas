@@ -3,6 +3,8 @@ import { Navbar } from '../components/Navbar'
 import { TablaAlmacenamiento } from '../components/almacenamiento/TablaAlmacenamiento'
 import { TablaEmpresas } from '../components/empresas/TablaEmpresas'
 import { TablaTiposResiduos } from '../components/tipos/TablaTiposResiduos'
+import { TablaAreas } from '../components/areas/TablaAreas'
+import { TablaLugares } from '../components/lugares/TablaLugares'
 
 
 
@@ -17,6 +19,8 @@ function ConfigsPage() {
                     <TablaAlmacenamiento />
                     <TablaEmpresas />
                     <TablaTiposResiduos />
+                    <TablaAreas/>
+                    <TablaLugares/>
                 </div>
             </main>
         </>

@@ -212,7 +212,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                     {data3.length ? ( 
                                         data3.map((item, index) => (
                                             <SelectItem key={item.id_actividad} value={item.id_actividad}>
-                                                {item.nombre_act}
+                                                {`${item.id_actividad}) ${ item.nombre_act}`}
                                             </SelectItem>
                                         ))
                                     ) : (
