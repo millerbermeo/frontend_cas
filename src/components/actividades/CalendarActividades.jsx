@@ -14,7 +14,7 @@ export const CalendarActividades = () => {
   
   const fetchData = async () => {
     try {
-      const response = await axiosClient.get('actividades/listar');
+      const response = await axiosClient.get('actividades/listarDos');
       const transformedEvents = response.data.map(activity => ({
         title: activity.nombre_act,
         start: new Date(activity.fecha_actividad),

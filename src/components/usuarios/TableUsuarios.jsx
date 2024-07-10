@@ -169,15 +169,15 @@ export const TableUsuarios = () => {
 
      <Table className='z-0 printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys}  onSelectionChange={setSelectedKeys}>
      <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>NOMBRE</TableColumn>
-          <TableColumn>APELLIDO</TableColumn>
-          <TableColumn>IDENTIIFCACION</TableColumn>
-          <TableColumn>TELEFONO</TableColumn>
-          <TableColumn>EMAIL</TableColumn>
-          <TableColumn>ROL</TableColumn>
-          <TableColumn>ESTADO</TableColumn>
-          <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>NOMBRE</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>APELLIDO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>IDENTIIFCACION</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>TELEFONO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>EMAIL</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ROL</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ESTADO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
        <TableBody>
          {paginatedData.map(item => (

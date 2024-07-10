@@ -98,10 +98,10 @@ export const TablaTiposResiduos = () => {
 
       <Table className='z-0 printableTable' aria-label="Tabla de Tipos de Residuos" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
         <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>TIPO RESIDUO</TableColumn>
-          <TableColumn>TIPO</TableColumn>
-          <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>TIPO RESIDUO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>TIPO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
         <TableBody>
           {paginatedData.map(item => (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Select, SelectItem, TimeInput } from '@nextui-org/react';
+import { Input, Button, Select, SelectItem, Checkbox } from '@nextui-org/react';
 import axiosClient from '../../configs/axiosClient';
 import { SweetAlert } from '../../configs/SweetAlert';
 
@@ -130,7 +130,7 @@ export const RegistrarActividad = () => {
   return (
     <>
       <section className='w-full z-10'>
-        <div className='bg-zinc-100 p-3 rounded'>
+        <div className=' p-3 rounded'>
           <div className='mb-4 flex gap-x-3'>
             <span className='text-lg w-48'>Seleccionar Usuarios:</span>
             <Button className='bg-sky-600 text-white' onClick={toggleUsuarios}>
@@ -138,26 +138,26 @@ export const RegistrarActividad = () => {
             </Button>
           </div>
           {mostrarUsuarios && (
-            <form className='grid grid-cols-5 mb-10'>
+            <form className='grid grid-cols-5 mb-10 bg-zinc-100 p-2 rounded-md'>
               {usuarios.map(usuario => (
                 <div key={usuario.id_usuario}>
-                  <input
-                    type="checkbox"
-                    checked={usuario.isChecked || false}
+                  <Checkbox
+                    isSelected={usuario.isChecked || false}
                     onChange={(e) => handleUsuarioCheckboxChange(usuario.id_usuario, e.target.checked)}
                     id={usuario.id_usuario}
                     name={usuario.id_usuario}
                     value={usuario.id_usuario}
                     className="mr-2"
-                  />
-                  <label htmlFor={usuario.id_usuario} className="mr-4">{usuario.nombre}</label>
+                  >
+                    <label htmlFor={usuario.id_usuario} className="mr-4">{usuario.nombre}</label>
+                  </Checkbox>
                 </div>
               ))}
             </form>
           )}
         </div>
 
-        <div className='bg-zinc-100 p-3 my-10 rounded flex flex-col items-'>
+        <div className='p-3 my-10 rounded flex flex-col items-'>
           <div className='mb-4 flex gap-x-3'>
             <span className='text-lg w-48'>Seleccionar Elementos:</span>
             <Button className='bg-sky-600 text-white' onClick={toggleElementos}>
@@ -165,22 +165,22 @@ export const RegistrarActividad = () => {
             </Button>
           </div>
           {mostrarElementos && (
-            <form className='grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 place-items-center w-full m-auto my-5'>
+            <form className='grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 place-items-center w-full m-auto my-5 bg-zinc-200 p-2 rounded-md'>
               {elementos.map(elemento => (
                 <div key={elemento.id_elemento} className={`mb-2 w-full ${elemento.cantidad === 0 ? 'hidden' : ''}`}>
-                  <input
-                    type="checkbox"
-                    checked={elemento.isChecked || false}
+                  <Checkbox
+                    isSelected={elemento.isChecked || false}
                     onChange={(e) => handleElementoCheckboxChange(elemento.id_elemento, e.target.checked)}
                     id={`elemento-${elemento.id_elemento}`}
                     name={`elemento-${elemento.id_elemento}`}
                     value={elemento.id_elemento}
-                    className="mr-2"
+                    className="mr-2 mb-1"
                     disabled={elemento.cantidad === 0}
-                  />
-                  <label htmlFor={`elemento-${elemento.id_elemento}`} className="mr-4">
-                    {elemento.nombre_elm} - {elemento.tipo_elm} {elemento.cantidad}
-                  </label>
+                  >
+                    <label htmlFor={`elemento-${elemento.id_elemento}`} className="mr-4">
+                      {elemento.nombre_elm} - {elemento.tipo_elm} {elemento.cantidad}
+                    </label>
+                  </Checkbox>
                   <Input
                     placeholder="Cantidad"
                     className="max-w-xs"
@@ -228,7 +228,7 @@ export const RegistrarActividad = () => {
           </form>
         </div>
 
-        {error && <div className='text-lg font-normal w-full mt-8 bg-red-600 text-white px-2 py-0.5 my- rounded'>{error}</div>}
+        {error && <div className='text-lg font-normal w-full mt-8 text-red-500 px-2 py-0.5 my- rounded'>{error}</div>}
 
         <Button className='my-5 bg-sky-600 text-white' onClick={handleActividad} color="primary">
           Registrar Actividad

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button } from '@nextui-org/react';
+import { Input, Button, Checkbox } from '@nextui-org/react';
 import axiosClient from '../../configs/axiosClient';
 import { SweetAlert } from '../../configs/SweetAlert';
+
 
 export const RegistrarActividadElm = () => {
   const [elementos, setElementos] = useState([]);
@@ -89,30 +90,31 @@ export const RegistrarActividadElm = () => {
   return (
     <>
       <section className='w-full z-10'>
-        <div className='bg-zinc-100 p-3 my-10 rounded flex flex-col items-'>
+        <div className='p-3 my-10 rounded flex flex-col items-'>
           <div className='mb-4 flex gap-x-3'>
             <span className='text-lg w-48'>Seleccionar Elementos:</span>
             <Button className='bg-sky-600 text-white' onClick={toggleElementos}>
               {mostrarElementos ? 'Ocultar Elementos' : 'Desplegar Elementos'}
             </Button>
           </div>
+          
           {mostrarElementos && (
-            <form className='grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 place-items-center w-full m-auto my-5'>
+            <form className='grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 place-items-center w-full m-auto my-5 bg-zinc-200 p-2 rounded-md'>
               {elementos.map(elemento => (
                 <div key={elemento.id_elemento} className={`mb-2 w-full ${elemento.cantidad === 0 ? 'hidden' : ''}`}>
-                  <input
-                    type="checkbox"
-                    checked={elemento.isChecked || false}
+                  <Checkbox
+                    isSelected={elemento.isChecked || false}
                     onChange={(e) => handleElementoCheckboxChange(elemento.id_elemento, e.target.checked)}
                     id={`elemento-${elemento.id_elemento}`}
                     name={`elemento-${elemento.id_elemento}`}
                     value={elemento.id_elemento}
                     className="mr-2"
                     disabled={elemento.cantidad === 0}
-                  />
-                  <label htmlFor={`elemento-${elemento.id_elemento}`} className="mr-4">
-                    {elemento.nombre_elm} - {elemento.tipo_elm} {elemento.cantidad}
-                  </label>
+                  >
+                    <label htmlFor={`elemento-${elemento.id_elemento}`} className="mr-4">
+                      {elemento.nombre_elm} - {elemento.tipo_elm} {elemento.cantidad}
+                    </label>
+                  </Checkbox>
                   <Input
                     placeholder="Cantidad"
                     className="max-w-xs"

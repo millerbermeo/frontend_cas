@@ -98,11 +98,11 @@ export const TablaLugares = () => {
 
       <Table className='z-0 printableTable' aria-label="Tabla de Lugares" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
         <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>NOMBRE LUGAR</TableColumn>
-          <TableColumn>UBICACIÓN</TableColumn>
-          <TableColumn>ÁREA</TableColumn>
-          <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>NOMBRE LUGAR</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>UBICACIÓN</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ÁREA</TableColumn>
+          <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
         <TableBody>
           {paginatedData.map(item => (

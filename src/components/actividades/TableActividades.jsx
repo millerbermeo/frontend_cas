@@ -151,13 +151,13 @@ export const TableActividades = () => {
 
       <Table className='z-0 printableTable' aria-label="Tabla de actividades" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
         <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>TIPO</TableColumn>
-          <TableColumn>NOMBRE</TableColumn>
-          <TableColumn>LUGAR</TableColumn>
-          <TableColumn>FECHA</TableColumn>
-          <TableColumn>ESTADO</TableColumn>
-          <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>TIPO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>NOMBRE</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>LUGAR</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>FECHA</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ESTADO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
         <TableBody>
           {paginatedData.map(item => (

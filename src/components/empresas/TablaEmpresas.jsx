@@ -98,11 +98,11 @@ export const TablaEmpresas = () => {
 
       <Table className='z-0 printableTable' aria-label="Tabla de Empresas" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
         <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>NOMBRE</TableColumn>
-          <TableColumn>DESCRIPCIÓN</TableColumn>
-          <TableColumn>CONTACTO</TableColumn>
-          <TableColumn className='flex justify-center items-center'>ACCIONES</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>NOMBRE</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>DESCRIPCIÓN</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>CONTACTO</TableColumn>
+          <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
         <TableBody>
           {paginatedData.map(item => (

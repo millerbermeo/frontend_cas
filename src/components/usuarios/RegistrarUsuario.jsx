@@ -96,9 +96,12 @@ export const RegistrarUsuario = ({ fetchData }) => {
 
         } catch (error) {
             console.error('Error al enviar los datos:', error);
+            if (error.response && error.response.status === 400) {
+                setMessage('El email o la identificación ya están en uso');
+            } else {
+                setMessage('Error al registrar el usuario');
+            }
             setIsSuccess(false);
-            onOpenChange(true);
-            setMessage('Usuario No registrado');
         }
     };
 
@@ -224,7 +227,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
                     )}
                 </ModalContent>
             </Modal>
-            <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>
+            {message && <SweetAlert type={isSuccess ? 'success' : 'error'} message={message}/>}
         </div>
     );
 };

@@ -270,16 +270,16 @@ export const TableMovimientos = () => {
                 </label>
             </div>
 
-            <Table className='printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys} selectionMode="multiple" onSelectionChange={setSelectedKeys}>
-                <TableHeader className=''>
-                    <TableColumn>ID</TableColumn>
-                    <TableColumn>TIPO MOVIMIENTO</TableColumn>
-                    <TableColumn>CANTIDAD</TableColumn>
-                    <TableColumn>FECHA</TableColumn>
-                    <TableColumn>ENCARGADO</TableColumn>
-                    <TableColumn>RESIDUO</TableColumn>
-                    <TableColumn>ACTIVIDAD</TableColumn>
-                    <TableColumn>DESTINO</TableColumn>
+            <Table className='printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys}  onSelectionChange={setSelectedKeys}>
+            <TableHeader>
+                    <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>TIPO MOVIMIENTO</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>CANTIDAD</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>FECHA</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>ENCARGADO</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>RESIDUO</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>ACTIVIDAD</TableColumn>
+                    <TableColumn className='bg-sky-700 text-white'>DESTINO</TableColumn>
                 </TableHeader>
                 <TableBody>
                     {paginatedData.map(item => (
