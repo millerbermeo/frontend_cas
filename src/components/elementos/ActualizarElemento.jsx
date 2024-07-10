@@ -109,7 +109,7 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.nombre_elm && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Nombre requerido
                                     </div>
                                 )}
@@ -130,7 +130,7 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
                                     ))}
                                 </select>
                                 {formErrors.tipo_elm && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Tipo requerido
                                     </div>
                                 )}
@@ -144,7 +144,7 @@ export const ActualizarElemento = ({ fetchData, elemento }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.cantidad && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Cantidad requerida
                                     </div>
                                 )}

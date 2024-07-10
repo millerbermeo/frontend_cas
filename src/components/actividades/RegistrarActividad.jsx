@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Select, SelectItem, Checkbox } from '@nextui-org/react';
+import { Input, Button, Select, SelectItem } from '@nextui-org/react'; // Mantenemos los componentes de Next UI para Input, Button, y Select
 import axiosClient from '../../configs/axiosClient';
 import { SweetAlert } from '../../configs/SweetAlert';
 
@@ -46,11 +46,12 @@ export const RegistrarActividad = () => {
   }, []);
 
   const handleCantidadChange = (elementoId, nuevaCantidad) => {
+    const cantidadNumerica = parseInt(nuevaCantidad, 10);
     const cantidadMaxima = elementos.find(e => e.id_elemento === elementoId).cantidad;
-    if (nuevaCantidad > cantidadMaxima) {
+    if (cantidadNumerica > cantidadMaxima) {
       setCantidades({ ...cantidades, [elementoId]: cantidadMaxima });
     } else {
-      setCantidades({ ...cantidades, [elementoId]: nuevaCantidad });
+      setCantidades({ ...cantidades, [elementoId]: cantidadNumerica });
     }
   };
 
@@ -101,7 +102,7 @@ export const RegistrarActividad = () => {
       setCantidades({});
       setIsSuccess(true);
       setMessage('Actividad Registrada Con Exito');
-      fetchData()
+      fetchData();
     } catch (error) {
       console.error('Error registering activity:', error);
       setIsSuccess(false);
@@ -141,16 +142,16 @@ export const RegistrarActividad = () => {
             <form className='grid grid-cols-5 mb-10 bg-zinc-100 p-2 rounded-md'>
               {usuarios.map(usuario => (
                 <div key={usuario.id_usuario}>
-                  <Checkbox
-                    isSelected={usuario.isChecked || false}
+                  <input
+                    type="checkbox"
+                    checked={usuario.isChecked || false}
                     onChange={(e) => handleUsuarioCheckboxChange(usuario.id_usuario, e.target.checked)}
                     id={usuario.id_usuario}
                     name={usuario.id_usuario}
                     value={usuario.id_usuario}
                     className="mr-2"
-                  >
-                    <label htmlFor={usuario.id_usuario} className="mr-4">{usuario.nombre}</label>
-                  </Checkbox>
+                  />
+                  <label htmlFor={usuario.id_usuario} className="mr-4">{usuario.nombre}</label>
                 </div>
               ))}
             </form>
@@ -168,19 +169,19 @@ export const RegistrarActividad = () => {
             <form className='grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 place-items-center w-full m-auto my-5 bg-zinc-200 p-2 rounded-md'>
               {elementos.map(elemento => (
                 <div key={elemento.id_elemento} className={`mb-2 w-full ${elemento.cantidad === 0 ? 'hidden' : ''}`}>
-                  <Checkbox
-                    isSelected={elemento.isChecked || false}
+                  <input
+                    type="checkbox"
+                    checked={elemento.isChecked || false}
                     onChange={(e) => handleElementoCheckboxChange(elemento.id_elemento, e.target.checked)}
                     id={`elemento-${elemento.id_elemento}`}
                     name={`elemento-${elemento.id_elemento}`}
                     value={elemento.id_elemento}
                     className="mr-2 mb-1"
                     disabled={elemento.cantidad === 0}
-                  >
-                    <label htmlFor={`elemento-${elemento.id_elemento}`} className="mr-4">
-                      {elemento.nombre_elm} - {elemento.tipo_elm} {elemento.cantidad}
-                    </label>
-                  </Checkbox>
+                  />
+                  <label htmlFor={`elemento-${elemento.id_elemento}`} className="mr-4">
+                    {elemento.nombre_elm} - {elemento.tipo_elm} {elemento.cantidad}
+                  </label>
                   <Input
                     placeholder="Cantidad"
                     className="max-w-xs"
@@ -228,7 +229,7 @@ export const RegistrarActividad = () => {
           </form>
         </div>
 
-        {error && <div className='text-lg font-normal w-full mt-8 text-red-500 px-2 py-0.5 my- rounded'>{error}</div>}
+        {error && <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>{error}</div>}
 
         <Button className='my-5 bg-sky-600 text-white' onClick={handleActividad} color="primary">
           Registrar Actividad

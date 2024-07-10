@@ -127,7 +127,7 @@ export const ActualizarLugar = ({ fetchData, lugar }) => {
                   onChange={handleChange}
                 />
                 {formErrors.nombre_lugar && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Nombre lugar requerido
                   </div>
                 )}
@@ -141,7 +141,7 @@ export const ActualizarLugar = ({ fetchData, lugar }) => {
                   onChange={handleChange}
                 />
                 {formErrors.ubicacion_lugar && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Ubicación requerida
                   </div>
                 )}
@@ -163,7 +163,7 @@ export const ActualizarLugar = ({ fetchData, lugar }) => {
 
 
                 {formErrors.fk_area && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Área requerida
                   </div>
                 )}

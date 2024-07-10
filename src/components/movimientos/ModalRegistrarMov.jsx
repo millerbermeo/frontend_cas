@@ -174,7 +174,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                 </Select>
                                 
                                 {formErrors.id_residuo && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Residuo Requerido
                                     </div>
                                 )}
@@ -196,7 +196,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                     ))}
                                 </Select>
                                 {formErrors.usuario_adm && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Administrador Requerido
                                     </div>
                                 )}
@@ -223,7 +223,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                     )}
                                 </Select>
                                 {formErrors.fk_actividad && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Actividad Requerida
                                     </div>
                                 )}
@@ -237,7 +237,7 @@ export const ModalRegistrarMov = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.cantidad && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Cantidad Requerida
                                     </div>
                                 )}

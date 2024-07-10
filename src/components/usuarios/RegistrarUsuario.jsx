@@ -19,6 +19,11 @@ export const RegistrarUsuario = ({ fetchData }) => {
         rol: false
     });
 
+    const [errorMessages, setErrorMessages] = useState({
+        identificacion: '',
+        email: ''
+    });
+
     const [formData, setFormData] = useState({
         nombre: "",
         apellidos: "",
@@ -34,10 +39,14 @@ export const RegistrarUsuario = ({ fetchData }) => {
             ...formData,
             [name]: value
         });
-        // Resetear el estado del campo de error
+        // Resetear el estado del campo de error y mensaje de error
         setFormErrors({
             ...formErrors,
             [name]: false
+        });
+        setErrorMessages({
+            ...errorMessages,
+            [name]: ''
         });
     };
 
@@ -62,6 +71,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
         setMessage('');
 
         const newFormErrors = {};
+        const newErrorMessages = {};
 
         // Validar campos
         Object.entries(formData).forEach(([key, value]) => {
@@ -76,8 +86,8 @@ export const RegistrarUsuario = ({ fetchData }) => {
         }
 
         try {
-            // Aquí puedes enviar los datos a tu backend utilizando axios o fetch
-            await axiosClient.post('usuario/registrar', formData).then((response) => {
+            const response = await axiosClient.post('usuario/registrar', formData);
+            if (response.status === 200) {
                 setIsSuccess(true);
                 fetchData();
                 onOpenChange(false);
@@ -89,15 +99,19 @@ export const RegistrarUsuario = ({ fetchData }) => {
                     telefono: "",
                     rol: ""
                 });
-                setIsSuccess(true);
-                setMessage('Usuario Registrado Con Exito');
-                console.log(response.data);
-            });
-
+                setMessage('Usuario registrado exitosamente');
+            }
         } catch (error) {
             console.error('Error al enviar los datos:', error);
             if (error.response && error.response.status === 400) {
-                setMessage('El email o la identificación ya están en uso');
+                const errorMessage = error.response.data.message;
+                if (errorMessage.includes('email')) {
+                    newErrorMessages.email = 'El email ya está en uso';
+                }
+                if (errorMessage.includes('identificación')) {
+                    newErrorMessages.identificacion = 'La identificación ya está en uso';
+                }
+                setErrorMessages(newErrorMessages);
             } else {
                 setMessage('Error al registrar el usuario');
             }
@@ -159,6 +173,11 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                         La identificación solo puede contener números
                                     </div>
                                 )}
+                                {errorMessages.identificacion && (
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        {errorMessages.identificacion}
+                                    </div>
+                                )}
 
                                 <Input
                                     label="Email"
@@ -171,6 +190,11 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                 {formErrors.email && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
                                         El email debe ser válido
+                                    </div>
+                                )}
+                                {errorMessages.email && (
+                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                        {errorMessages.email}
                                     </div>
                                 )}
 
@@ -210,7 +234,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                 </Select>
                                 {formErrors.rol && (
                                     <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
-                                        Rol Requerido
+                                        Rol requerido
                                     </div>
                                 )}
                             </ModalBody>

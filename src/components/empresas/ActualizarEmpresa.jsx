@@ -101,7 +101,7 @@ export const ActualizarEmpresa = ({ fetchData, empresa }) => {
                   onChange={handleChange}
                 />
                 {formErrors.nombre_empresa && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Nombre requerido
                   </div>
                 )}
@@ -115,7 +115,7 @@ export const ActualizarEmpresa = ({ fetchData, empresa }) => {
                   onChange={handleChange}
                 />
                 {formErrors.descripcion_empresa && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Descripción requerida
                   </div>
                 )}
@@ -129,7 +129,7 @@ export const ActualizarEmpresa = ({ fetchData, empresa }) => {
                   onChange={handleChange}
                 />
                 {formErrors.contacto_empresa && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Contacto requerido
                   </div>
                 )}

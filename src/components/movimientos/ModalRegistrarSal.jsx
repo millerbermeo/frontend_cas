@@ -175,7 +175,7 @@ export const ModalRegistrarSal = ({ fetchData, initialCantidad = '' }) => {
                                     ))}
                                 </Select>
                                 {formErrors.id_residuo && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Residuo Requerido
                                     </div>
                                 )}
@@ -194,7 +194,7 @@ export const ModalRegistrarSal = ({ fetchData, initialCantidad = '' }) => {
                                     ))}
                                 </Select>
                                 {formErrors.usuario_adm && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Administrador Requerido
                                     </div>
                                 )}
@@ -213,7 +213,7 @@ export const ModalRegistrarSal = ({ fetchData, initialCantidad = '' }) => {
                                     ))}
                                 </Select>
                                 {formErrors.destino && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Destino Requerido
                                     </div>
                                 )}
@@ -235,7 +235,7 @@ export const ModalRegistrarSal = ({ fetchData, initialCantidad = '' }) => {
                                     disabled={!isCantidadEnabled}
                                 />
                                 {formErrors.registrar_cantidad && isCantidadEnabled && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         {parseFloat(formData.registrar_cantidad) > parseFloat(cantidadResiduo.cantidad) ? 'Cantidad excede el límite disponible' : 'Cantidad Requerida'}
                                     </div>
                                 )}

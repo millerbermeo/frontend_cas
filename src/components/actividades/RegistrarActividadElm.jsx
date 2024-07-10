@@ -147,7 +147,7 @@ export const RegistrarActividadElm = () => {
           </form>
         </div>
 
-        {error && <div className='text-lg font-normal w-full mt-8 bg-red-600 text-white px-2 py-0.5 my- rounded'>{error}</div>}
+        {error && <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>{error}</div>}
 
         <Button className='my-5 bg-sky-600 text-white' onClick={handleActividad} color="primary">
           Registrar Actividad

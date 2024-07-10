@@ -86,7 +86,7 @@ export const RegistrarArea = ({ fetchData }) => {
                   onChange={handleChange}
                 />
                 {formErrors.nombre_area && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Nombre área requerido
                   </div>
                 )}

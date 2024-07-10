@@ -128,7 +128,7 @@ export const ModalRegisterResiduo = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.nombre_residuo && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Nombre de residuo requerido
                                     </div>
                                 )}
@@ -148,7 +148,7 @@ export const ModalRegisterResiduo = ({ fetchData }) => {
                                     </SelectItem>
                                 </Select>
                                 {formErrors.residuo && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Residuo requerido
                                     </div>
                                 )}
@@ -167,7 +167,7 @@ export const ModalRegisterResiduo = ({ fetchData }) => {
                                     ))}
                                 </Select>
                                 {formErrors.tipo_residuo && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Tipo de residuo requerido
                                     </div>
                                 )}
@@ -196,7 +196,7 @@ export const ModalRegisterResiduo = ({ fetchData }) => {
                                     </SelectItem>
                                 </Select>
                                 {formErrors.unidad_medida && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Unidad de medida requerida
                                     </div>
                                 )}
@@ -215,7 +215,7 @@ export const ModalRegisterResiduo = ({ fetchData }) => {
                                     ))}
                                 </Select>
                                 {formErrors.fk_alm && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Almacenamiento requerido
                                     </div>
                                 )}
