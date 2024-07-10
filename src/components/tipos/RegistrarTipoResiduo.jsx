@@ -104,7 +104,7 @@ export const RegistrarTipoResiduo = ({ fetchData }) => {
                   onChange={handleChange}
                 />
                 {formErrors.tipo_residuo && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Tipo residuo requerido
                   </div>
                 )}
@@ -124,7 +124,7 @@ export const RegistrarTipoResiduo = ({ fetchData }) => {
                   </SelectItem>
                 </Select>
                 {formErrors.tipo && (
-                  <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my- rounded'>
+                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Tipo requerido
                   </div>
                 )}

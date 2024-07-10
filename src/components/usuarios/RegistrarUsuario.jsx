@@ -141,7 +141,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.nombre && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         El nombre solo puede contener letras, espacios y caracteres acentuados
                                     </div>
                                 )}
@@ -155,7 +155,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.apellidos && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Los apellidos solo pueden contener letras, espacios y caracteres acentuados
                                     </div>
                                 )}
@@ -169,12 +169,12 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.identificacion && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         La identificación solo puede contener números
                                     </div>
                                 )}
                                 {errorMessages.identificacion && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         {errorMessages.identificacion}
                                     </div>
                                 )}
@@ -188,12 +188,12 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.email && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         El email debe ser válido
                                     </div>
                                 )}
                                 {errorMessages.email && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         {errorMessages.email}
                                     </div>
                                 )}
@@ -207,7 +207,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.telefono && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         El teléfono solo puede contener números
                                     </div>
                                 )}
@@ -233,7 +233,7 @@ export const RegistrarUsuario = ({ fetchData }) => {
                                     </SelectItem>
                                 </Select>
                                 {formErrors.rol && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Rol requerido
                                     </div>
                                 )}

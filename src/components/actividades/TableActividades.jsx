@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Button, Input, Switch } from "@nextui-org/react";
+import * as XLSX from 'xlsx';
 import axiosClient from '../../configs/axiosClient';
 import { SearchIcon } from '../iconos/SearchIcon';
 import { ActualizarActividad } from './ActualizarActividad';
@@ -34,11 +35,51 @@ export const TableActividades = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', 'activiades.csv');
+    link.setAttribute('download', 'actividades.csv');
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const generateExcel = (data) => {
+    const wb = XLSX.utils.book_new();
+    const ws_data = [
+      ["ID", "TIPO", "NOMBRE", "LUGAR", "FECHA", "ESTADO"],
+      ...data.map(item => [
+        item.id_actividad,
+        item.tipo_actividad,
+        item.nombre_act,
+        item.nombre_lugar,
+        item.fecha_actividad,
+        item.estado
+      ])
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+    // Aplicar estilos a las celdas
+    const wscols = [
+      { wch: 10 }, // "ID"
+      { wch: 20 }, // "TIPO"
+      { wch: 30 }, // "NOMBRE"
+      { wch: 20 }, // "LUGAR"
+      { wch: 15 }, // "FECHA"
+      { wch: 15 }  // "ESTADO"
+    ];
+    ws['!cols'] = wscols;
+
+    const headerStyle = {
+      font: { bold: true },
+      alignment: { horizontal: "center", vertical: "center" },
+      fill: { fgColor: { rgb: "FFCCCCCC" } }
+    };
+
+    ["A1", "B1", "C1", "D1", "E1", "F1"].forEach(cell => {
+      ws[cell].s = headerStyle;
+    });
+
+    XLSX.utils.book_append_sheet(wb, ws, "Actividades");
+    XLSX.writeFile(wb, 'actividades.xlsx');
   };
 
   const formatDate = (dateString) => {
@@ -91,14 +132,6 @@ export const TableActividades = () => {
     formatDate(item.fecha_actividad).includes(filterValue.toLowerCase())
   ).slice(start, end);
 
-  const printTable = () => {
-    const printContents = document.querySelector('.printableTable').outerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    window.location.reload(); // Esto es opcional para restaurar completamente el estado de la página.
-  };
 
   const cambiarEstado = async (id) => {
     await axiosClient.put(`actividades/actualizar/${id}`).then((response) => {
@@ -126,15 +159,16 @@ export const TableActividades = () => {
             <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
               Descargar CSV
             </Button>
-            <Button auto onClick={printTable}>
-              Imprimir Tabla
+            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(data)}>
+              Descargar Excel
             </Button>
           </div>
+          
         </div>
       </div>
 
       <div className="flex justify-between items-center my-5">
-        <span className="text-default-400 text-small">Total {data.length} residuos</span>
+        <span className="text-default-400 text-small">Total {data.length} actividades</span>
         <label className="flex items-center text-default-400 text-small">
           Filas por página:
           <select

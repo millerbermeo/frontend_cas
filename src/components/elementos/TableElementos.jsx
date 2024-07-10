@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Button, Input, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
+import * as XLSX from 'xlsx';
 import axiosClient from '../../configs/axiosClient';
 import { SearchIcon } from '../iconos/SearchIcon';
 import { RegistrarElemento } from './RegistrarElemento';
 import { ActualizarElemento } from './ActualizarElemento';
 
-
 export const TableElementos = () => {
-
   const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [rowsPerPage, setRowsPerPage] = useState(6);
@@ -22,7 +21,6 @@ export const TableElementos = () => {
       console.error('Error fetching data:', error);
     }
   };
-
 
   const convertToCSV = (data) => {
     const headers = ["ID", "NOMBRE", "TIPO", "CANTIDAD"];
@@ -45,10 +43,43 @@ export const TableElementos = () => {
     document.body.removeChild(link);
   };
 
+  const generateExcel = (data) => {
+    const wb = XLSX.utils.book_new();
+    const ws_data = [
+      ["ID", "NOMBRE", "TIPO", "CANTIDAD"],
+      ...data.map(item => [
+        item.id_elemento,
+        item.nombre_elm,
+        item.tipo_elm,
+        item.cantidad
+      ])
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
 
+    // Aplicar estilos a las celdas
+    const wscols = [
+      { wch: 10 }, // "ID"
+      { wch: 20 }, // "NOMBRE"
+      { wch: 20 }, // "TIPO"
+      { wch: 15 }  // "CANTIDAD"
+    ];
+    ws['!cols'] = wscols;
+
+    const headerStyle = {
+      font: { bold: true },
+      alignment: { horizontal: "center", vertical: "center" },
+      fill: { fgColor: { rgb: "FFCCCCCC" } }
+    };
+
+    ["A1", "B1", "C1", "D1"].forEach(cell => {
+      ws[cell].s = headerStyle;
+    });
+
+    XLSX.utils.book_append_sheet(wb, ws, "Elementos");
+    XLSX.writeFile(wb, 'elementos.xlsx');
+  };
 
   useEffect(() => {
-
     fetchData();
   }, []);
 
@@ -88,124 +119,92 @@ export const TableElementos = () => {
   const end = start + rowsPerPage;
   const paginatedData = data.filter(item => item.nombre_elm.toLowerCase().includes(filterValue.toLowerCase())).slice(start, end);
 
-
-  const statusColorMap = {
-    active: "success",
-    paused: "danger",
-    vacation: "warning",
-  };
-
-  const printTable = () => {
-    const printContents = document.querySelector('.printableTable').outerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    window.location.reload(); // Esto es opcional para restaurar completamente el estado de la página.
-  };
-
-
-
   return (
     <>
-    <div className='flex flex-col lg:flex-row justify-between lg:items-center w-full'>
-    <div className='w-full flex-col lg:flex-row flex gap-3'>
-    <Input
-         color='white'
-         isClearable
-         className="w-full sm:max-w-[44%]"
-         placeholder="Search by name..."
-         startContent={<SearchIcon />}
-         value={filterValue}
-         onClear={() => onClear()}
-         onValueChange={onSearchChange}
-       />
+      <div className='flex flex-col lg:flex-row justify-between lg:items-center w-full'>
+        <div className='w-full flex-col lg:flex-row flex gap-3'>
+          <Input
+            color='white'
+            isClearable
+            className="w-full sm:max-w-[44%]"
+            placeholder="Search by name..."
+            startContent={<SearchIcon />}
+            value={filterValue}
+            onClear={() => onClear()}
+            onValueChange={onSearchChange}
+          />
 
-<div className='flex gap-1 mb-2 lg:mb-0'>
-        <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
-        Descargar CSV
-      </Button>
-      <Button className='' auto onClick={printTable}>
-        Imprimir Tabla
-      </Button>
+          <div className='flex gap-1 mb-2 lg:mb-0'>
+            <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
+              Descargar CSV
+            </Button>
+            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(data)}>
+              Descargar Excel
+            </Button>
+          </div>
         </div>
-    </div>
 
-<RegistrarElemento fetchData={fetchData}/>
+        <RegistrarElemento fetchData={fetchData} />
+      </div>
 
-     </div>
+      <div className="flex justify-between items-center my-5">
+        <span className="text-default-400 text-small">Total {data.length} elementos</span>
+        <label className="flex items-center text-default-400 text-small">
+          Rows per page:
+          <select
+            className="bg-transparent outline-none text-default-400 text-small"
+            value={rowsPerPage}
+            onChange={onRowsPerPageChange}
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
+        </label>
+      </div>
 
-    
-
-
-
-     <div className="flex justify-between items-center my-5">
-       <span className="text-default-400 text-small">Total {data.length} residuos</span>
-       <label className="flex items-center text-default-400 text-small">
-         Rows per page:
-         <select
-           className="bg-transparent outline-none text-default-400 text-small"
-           value={rowsPerPage}
-           onChange={onRowsPerPageChange}
-         >
-           <option value="5">5</option>
-           <option value="10">10</option>
-           <option value="15">15</option>
-         </select>
-       </label>
-     </div>
-
-     <Table className='z-0 printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys}  onSelectionChange={setSelectedKeys}>
-     <TableHeader>
+      <Table className='z-0 printableTable' aria-label="Example static collection table" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
+        <TableHeader>
           <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
           <TableColumn className='bg-sky-700 text-white'>NOMBRE</TableColumn>
           <TableColumn className='bg-sky-700 text-white'>TIPO</TableColumn>
           <TableColumn className='bg-sky-700 text-white'>CANTIDAD</TableColumn>
           <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
-       <TableBody>
-         {paginatedData.map(item => (
-          <TableRow key={item.id_elemento}>
-          <TableCell>{item.id_elemento}</TableCell>
-          <TableCell>{item.nombre_elm}</TableCell>
-          <TableCell>{item.tipo_elm}</TableCell>
-          <TableCell>{item.cantidad}</TableCell>
+        <TableBody>
+          {paginatedData.map(item => (
+            <TableRow key={item.id_elemento}>
+              <TableCell>{item.id_elemento}</TableCell>
+              <TableCell>{item.nombre_elm}</TableCell>
+              <TableCell>{item.tipo_elm}</TableCell>
+              <TableCell>{item.cantidad}</TableCell>
+              <TableCell className='flex justify-center gap-2'>
+                <ActualizarElemento fetchData={fetchData} elemento={item} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
 
-
-          <TableCell className='flex justify-center gap-2'>
-
-<ActualizarElemento fetchData={fetchData} elemento={item}/>
-            {/* <ActualizarUsuarios usuario={item} fetchData={fetchData} /> */}
-
-          </TableCell>
-
-
-
-        </TableRow>
-         ))}
-       </TableBody>
-     </Table>
-
-     <div className="py-2 px-2 flex justify-between my-2 items-center">
-       <Pagination
-         isCompact
-         showControls
-         showShadow
-         color="primary"
-         page={page}
-         total={Math.ceil(data.length / rowsPerPage)}
-         onChange={onPageChange}
-       />
-       <div className="hidden sm:flex w-[30%] justify-end gap-2">
-         <Button isDisabled={page === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-           Previous
-         </Button>
-         <Button isDisabled={page === Math.ceil(data.length / rowsPerPage)} size="sm" variant="flat" onPress={onNextPage}>
-           Next
-         </Button>
-       </div>
-     </div>
-   </>
-  )
+      <div className="py-2 px-2 flex justify-between my-2 items-center">
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={page}
+          total={Math.ceil(data.length / rowsPerPage)}
+          onChange={onPageChange}
+        />
+        <div className="hidden sm:flex w-[30%] justify-end gap-2">
+          <Button isDisabled={page === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+            Previous
+          </Button>
+          <Button isDisabled={page === Math.ceil(data.length / rowsPerPage)} size="sm" variant="flat" onPress={onNextPage}>
+            Next
+          </Button>
+        </div>
+      </div>
+    </>
+  );
 }
-

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Button, Input, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Button, Input, Select, SelectItem } from "@nextui-org/react";
+import * as XLSX from 'xlsx';
 import axiosClient from '../../configs/axiosClient';
 import { SearchIcon } from '../iconos/SearchIcon';
 import { ModalRegisterResiduo } from './ModalRegisterResiduo';
 import { ModalActualizarResiduos } from './ModalActualizarResiduos';
 
-
-
-
-
 export const TablaResiduos = () => {
-
   const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [page, setPage] = useState(1);
-  const [filterValue, setFilterValue] = useState('');
-
+  const [filterName, setFilterName] = useState('');
+  const [filterType, setFilterType] = useState(''); 
 
   const fetchData = async () => {
     try {
@@ -26,7 +22,6 @@ export const TablaResiduos = () => {
       console.error('Error fetching data:', error);
     }
   };
-
 
   const convertToCSV = (data) => {
     const headers = ["ID", "NOMBRE", "RESIDUO", "TIPO", "CANTIDAD", "UNIDAD MEDIDA", "ALMACENAMIENTO"];
@@ -49,20 +44,60 @@ export const TablaResiduos = () => {
     document.body.removeChild(link);
   };
 
+  const generateExcel = (data) => {
+    const wb = XLSX.utils.book_new();
+    const ws_data = [
+      ["ID", "NOMBRE", "RESIDUO", "TIPO", "CANTIDAD", "UNIDAD MEDIDA", "ALMACENAMIENTO"],
+      ...data.map(item => [
+        item.id_residuo,
+        item.nombre_residuo,
+        item.residuo,
+        item.tipo_residuo,
+        item.cantidad,
+        item.unidad_medida,
+        item.alm
+      ])
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
 
+    // Aplicar estilos a las celdas
+    const wscols = [
+      { wch: 10 }, // "ID"
+      { wch: 20 }, // "NOMBRE"
+      { wch: 20 }, // "RESIDUO"
+      { wch: 20 }, // "TIPO"
+      { wch: 10 }, // "CANTIDAD"
+      { wch: 15 }, // "UNIDAD MEDIDA"
+      { wch: 25 }  // "ALMACENAMIENTO"
+    ];
+    ws['!cols'] = wscols;
+
+    const headerStyle = {
+      font: { bold: true },
+      alignment: { horizontal: "center", vertical: "center" },
+      fill: { fgColor: { rgb: "FFCCCCCC" } }
+    };
+
+    ["A1", "B1", "C1", "D1", "E1", "F1", "G1"].forEach(cell => {
+      ws[cell].s = headerStyle;
+    });
+
+    XLSX.utils.book_append_sheet(wb, ws, "Residuos");
+    XLSX.writeFile(wb, 'residuos.xlsx');
+  };
 
   useEffect(() => {
-
     fetchData();
   }, []);
 
   const onSearchChange = (value) => {
-    setFilterValue(value);
+    setFilterName(value);
     setPage(1); // Reset page number when changing search filter
   };
 
   const onClear = () => {
-    setFilterValue('');
+    setFilterName('');
+    setFilterType(''); // Clear type filter as well
     setPage(1); // Reset page number when clearing search filter
   };
 
@@ -82,69 +117,67 @@ export const TablaResiduos = () => {
   };
 
   const onNextPage = () => {
-    const totalPages = Math.ceil(data.length / rowsPerPage);
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     if (page < totalPages) {
       setPage(page + 1);
     }
   };
 
+  const filteredData = data.filter(item => {
+    const nameMatches = item.nombre_residuo.toLowerCase().includes(filterName.toLowerCase());
+    const typeMatches = filterType ? item.residuo.toLowerCase() === filterType.toLowerCase() : true;
+    return nameMatches && typeMatches;
+  });
+
   const start = (page - 1) * rowsPerPage;
   const end = start + rowsPerPage;
-  const paginatedData = data.filter(item => item.nombre_residuo.toLowerCase().includes(filterValue.toLowerCase())).slice(start, end);
+  const paginatedData = filteredData.slice(start, end);
 
-
-  const statusColorMap = {
-    active: "success",
-    paused: "danger",
-    vacation: "warning",
+  const handleFilterByType = (type) => {
+    setFilterType(type);
+    setPage(1);
   };
-
-  const printTable = () => {
-    const printContents = document.querySelector('.printableTable').outerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    window.location.reload(); // Esto es opcional para restaurar completamente el estado de la página.
-  };
-
-
 
   return (
     <>
       <div className='flex flex-col lg:flex-row justify-between lg:items-center w-full'>
-     <div className='w-full flex-col lg:flex-row flex gap-3'>
-     <Input
-          color='white'
-          isClearable
-          className="w-full sm:max-w-[44%]"
-          placeholder="Search by name..."
-          startContent={<SearchIcon />}
-          value={filterValue}
-          onClear={() => onClear()}
-          onValueChange={onSearchChange}
-        />
+        <div className='w-full flex-col lg:flex-row flex gap-3'>
+          <Input
+            color='white'
+            isClearable
+            className="w-96 sm:max-w-[44%]"
+            placeholder="Search by name..."
+            startContent={<SearchIcon />}
+            value={filterName}
+            onClear={() => onClear()}
+            onValueChange={onSearchChange}
+          />
+          <select
+            placeholder="Filter by type"
+            className="w-96 sm:max-w-[44%] border rounded-md overflow-hidden"
+            value={filterType}
+            onChange={(e) => handleFilterByType(e.target.value)}
+          >
+            <option value="">Todos</option>
+            <option value="peligrosos">Peligrosos</option>
+            <option value="no peligrosos">No Peligrosos</option>
+          </select>
 
-        <div className='flex gap-1 mb-2 lg_mb-0'>
-        <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
-        Descargar CSV
-      </Button>
-      <Button className='' auto onClick={printTable}>
-        Imprimir Tabla
-      </Button>
+          <div className='flex gap-1 mb-2 lg:mb-0'>
+            <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(filteredData)}>
+              Descargar CSV
+            </Button>
+            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(filteredData)}>
+              Descargar Excel
+            </Button>
+          </div>
         </div>
-     </div>
 
         <ModalRegisterResiduo fetchData={fetchData} />
-
       </div>
 
-     
-
-
-
       <div className="flex justify-between items-center my-5">
-        <span className="text-default-400 text-small">Total {data.length} residuos</span>
+        <span className="text-default-400 text-small">Total {filteredData.length} residuos</span>
         <label className="flex items-center text-default-400 text-small">
           Rows per page:
           <select
@@ -183,15 +216,8 @@ export const TablaResiduos = () => {
               <TableCell>{item.unidad_medida}</TableCell>
               <TableCell>{item.alm}</TableCell>
               <TableCell className='flex justify-center gap-2'>
-
-
                 <ModalActualizarResiduos fetchData={fetchData} residuos={item} />
-                {/* <ModalRegistrarSal2 residuos={item} fetchData={fetchData} /> */}
-
               </TableCell>
-
-
-
             </TableRow>
           ))}
         </TableBody>
@@ -204,18 +230,18 @@ export const TablaResiduos = () => {
           showShadow
           color="primary"
           page={page}
-          total={Math.ceil(data.length / rowsPerPage)}
+          total={Math.ceil(filteredData.length / rowsPerPage)}
           onChange={onPageChange}
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
           <Button isDisabled={page === 1} size="sm" variant="flat" onPress={onPreviousPage}>
             Previous
           </Button>
-          <Button isDisabled={page === Math.ceil(data.length / rowsPerPage)} size="sm" variant="flat" onPress={onNextPage}>
+          <Button isDisabled={page === Math.ceil(filteredData.length / rowsPerPage)} size="sm" variant="flat" onPress={onNextPage}>
             Next
           </Button>
         </div>
       </div>
     </>
-  )
-}
+  );
+};

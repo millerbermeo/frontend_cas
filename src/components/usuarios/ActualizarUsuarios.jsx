@@ -125,7 +125,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.nombre && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         El nombre solo puede contener letras, espacios y caracteres acentuados
                                     </div>
                                 )}
@@ -140,7 +140,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.apellidos && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Los apellidos solo pueden contener letras, espacios y caracteres acentuados
                                     </div>
                                 )}
@@ -154,7 +154,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.identificacion && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 roundedd'>
                                         La identificación solo puede contener números
                                     </div>
                                 )}
@@ -168,7 +168,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.email && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         El email debe ser válido
                                     </div>
                                 )}
@@ -182,7 +182,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     onChange={handleChange}
                                 />
                                 {formErrors.telefono && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         El teléfono solo puede contener números
                                     </div>
                                 )}
@@ -202,7 +202,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     <option value="aprendiz">Aprendiz</option>
                                 </select>
                                 {formErrors.rol && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Rol Requerido
                                     </div>
                                 )}
@@ -220,7 +220,7 @@ export const ActualizarUsuarios = ({ fetchData, usuario }) => {
                                     <option value="inactivo">Inactivo</option>
                                 </select>
                                 {formErrors.estado && (
-                                    <div className='text-lg font-normal w-full bg-red-600 text-white px-2 py-0.5 my-1 rounded'>
+                                    <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                                         Estado Requerido
                                     </div>
                                 )}
