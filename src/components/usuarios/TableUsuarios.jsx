@@ -152,7 +152,7 @@ export const TableUsuarios = () => {
             <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
               Descargar CSV
             </Button>
-            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(data)}>
+            <Button className='bg-green-500 text-white px-4 py-2 hover:bg-green-700' auto onClick={() => generateExcel(data)}>
               Descargar Excel
             </Button>
           </div>
@@ -170,7 +170,7 @@ export const TableUsuarios = () => {
             value={rowsPerPage}
             onChange={onRowsPerPageChange}
           >
-            <option value="5">5</option>
+            <option value="6">6</option>
             <option value="10">10</option>
             <option value="15">15</option>
           </select>

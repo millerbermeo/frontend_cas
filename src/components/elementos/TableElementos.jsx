@@ -138,7 +138,7 @@ export const TableElementos = () => {
             <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(data)}>
               Descargar CSV
             </Button>
-            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(data)}>
+            <Button className='bg-green-500 text-white px-4 py-2 hover:bg-green-700' auto onClick={() => generateExcel(data)}>
               Descargar Excel
             </Button>
           </div>

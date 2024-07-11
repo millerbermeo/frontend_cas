@@ -224,7 +224,7 @@ export const TableMovimientos = () => {
                             <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(filteredData)}>
                                 Descargar CSV
                             </Button>
-                            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(filteredData)}>
+                            <Button className='bg-green-500 text-white px-4 py-2 hover:bg-green-700' auto onClick={() => generateExcel(filteredData)}>
                                 Descargar Excel
                             </Button>
                             <ModalRegistrarMov fetchData={fetchData} />

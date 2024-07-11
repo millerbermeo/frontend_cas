@@ -154,7 +154,7 @@ export const TablaResiduos = () => {
           />
           <select
             placeholder="Filter by type"
-            className="w-96 sm:max-w-[44%] border rounded-md overflow-hidden"
+            className="w-40 2xl:w-96 sm:max-w-[44%] border rounded-md overflow-hidden"
             value={filterType}
             onChange={(e) => handleFilterByType(e.target.value)}
           >
@@ -167,7 +167,7 @@ export const TablaResiduos = () => {
             <Button className='bg-[#61B2DC] text-white' auto onClick={() => downloadCSV(filteredData)}>
               Descargar CSV
             </Button>
-            <Button className='bg-[#61B2DC] text-white' auto onClick={() => generateExcel(filteredData)}>
+            <Button className='bg-green-500 text-white px-4 py-2 hover:bg-green-700' auto onClick={() => generateExcel(filteredData)}>
               Descargar Excel
             </Button>
           </div>
