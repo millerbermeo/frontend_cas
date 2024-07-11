@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 import axiosClient from '../../configs/axiosClient';
 
 const ReporteElementos = () => {
@@ -51,6 +52,40 @@ const ReporteElementos = () => {
     doc.save("reporte_elementos.pdf");
   };
 
+  const generateExcel = () => {
+    const wb = XLSX.utils.book_new();
+    const ws_data = [
+      ["Nombre Elemento", "Tipo Elemento", "Cantidad"],
+      ...elementos.map(elm => [
+        elm.nombre_elm,
+        elm.tipo_elm,
+        elm.cantidad
+      ])
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+    // Aplicar estilos a las celdas
+    const wscols = [
+      { wch: 20 }, // "Nombre Elemento"
+      { wch: 20 }, // "Tipo Elemento"
+      { wch: 10 }  // "Cantidad"
+    ];
+    ws['!cols'] = wscols;
+
+    const headerStyle = {
+      font: { bold: true },
+      alignment: { horizontal: "center", vertical: "center" },
+      fill: { fgColor: { rgb: "FFCCCCCC" } }
+    };
+
+    ["A1", "B1", "C1"].forEach(cell => {
+      ws[cell].s = headerStyle;
+    });
+
+    XLSX.utils.book_append_sheet(wb, ws, "Elementos");
+    XLSX.writeFile(wb, 'reporte_elementos.xlsx');
+  };
+
   const handleTiposChange = (value) => {
     setSelectedTipos(value);
     console.log('Tipos seleccionados:', value);
@@ -74,12 +109,20 @@ const ReporteElementos = () => {
           <SelectItem key="otro" value="otro">Otro</SelectItem>
         </Select>
       </div>
-      <button 
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4"
-        onClick={generatePDF}
-      >
-        Descargar PDF
-      </button>
+      <div className="flex space-x-4 mb-4">
+        <button 
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+          onClick={generatePDF}
+        >
+          Descargar PDF
+        </button>
+        <button 
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+          onClick={generateExcel}
+        >
+          Descargar Excel
+        </button>
+      </div>
       <div className="w-full">
         {elementos.length > 0 ? (
           elementos.map((elm, index) => (
