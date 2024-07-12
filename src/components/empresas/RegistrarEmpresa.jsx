@@ -47,9 +47,9 @@ export const RegistrarEmpresa = ({ fetchData }) => {
     if (!formData.descripcion_empresa) {
       newFormErrors.descripcion_empresa = true;
     }
-    if (!formData.contacto_empresa) {
-      newFormErrors.contacto_empresa = true;
-    }
+    // if (!formData.contacto_empresa) {
+    //   newFormErrors.contacto_empresa = true;
+    // }
 
     if (Object.keys(newFormErrors).length > 0) {
       // Actualizar estado de errores
@@ -79,7 +79,7 @@ export const RegistrarEmpresa = ({ fetchData }) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Button className="bg-sky-600 text-white" endContent={<PlusIcon />} onPress={onOpen}>Registrar Empresa</Button>
+      <Button className="bg-sky-600 text-white" endContent={<PlusIcon />} onPress={onOpen}>Registrar Destino</Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -125,11 +125,11 @@ export const RegistrarEmpresa = ({ fetchData }) => {
                   value={formData.contacto_empresa}
                   onChange={handleChange}
                 />
-                {formErrors.contacto_empresa && (
+                {/* {formErrors.contacto_empresa && (
                   <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Contacto requerido
                   </div>
-                )}
+                )} */}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

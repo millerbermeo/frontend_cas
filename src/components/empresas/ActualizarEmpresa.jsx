@@ -47,9 +47,9 @@ export const ActualizarEmpresa = ({ fetchData, empresa }) => {
     if (!formData.descripcion_empresa) {
       newFormErrors.descripcion_empresa = true;
     }
-    if (!formData.contacto_empresa) {
-      newFormErrors.contacto_empresa = true;
-    }
+    // if (!formData.contacto_empresa) {
+    //   newFormErrors.contacto_empresa = true;
+    // }
 
     if (Object.keys(newFormErrors).length > 0) {
       // Actualizar estado de errores
@@ -89,7 +89,7 @@ export const ActualizarEmpresa = ({ fetchData, empresa }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Actualizar Empresa</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Actualizar Destino</ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus
@@ -128,11 +128,11 @@ export const ActualizarEmpresa = ({ fetchData, empresa }) => {
                   value={formData.contacto_empresa}
                   onChange={handleChange}
                 />
-                {formErrors.contacto_empresa && (
+                {/* {formErrors.contacto_empresa && (
                   <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
                     Contacto requerido
                   </div>
-                )}
+                )} */}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>Cerrar</Button>

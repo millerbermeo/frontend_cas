@@ -101,6 +101,7 @@ export const TablaAlmacenamiento = () => {
         <TableHeader>
           <TableColumn className='bg-sky-700 text-white'>ID</TableColumn>
           <TableColumn className='bg-sky-700 text-white'>NOMBRE</TableColumn>
+          <TableColumn className='bg-sky-700 text-white'>TIPO AREA</TableColumn>
           <TableColumn className='bg-sky-700 text-white'>CANTIDAD</TableColumn>
           <TableColumn className='bg-sky-700 text-white flex justify-center items-center'>ACCIONES</TableColumn>
         </TableHeader>
@@ -109,6 +110,7 @@ export const TablaAlmacenamiento = () => {
             <TableRow key={item.id_almacenamiento}>
               <TableCell>{item.id_almacenamiento}</TableCell>
               <TableCell>{item.nombre_alm}</TableCell>
+              <TableCell>{item.tipo_area}</TableCell>
               <TableCell>{item.cantidad_alm}</TableCell>
 
               <TableCell className='flex justify-center gap-2'>

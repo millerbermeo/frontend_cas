@@ -111,6 +111,7 @@ export const ActualizarActividad = ({ fetchData, actividad }) => {
                                 </select>
 
                                 <Input
+                                type='date'
                                     label="Fecha de la Actividad"
                                     placeholder="Ingrese la fecha de la actividad"
                                     variant="bordered"

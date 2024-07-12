@@ -39,9 +39,9 @@ export const EliminarEmpresa = ({ fetchData, empresa }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Eliminar Empresa</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Eliminar Destino</ModalHeader>
               <ModalBody>
-                ¿Estás seguro de que deseas eliminar esta empresa?
+                ¿Estás seguro de que deseas eliminar este Destino?
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>Cancelar</Button>

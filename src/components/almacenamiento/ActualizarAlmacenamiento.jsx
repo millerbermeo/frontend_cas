@@ -11,12 +11,14 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
 
   const [formData, setFormData] = useState({
     nombre_alm: almacenamiento.nombre_alm,
-    cantidad_alm: almacenamiento.cantidad_alm
+    cantidad_alm: almacenamiento.cantidad_alm,
+    tipo_area: almacenamiento.tipo_area || ""
   });
 
   const [formErrors, setFormErrors] = useState({
     nombre_alm: false,
-    cantidad_alm: false
+    cantidad_alm: false,
+    tipo_area: false
   });
 
   const handleChange = (event) => {
@@ -45,6 +47,9 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
     if (formData.cantidad_alm === "") {
       newFormErrors.cantidad_alm = true;
     }
+    if (!formData.tipo_area) {
+      newFormErrors.tipo_area = true;
+    }
 
     if (Object.keys(newFormErrors).length > 0) {
       // Actualizar estado de errores
@@ -59,7 +64,8 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
         onOpenChange(false);
         setFormData({
           nombre_alm: "",
-          cantidad_alm: 0
+          cantidad_alm: 0,
+          tipo_area: ""
         });
         setMessage('Almacenamiento Actualizado Con Exito');
       });
@@ -69,7 +75,7 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
     } catch (error) {
       console.error('Error submitting data:', error);
       setIsSuccess(false);
-      setMessage('Almacenamiento No registrado');
+      setMessage('Almacenamiento No actualizado');
     }
   };
 
@@ -95,7 +101,7 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
                   onChange={handleChange}
                 />
                 {formErrors.nombre_alm && (
-                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
+                  <div className='text-sm font-normal w-full text-red-500 px-2 rounded'>
                     Nombre requerido
                   </div>
                 )}
@@ -110,10 +116,30 @@ export const ActualizarAlmacenamiento = ({ fetchData, almacenamiento }) => {
                   onChange={handleChange}
                 />
                 {formErrors.cantidad_alm && (
-                  <div className='text-sm font-normal w-ful text-red-500 px-2 rounded'>
+                  <div className='text-sm font-normal w-full text-red-500 px-2 rounded'>
                     Cantidad requerida
                   </div>
                 )}
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-gray-700">Tipo de Área</label>
+                  <select
+                    name="tipo_area"
+                    value={formData.tipo_area}
+                    onChange={handleChange}
+                    className="border rounded-md p-2"
+                  >
+                    <option value="">Seleccione el tipo de área</option>
+                    <option value="1">Peligrosos</option>
+                    <option value="2">No Aprovechables</option>
+                    <option value="3">Aprovechables</option>
+                  </select>
+                  {formErrors.tipo_area && (
+                    <div className='text-sm font-normal w-full text-red-500 px-2 rounded'>
+                      Tipo de área requerido
+                    </div>
+                  )}
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>Cerrar</Button>

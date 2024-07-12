@@ -81,7 +81,7 @@ export const TablaEmpresas = () => {
       </div>
       
       <div className="flex justify-between items-center my-5">
-        <span className="text-default-400 text-small">Total {data.length} empresas</span>
+        <span className="text-default-400 text-small">Total {data.length} destinos</span>
         <label className="flex items-center text-default-400 text-small">
           Filas por página:
           <select

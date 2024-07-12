@@ -89,7 +89,7 @@ export const TablaLugares = () => {
             value={rowsPerPage}
             onChange={onRowsPerPageChange}
           >
-            <option value="5">5</option>
+            <option value="6">6</option>
             <option value="10">10</option>
             <option value="15">15</option>
           </select>
