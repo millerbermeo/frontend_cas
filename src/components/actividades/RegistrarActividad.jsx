@@ -4,6 +4,7 @@ import axiosClient from '../../configs/axiosClient';
 import { SweetAlert } from '../../configs/SweetAlert';
 
 export const RegistrarActividad = () => {
+  const [data, setData] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [elementos, setElementos] = useState([]);
   const [lugarActividad, setLugarActividad] = useState('');
@@ -43,6 +44,19 @@ export const RegistrarActividad = () => {
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  const fetchData2 = async () => {
+    try {
+      const response = await axiosClient.get('areas/listar');
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData2();
   }, []);
 
   const handleCantidadChange = (elementoId, nuevaCantidad) => {
@@ -209,7 +223,7 @@ export const RegistrarActividad = () => {
               value={lugarActividad}
               onChange={(e) => setLugarActividad(e.target.value)}
             >
-              {lugares.map((lugar) => (
+              {data.map((lugar) => (
                 <SelectItem key={lugar.value} value={lugar.value}>
                   {lugar.label}
                 </SelectItem>
