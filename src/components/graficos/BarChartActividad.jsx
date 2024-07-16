@@ -8,8 +8,9 @@ import { Select, SelectItem, Button } from '@nextui-org/react';
 dayjs.locale('es');
 
 export const BarChartActividad = () => {
+    const currentYear = dayjs().year().toString();
     const [chartData, setChartData] = useState([]);
-    const [selectedYear, setSelectedYear] = useState('2024');
+    const [selectedYear, setSelectedYear] = useState(currentYear);
     const [showFirstHalf, setShowFirstHalf] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -116,7 +117,6 @@ export const BarChartActividad = () => {
                                 Mostrar primeros 6 meses
                             </Button>
                             <Button
-                            
                                 onClick={() => setShowFirstHalf(false)}
                                 disabled={!showFirstHalf}
                                 className={!showFirstHalf ? 'bg-blue-500 text-white ml-2' : 'bg-gray-200 ml-2'}

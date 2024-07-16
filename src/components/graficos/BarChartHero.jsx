@@ -1,11 +1,13 @@
 import { BarChart } from '@tremor/react';
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../configs/axiosClient';
+import dayjs from 'dayjs';
 import { Select, SelectItem, Button } from '@nextui-org/react';
 
 export const BarChartHero = () => {
+  const currentYear = dayjs().year().toString();
   const [chartData, setChartData] = useState([]);
-  const [selectedYear, setSelectedYear] = useState('2024');
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [showFirstHalf, setShowFirstHalf] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 

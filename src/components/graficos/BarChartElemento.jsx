@@ -1,11 +1,13 @@
 import { BarChart } from '@tremor/react';
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../configs/axiosClient';
+import dayjs from 'dayjs';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 
 export const BarChartElemento = () => {
+    const currentYear = dayjs().year().toString();
     const [chartData, setChartData] = useState({ firstHalfData: [], secondHalfData: [] });
-    const [selectedYear, setSelectedYear] = useState('2024');
+    const [selectedYear, setSelectedYear] = useState(currentYear);
     const [showFirstHalf, setShowFirstHalf] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -109,10 +111,6 @@ export const BarChartElemento = () => {
                             data={currentData}
                             index="mes"
                             categories={categories}
-                            // colors={categories.map((_, index) => {
-                            //     const colors = ['sky', 'indigo', 'rose', 'lime', 'amber', 'emerald', 'purple', 'pink', 'cyan', 'teal', 'orange', 'blue'];
-                            //     return colors[index % colors.length];
-                            // })}
                             yAxisWidth={60}
                             barSpacing={0.5} // Aumentar el espacio entre las barras
                             barGroupWidth="90%" // Aumentar el ancho del grupo de barras

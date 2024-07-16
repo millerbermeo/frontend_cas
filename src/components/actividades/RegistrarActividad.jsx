@@ -15,6 +15,7 @@ export const RegistrarActividad = () => {
   const [isSuccess, setIsSuccess] = useState(null);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState('');
+  const [lugares, setLugares] = useState([]);
 
   const toggleUsuarios = () => {
     setMostrarUsuarios(!mostrarUsuarios);
@@ -24,12 +25,7 @@ export const RegistrarActividad = () => {
     setMostrarElementos(!mostrarElementos);
   };
 
-  const lugares = [
-    { label: "Area 1", value: "1" },
-    { label: "Area 2", value: "2" },
-    { label: "Area 3", value: "3" },
-    { label: "Area 4", value: "4" },
-  ];
+  
 
   const fetchData = async () => {
     try {
@@ -57,6 +53,20 @@ export const RegistrarActividad = () => {
 
   useEffect(() => {
     fetchData2();
+  }, []);
+
+  const fetchLugares = async (idArea) => {
+    try {
+      const response = await axiosClient.get(`lugares/listar/1`);
+      console.log(response.data)
+      setLugares(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLugares();
   }, []);
 
   const handleCantidadChange = (elementoId, nuevaCantidad) => {
@@ -224,8 +234,8 @@ export const RegistrarActividad = () => {
               onChange={(e) => setLugarActividad(e.target.value)}
             >
               {data.map((lugar) => (
-                <SelectItem key={lugar.value} value={lugar.value}>
-                  {lugar.label}
+                <SelectItem key={lugar.id_lugar} value={lugar.id_lugar}>
+                  {lugar.nombre_area}
                 </SelectItem>
               ))}
             </Select>
