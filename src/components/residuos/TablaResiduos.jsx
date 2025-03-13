@@ -7,7 +7,6 @@ import { ModalRegisterResiduo } from './ModalRegisterResiduo';
 import { ModalActualizarResiduos } from './ModalActualizarResiduos';
 
 export const TablaResiduos = () => {
-  const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [page, setPage] = useState(1);
@@ -22,6 +21,20 @@ export const TablaResiduos = () => {
       console.error('Error fetching data:', error);
     }
   };
+
+  const staticResiduos = [
+    { id_residuo: 1, nombre_residuo: "Plástico", residuo: "Envases", tipo_residuo: "No peligroso", cantidad: 50, unidad_medida: "Kg", alm: "Bodega A" },
+    { id_residuo: 2, nombre_residuo: "Vidrio", residuo: "Botellas", tipo_residuo: "No peligroso", cantidad: 30, unidad_medida: "Kg", alm: "Bodega B" },
+    { id_residuo: 3, nombre_residuo: "Papel", residuo: "Cartón", tipo_residuo: "No peligroso", cantidad: 20, unidad_medida: "Kg", alm: "Bodega C" },
+    { id_residuo: 4, nombre_residuo: "Baterías", residuo: "Pilas", tipo_residuo: "Peligroso", cantidad: 10, unidad_medida: "Unidades", alm: "Bodega D" },
+    { id_residuo: 5, nombre_residuo: "Aceite", residuo: "Usado", tipo_residuo: "Peligroso", cantidad: 15, unidad_medida: "Litros", alm: "Bodega E" },
+    { id_residuo: 6, nombre_residuo: "Metal", residuo: "Chatarra", tipo_residuo: "No peligroso", cantidad: 40, unidad_medida: "Kg", alm: "Bodega F" },
+    { id_residuo: 7, nombre_residuo: "Electrónicos", residuo: "Computadoras", tipo_residuo: "Peligroso", cantidad: 5, unidad_medida: "Unidades", alm: "Bodega G" },
+    { id_residuo: 8, nombre_residuo: "Plástico", residuo: "Bolsas", tipo_residuo: "No peligroso", cantidad: 60, unidad_medida: "Kg", alm: "Bodega H" },
+    { id_residuo: 9, nombre_residuo: "Textiles", residuo: "Ropa", tipo_residuo: "No peligroso", cantidad: 25, unidad_medida: "Kg", alm: "Bodega I" },
+    { id_residuo: 10, nombre_residuo: "Madera", residuo: "Tablones", tipo_residuo: "No peligroso", cantidad: 35, unidad_medida: "Kg", alm: "Bodega J" }
+  ];
+  
 
   const convertToCSV = (data) => {
     const headers = ["ID", "NOMBRE", "RESIDUO", "TIPO", "CANTIDAD", "UNIDAD MEDIDA", "ALMACENAMIENTO"];
@@ -122,6 +135,8 @@ export const TablaResiduos = () => {
       setPage(page + 1);
     }
   };
+
+  const [data] = useState(staticResiduos);
 
   const filteredData = data.filter(item => {
     const nameMatches = item.nombre_residuo.toLowerCase().includes(filterName.toLowerCase());

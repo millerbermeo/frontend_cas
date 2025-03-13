@@ -8,12 +8,21 @@ import { RegistrarUsuario } from './RegistrarUsuario';
 import { ActualizarUsuarios } from './ActualizarUsuarios';
 
 export const TableUsuarios = () => {
-  const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [page, setPage] = useState(1);
   const [filterValue, setFilterValue] = useState('');
 
+  const usuariosIniciales = [
+    { id_usuario: 1, nombre: "Juan", apellidos: "Pérez", identificacion: "123456789", telefono: "3001234567", email: "juan@example.com", rol: "Admin", estado: "activo" },
+    { id_usuario: 2, nombre: "María", apellidos: "Gómez", identificacion: "987654321", telefono: "3209876543", email: "maria@example.com", rol: "Usuario", estado: "inactivo" },
+    { id_usuario: 3, nombre: "Carlos", apellidos: "Rodríguez", identificacion: "456789123", telefono: "3105678901", email: "carlos@example.com", rol: "Usuario", estado: "activo" },
+    { id_usuario: 4, nombre: "Ana", apellidos: "López", identificacion: "741258963", telefono: "3507412589", email: "ana@example.com", rol: "Editor", estado: "activo" },
+  ];
+
+  const [data, setData] = useState(usuariosIniciales)
+
+  
   const fetchData = async () => {
     try {
       const response = await axiosClient.get('usuario/listar');

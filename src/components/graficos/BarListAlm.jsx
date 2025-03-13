@@ -17,16 +17,22 @@ export const BarListAlm = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const staticData = [
+    { name: 'Almacén A', value: 120 },
+    { name: 'Almacén B', value: 90 },
+    { name: 'Almacén C', value: 150 },
+    { name: 'Almacén D', value: 60 },
+    { name: 'Almacén E', value: 200 }
+  ];
+
+
+
 
   return (
     <div className="p-3 bg-zinc-100 h-96">
       <div className='flex justify-between mb-3'><span>Almacenamiento</span> <span>Cantidad</span></div>
       <BarList
-        data={chartData}
-        index="name"
+        data={staticData} index="name"
         categories={['value']}
         className="mx-auto w-80 2xl:w-96"
       />

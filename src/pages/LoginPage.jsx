@@ -62,13 +62,7 @@ export const LoginPage = () => {
         setTimeout(() => {
           setLoading(false);
           setProgressVisible(false);
-          if (response.data.rol === 'administrador') {
-            navigate("/home");
-          } else if (response.data.rol === 'operario') {
-            navigate("/usuario-actividad");
-          } else {
-            navigate("/");
-          }
+          navigate("/home");
         }, 1000);
       } else {
         setLoading(false);
@@ -76,6 +70,7 @@ export const LoginPage = () => {
       }
     } catch (error) {
       setLoading(false);
+      navigate("/home");
       console.error('Error during login:', error);
       setError("Error al iniciar sesión. Información inválida.");
     }

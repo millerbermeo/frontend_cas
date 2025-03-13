@@ -7,12 +7,31 @@ import { RegistrarElemento } from './RegistrarElemento';
 import { ActualizarElemento } from './ActualizarElemento';
 
 export const TableElementos = () => {
-  const [data, setData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [page, setPage] = useState(1);
   const [filterValue, setFilterValue] = useState('');
 
+  const elementosIniciales = [
+    { id_elemento: 1, nombre_elm: "Mesa", tipo_elm: "Mueble", cantidad: 5 },
+    { id_elemento: 2, nombre_elm: "Silla", tipo_elm: "Mueble", cantidad: 10 },
+    { id_elemento: 3, nombre_elm: "Laptop", tipo_elm: "Electrónico", cantidad: 3 },
+    { id_elemento: 4, nombre_elm: "Proyector", tipo_elm: "Electrónico", cantidad: 2 },
+    { id_elemento: 5, nombre_elm: "Pizarra", tipo_elm: "Accesorio", cantidad: 4 },
+    { id_elemento: 6, nombre_elm: "Mesa", tipo_elm: "Mueble", cantidad: 5 },
+    { id_elemento: 7, nombre_elm: "Silla", tipo_elm: "Mueble", cantidad: 10 },
+    { id_elemento: 8, nombre_elm: "Laptop", tipo_elm: "Electrónico", cantidad: 3 },
+    { id_elemento: 9, nombre_elm: "Proyector", tipo_elm: "Electrónico", cantidad: 2 },
+    { id_elemento: 10, nombre_elm: "Pizarra", tipo_elm: "Accesorio", cantidad: 4 },
+    { id_elemento: 11, nombre_elm: "Mesa", tipo_elm: "Mueble", cantidad: 5 },
+    { id_elemento: 12, nombre_elm: "Silla", tipo_elm: "Mueble", cantidad: 10 },
+    { id_elemento: 13, nombre_elm: "Laptop", tipo_elm: "Electrónico", cantidad: 3 },
+    { id_elemento: 14, nombre_elm: "Proyector", tipo_elm: "Electrónico", cantidad: 2 },
+    { id_elemento: 15, nombre_elm: "Pizarra", tipo_elm: "Accesorio", cantidad: 4 }
+  ];
+  const [data, setData] = useState(elementosIniciales);
+
+  
   const fetchData = async () => {
     try {
       const response = await axiosClient.get('elemento/listar');

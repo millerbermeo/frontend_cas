@@ -8,7 +8,6 @@ import { ModalRegistrarMov } from './ModalRegistrarMov';
 import { ModalRegistrarSal } from './ModalRegistrarSal';
 
 export const TableMovimientos = () => {
-    const [data, setData] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState(new Set([]));
     const [rowsPerPage, setRowsPerPage] = useState(6);
     const [page, setPage] = useState(1);
@@ -16,6 +15,31 @@ export const TableMovimientos = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [movementType, setMovementType] = useState('');
+
+    const staticData = [
+        { id_movimiento: 1, tipo_movimiento: 'entrada', cantidad_total: 100, fecha: '2024-03-01', user: 'Juan Pérez', residuo: 'Plástico', actividad: 'Reciclaje', empresa: 'EcoGreen' },
+        { id_movimiento: 2, tipo_movimiento: 'salida', cantidad_total: 50, fecha: '2024-03-02', user: 'Ana Gómez', residuo: 'Vidrio', actividad: 'Venta', empresa: 'GlassCorp' },
+        { id_movimiento: 3, tipo_movimiento: 'entrada', cantidad_total: 75, fecha: '2024-03-03', user: 'Carlos Ruiz', residuo: 'Papel', actividad: 'Donación', empresa: 'PaperSave' },
+        { id_movimiento: 4, tipo_movimiento: 'salida', cantidad_total: 30, fecha: '2024-03-04', user: 'Lucía Fernández', residuo: 'Metal', actividad: 'Fundición', empresa: 'MetalWorks' },
+        { id_movimiento: 5, tipo_movimiento: 'entrada', cantidad_total: 120, fecha: '2024-03-05', user: 'Pedro Sánchez', residuo: 'Orgánico', actividad: 'Compostaje', empresa: 'BioCompost' },
+        { id_movimiento: 6, tipo_movimiento: 'salida', cantidad_total: 90, fecha: '2024-03-06', user: 'María López', residuo: 'Cartón', actividad: 'Reventa', empresa: 'CardboardX' },
+        { id_movimiento: 7, tipo_movimiento: 'entrada', cantidad_total: 40, fecha: '2024-03-07', user: 'Sofía Ramírez', residuo: 'Plástico', actividad: 'Recolección', empresa: 'EcoCollect' },
+        { id_movimiento: 8, tipo_movimiento: 'salida', cantidad_total: 80, fecha: '2024-03-08', user: 'Javier Torres', residuo: 'Chatarra', actividad: 'Reciclaje', empresa: 'MetalRecyc' },
+        { id_movimiento: 9, tipo_movimiento: 'entrada', cantidad_total: 110, fecha: '2024-03-09', user: 'Laura Méndez', residuo: 'Aceite', actividad: 'Filtrado', empresa: 'OilClean' },
+        { id_movimiento: 10, tipo_movimiento: 'salida', cantidad_total: 60, fecha: '2024-03-10', user: 'Fernando Ríos', residuo: 'Baterías', actividad: 'Descarte seguro', empresa: 'BatterySafe' },
+        { id_movimiento: 11, tipo_movimiento: 'entrada', cantidad_total: 95, fecha: '2024-03-11', user: 'Elena Castro', residuo: 'Plástico', actividad: 'Reciclaje', empresa: 'EcoGreen' },
+        { id_movimiento: 12, tipo_movimiento: 'salida', cantidad_total: 45, fecha: '2024-03-12', user: 'Diego Vargas', residuo: 'Vidrio', actividad: 'Venta', empresa: 'GlassCorp' },
+        { id_movimiento: 13, tipo_movimiento: 'entrada', cantidad_total: 85, fecha: '2024-03-13', user: 'Camila Herrera', residuo: 'Papel', actividad: 'Donación', empresa: 'PaperSave' },
+        { id_movimiento: 14, tipo_movimiento: 'salida', cantidad_total: 70, fecha: '2024-03-14', user: 'Ricardo Ortega', residuo: 'Metal', actividad: 'Fundición', empresa: 'MetalWorks' },
+        { id_movimiento: 15, tipo_movimiento: 'entrada', cantidad_total: 130, fecha: '2024-03-15', user: 'Valeria Navarro', residuo: 'Orgánico', actividad: 'Compostaje', empresa: 'BioCompost' },
+        { id_movimiento: 16, tipo_movimiento: 'salida', cantidad_total: 100, fecha: '2024-03-16', user: 'Andrés Fuentes', residuo: 'Cartón', actividad: 'Reventa', empresa: 'CardboardX' },
+        { id_movimiento: 17, tipo_movimiento: 'entrada', cantidad_total: 55, fecha: '2024-03-17', user: 'Daniela Paredes', residuo: 'Plástico', actividad: 'Recolección', empresa: 'EcoCollect' },
+        { id_movimiento: 18, tipo_movimiento: 'salida', cantidad_total: 75, fecha: '2024-03-18', user: 'Gabriel Rojas', residuo: 'Chatarra', actividad: 'Reciclaje', empresa: 'MetalRecyc' },
+        { id_movimiento: 19, tipo_movimiento: 'entrada', cantidad_total: 115, fecha: '2024-03-19', user: 'Isabela Peña', residuo: 'Aceite', actividad: 'Filtrado', empresa: 'OilClean' },
+        { id_movimiento: 20, tipo_movimiento: 'salida', cantidad_total: 85, fecha: '2024-03-20', user: 'José Maldonado', residuo: 'Baterías', actividad: 'Descarte seguro', empresa: 'BatterySafe' }
+    ];
+
+    const [data, setData] = useState(staticData); 
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -72,16 +96,7 @@ export const TableMovimientos = () => {
         }
     };
 
-    const filteredData = data.filter(item => {
-        const itemDate = new Date(item.fecha);
-        const start = startDate ? new Date(startDate) : null;
-        const end = endDate ? new Date(endDate) : null;
-        const typeMatch = movementType ? item.tipo_movimiento.toLowerCase() === movementType.toLowerCase() : true;
-        const dateMatches = formatDate(item.fecha).includes(filterValue);
-        const nameMatches = item.nombre_residuo.toLowerCase().includes(filterValue.toLowerCase());
-        return (!start || itemDate >= start) && (!end || itemDate <= end) && typeMatch && (nameMatches || dateMatches);
-    });
-
+    const filteredData = data
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
