@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .progress {
     width: 134.4px;
     height: 24.6px;
@@ -25,4 +26,23 @@
     100% {
        inset: 0;
     }
+ }
+
+
+ @keyframes move-up-down-fast {
+   0%, 100% { transform: translateY(0); }
+   50% { transform: translateY(50px); }
+ }
+ 
+ @keyframes move-up-down-slow {
+   0%, 100% { transform: translateY(0); }
+   50% { transform: translateY(30px); }
+ }
+ 
+ .animate-move-up-down-fast {
+   animation: move-up-down-fast 3s ease-in-out infinite;
+ }
+ 
+ .animate-move-up-down-slow {
+   animation: move-up-down-slow 5s ease-in-out infinite;
  }
